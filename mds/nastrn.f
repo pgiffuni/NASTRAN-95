@@ -1,5 +1,5 @@
-      PROGRAM NASTRN        
-C        
+      PROGRAM NASTRN
+C
       CHARACTER*80    VALUE
       CHARACTER*5     TMP
       INTEGER         SPERLK
@@ -18,15 +18,15 @@ C
       CHARACTER*80    SDSN
       EQUIVALENCE    ( ISYSTM, SYSTM )
       LENOPC = 14000000
-C        
-C     SAVE STARTING CPU TIME AND WALL CLOCK TIME IN /SYSTEM/        
-C      
+C
+C     SAVE STARTING CPU TIME AND WALL CLOCK TIME IN /SYSTEM/
+C
       ISYSTM(18) = 0
-      CALL SECOND (SYSTM(18))        
-      CALL WALTIM (ISYSTM(32))        
-C        
+      CALL SECOND (SYSTM(18))
+      CALL WALTIM (ISYSTM(32))
+C
 C     EXECUTE NASTRAN SUPER LINK
-C        
+C
       LEN = 80
       VALUE = ' '
       CALL BTSTRP
@@ -37,15 +37,15 @@ C
       IF ( IOCMEM .LE. LENOPC ) GO TO 10
       PRINT *,' LARGEST VALUE FOR OPEN CORE ALLOWED IS:',LENOPC
       CALL MESAGE ( -61, 0, 0 )
-10    IF ( IDBLEN .NE. 0 ) IDBLEN = LENOPC - IOCMEM 
+10    IF ( IDBLEN .NE. 0 ) IDBLEN = LENOPC - IOCMEM
       LASTAD = LOCFX( IZ( IOCMEM ) )
       IF ( IDBLEN .NE. 0 ) IDBADR = LOCFX( IZ( IOCMEM+1 ) )
       LENOPC = IOCMEM
       CALL DBMINT
       LOUT   = 3
       IRDICT = 4
-      SPERLK = 1        
-      ISYSTM(11) = 1        
+      SPERLK = 1
+      ISYSTM(11) = 1
       VALUE = ' '
       CALL GETENV ( 'RFDIR',  RFDIR  )
       VALUE = ' '
@@ -91,7 +91,7 @@ C
       CALL GETENV ( 'DICTNM', DIC )
       DSNAMES(4) = DIC
       CALL GETENV ( 'PUNCHNM', PUNCH )
-      DSNAMES(1) = PUNCH 
+      DSNAMES(1) = PUNCH
       CALL GETENV ( 'SOF1', VALUE )
       SDSN(1) = VALUE
       CALL GETENV ( 'SOF2', VALUE )
@@ -123,6 +123,6 @@ C
      & OPEN ( 4, FILE=DSNAMES(4),STATUS='UNKNOWN')
       IF ( DSNAMES(1) .NE. 'none' )
      & OPEN ( 1, FILE=DSNAMES(1),STATUS='UNKNOWN')
-      CALL XSEM00       
+      CALL XSEM00
       STOP
-      END        
+      END

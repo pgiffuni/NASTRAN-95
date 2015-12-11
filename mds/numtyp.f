@@ -13,12 +13,12 @@ C      WRITE(6,40646) IVALUE
       IF ( BYTE(1) .EQ. '  ' ) GO TO 210
       IF ( BYTE(1) .EQ. '00' ) GO TO 210
       IF ((BYTE(1) .EQ. '07'.OR. BYTE(1) .EQ. ' 7') .AND.
-     &     BYTE(2) .EQ. 'FF' .AND.   
-     &     BYTE(3) .EQ. 'FF' .AND.   
+     &     BYTE(2) .EQ. 'FF' .AND.
+     &     BYTE(3) .EQ. 'FF' .AND.
      &     BYTE(4) .EQ. 'FF' )  GO TO 210
       IF ( BYTE(1) .EQ. '7F' .AND.
-     &     BYTE(2) .EQ. 'FF' .AND.   
-     &     BYTE(3) .EQ. 'FF' .AND.   
+     &     BYTE(2) .EQ. 'FF' .AND.
+     &     BYTE(3) .EQ. 'FF' .AND.
      &     BYTE(4) .EQ. 'FF' )  GO TO 210
 
       IF ( BYTE(1) .EQ. 'FF' ) GO TO 210
