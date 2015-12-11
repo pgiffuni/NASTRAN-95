@@ -58,8 +58,8 @@ C           SGI    MAC   CRAY  CONVEX   NEC  FUJITSU  SUN  AMDAHL  PRIME
 C           IRIS        UNICOS                       SUNOS
 C          --10-  --11-  --12-  --13-  --14-  --15-  --16-  --17-  --18-
 C
-C           PC            DEC/   DEC/
-C         MS/DOS  DUMMY OPENVMS  OSF
+C          INTEL          DEC/   DEC/
+C          LINUX  DUMMY OPENVMS  OSF
 C          --19-  --20-  --21-  --22-
 C
 C  MACHINE NAMES
@@ -71,7 +71,7 @@ C
      4        'SGI        ', 'MACINTOCH  ', 'CRAY       ',
      5        'CONVEX     ', 'NEC        ', 'FUJITSU    ',
      6        'SUN        ', 'AMDAHL     ', 'PRIME      ',
-     7        'PC         ', 'DUMMY      ', 'DEC-ALPHA  ',
+     7        'INTEL x86  ', 'DUMMY      ', 'DEC-ALPHA  ',
      8        'DEC-ALPHA  '/
 C
 C  MACHINE OPERATING SYSTEM
@@ -83,7 +83,7 @@ C
      4        'IRIX   ', '       ', 'UNICOS ',
      5        '       ', '       ', '       ',
      6        'SUNOS  ', '       ', '       ',
-     7        'MS-DOS ', '       ', 'OPENVMS',
+     7        'LINUX  ', '       ', 'OPENVMS',
      8        'OSF    '/
 C
       DATA    NMACH / 22 /,    M1/
@@ -107,7 +107,7 @@ C     NWPIC       =  NUMBER OF WORDS PER INPUT CARD, USED ONLY IN XGPIBS
 C
      7    50 00, 55 18, 55 18, 42 08, 55 18, 55 18, 55 18, 55 18, 55 18,
      8    55 18, 55 18, 55 09, 55 18, 55 00, 55 00, 55 00, 55 00, 55 00,
-     9    55 00, 55 00, 55 18, 55  0,
+     9    55 18, 55 00, 55 18, 55  0,
 C
 C     NBPC(X100)  =  NUMBER OF BITS PER CHARACTER
 C     NBPW        =  NUMBER OF BITS PER WORD
@@ -124,7 +124,7 @@ C
 CWKBR3    2 0 0, 2 4 0, 2 1 1, 1 1 0, 2 1 1, 2 1 0, 2 4 0, 2 4 1, 2 4 1,
      3    2 0 0, 2 4 0, 2 1 0, 1 1 0, 2 1 0, 2 1 0, 2 4 0, 2 4 0, 2 4 0,
      4    2 1 0, 2 0 0, 1 8 0, 2 4 0, 1 0 0, 1 0 0, 2 0 0, 2 0 0, 2 0 0,
-     5    2 0 0, 2 0 0, 2 1 0, 2 0 0 /
+     5    2 4 1, 2 0 0, 2 1 0, 2 0 0 /
 C
 C
       DATA          M2/
@@ -141,7 +141,7 @@ C     USED ONLY BY RCARD, RCARD2, XRCARD AND YRCARD
 C
      4       38,    75,    38,   321,    38,    38,    38,    38,    38,
      5       38,    38,  2465,    38,     0,     0,     0,     0,     0,
-     6        0,     0,    38,     0,
+     6       38,     0,    38,     0,
 C
 C     NUDFLW(X100) =  FLOATING NUMBER UNDERFLOW CONTROL
 C                     (USED ONLY BY FQRW AND FQRWV)
@@ -157,13 +157,13 @@ C                RETURNED FROM SAVPOS TO GINO BLOCK NUMBER, USED IN EMA
 C
      O        1,  4096,   4096,262144,  4096,  4096, 4096,  4096,  4096,
      1     4096,  4096,   4096,  4096,     0,     0,    0,     0,     0,
-     2        0,     0,   4096,     0,
+     2     4096,     0,   4096,     0,
 C
 C     MANTISSA BITS, USED ONLY IN SDCMPS
 C
      3     0 00, 24 26, 27 60, 48 96, 23 55, 23 55, 23 52, 23 55, 23 55,
      4    23 55, 23 55, 48 96, 23 52, 48 96, 48 96, 23 55, 23 55, 23 55,
-     5     0 00,  0 00, 23 55,  0 00/
+     5    23 55,  0 00, 23 55,  0 00/
 C
 C     DEFINE SYSTEM (42), SYSTEM(43), SYSTEM(44)
 C
@@ -173,7 +173,7 @@ C
 C
 C     MACHINE TYPE IS SET HERE
 C     +++++++++++++++++++++++++++++++
-  100 MACH = 7
+  100 MACH = 19
       MCHNAM = COMPUT(MACH)
       MACHOS = COMPOS(MACH)
       SYSBUF = MCONST(MACH)
