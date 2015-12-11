@@ -6,7 +6,7 @@ C OSCAR.  FOR EACH MODULE TO BE EXECUTED, THE FIST AND XVPS ARE SETUP.
 C
 CWKBD 5/95
 C     INTEGER ORF
-      INTEGER ANDF ,DATABF,ERRFLG,FIST  ,FISTNM,FSTRST,OPNTR 
+      INTEGER ANDF ,DATABF,ERRFLG,FIST  ,FISTNM,FSTRST,OPNTR
      1       ,PARML,PARAM ,PARMN ,POOL  ,RSHIFT,SCRTCH
      2       ,VPS  ,VPARML,TYPECD,VPSX  ,WORDB ,WORDE
      3       ,PLOTF,EXIT  ,SYSBUF,SUBNAM(2)
@@ -40,7 +40,8 @@ C
      D
      E      /MSGX  /NMSG
 C
-      EQUIVALENCE (XX(1),NOUT)
+      EQUIVALENCE (XX(1),NOUT),
+     1            (xx(3),nin) ! input file number
       EQUIVALENCE (XX(19),PLOTF)
       equivalence (xx(17),itmbgn)
 CWKBI 5/95
@@ -58,9 +59,60 @@ C
       DATA EQUIV, PURGE /4HEQUI, 4HV   , 4HPURG, 4HE   /
       DATA XEQU , XPUR  /4HXEQU, 4HXPUR/
       DATA XSAV , YCHK  /4HXSAV, 4HXCHK/
+!     Set varables
+      integer error_id
+	  integer nin, nout
+      character(80) proj,ft05,ft06,output,infile
 C*****
 C INITIALIZE MACHINE DEPENDENT CONSTANTS
       CALL BTSTRP
+!----------------------------------------------------------------------
+! hgs 12/06/2104 - The NASA delivery uses redirected input and out put
+!                  so these files are not explicitly opened. I need
+!                  to change the stdin and stdout to allow the use of
+!                  GDB in the script file. Therefore the following mod-
+!                  ifications explicitly open the stdin and stdout files
+!                  using the FTN5 and FTN6 ENV set by the script.
+!
+c
+c     open inout and output files
+c
+      call getenv('PROJ',proj)
+	  call getenv('FT05',ft05)
+	  call getenv('FT06',ft06)
+	  output = trim(proj)//'/'//trim(ft06)
+	  error_id = 0
+  101 continue
+      ifile = nout
+      open(nout,file=output,form='formatted',
+     1status='unknown',iostat=ierr,err=102)
+      go to 103
+  102 continue
+      error_id = -2
+      go to 104
+  103 continue
+      ifile = nin
+	  infile = trim(proj)//'/'//trim(ft05)
+      open(nin,file=infile,form='formatted'
+     1    ,status='unknown', iostat =ierr,err=106)
+      go to 105
+  106 continue
+      error_id = -1
+  104 continue
+c
+c     open error
+c
+      write(nout,*) 'Error in opening file =',ifile,' IOSTAT = ',ierr
+	  select case(error_id)
+	  case(-1)
+	    write(nout,'(a)') 'File name: ',infile
+	  case(-2)
+	    write(nout,'(a)') 'File name: ',output
+	  end select
+      call pexit ! close down and exit with ierror
+	  return
+c
+ 105  continue
       LVAX = MACH.EQ.5
 C*****
 C EXECUTE PREFACE
@@ -217,7 +269,7 @@ C      IF (LVAX)  WORDB(1)=KHRFN1(WORDB(1),5-I,NUMBR(ICHR),1)
 C      IDIN = IDIN/10
 C      IF(IDIN .EQ. 0)  GO TO 252
 C  251 CONTINUE
-CWKBDE 5/95  
+CWKBDE 5/95
   252 CONTINUE
 C      CALL CONMSG(WORDB,4,0)
       CALL CONMSG(WORDB,4,111111)

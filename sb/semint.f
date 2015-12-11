@@ -28,9 +28,13 @@ C
 C
 C     READ AND PROCESS THE NASTRAN CARD (IF PRESENT).
 C
+!hgs disable nascar
+      iby = 0
+      if(iby .eq. 0) then
       IF (DEBUG1 .GT. 0) WRITE (6,10) SUBR(1)
    10 FORMAT (/,' -LINK1 DEBUG- SEMINT CALLING ',A6,' NEXT',/)
       CALL NASCAR
+      endif
 C
 C     DEFINE OPEN CORE FOR UNIVAC, VAX, AND UNIX
 C
