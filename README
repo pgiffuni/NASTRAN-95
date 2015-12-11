@@ -14,9 +14,9 @@ HOW TO USE:
 	   directory.
 	
 	3. Place your problem file in the "test" directory. You'll finde 
-	   some in the inp directory.
+	   some in the "inp" directory.
 	
-	4. Run from there ..\bin\nastran or on windows  ..\bin\nastran xxx
+	4. Run from there ..\bin\nastran or on windows  ..\bin\nastran.bat xxx
 	   where xxx is your problem file (without the file extension).
 
 
