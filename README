@@ -1,9 +1,9 @@
 PREREQUISITES:
 
-	-  a fortran compiler, gfortran will do. On Linux, Windows (mingw) and
-	   on Android using CCTools
+	-  A fortran compiler, gfortran will do. On Linux, Windows (mingw) and
+	   on Android using CCTools.
 	
-	-  GNU make
+	-  GNU make.
 
 
 HOW TO USE:
@@ -45,7 +45,7 @@ ISSUES:
 	
 	-  There is no predefined binary result output, as some users may be
 	   used to PARAM,POST. Nevertheless it is possible to write an op2 file
-	   via DMAP alters, which then can be read by commont post-processing
+	   via DMAP alters, which then can be read by common post-processing
 	   software. Basically insert 
 	   OUTPUT2  "DATABLOCK",,,,//C,N,0/C,N,11////C,N,*MSC* $
 	   after the OPF DMAP statement.
