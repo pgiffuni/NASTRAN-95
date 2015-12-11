@@ -11,13 +11,14 @@ HOW TO USE:
 	1. Run make in "sb" dir.
 	
 	2. Set nasthome enviroment variable pointing to the nastran root 
-	   directory.
+	   directory. Avoid the "-" character, it will break nastran.
 	
 	3. Place your problem file in the "test" directory. You'll finde 
 	   some in the "inp" directory.
 	
 	4. Run from there ..\bin\nastran or on windows  ..\bin\nastran.bat xxx
-	   where xxx is your problem file (without the file extension).
+	   where xxx is your problem file (without the file extension). For
+	   Android have a look at the android.sh script.
 
 
 ISSUES:
@@ -48,4 +49,3 @@ ISSUES:
 	   software. Basically insert 
 	   OUTPUT2  "DATABLOCK",,,,//C,N,0/C,N,11////C,N,*MSC* $
 	   after the OPF DMAP statement.
-
