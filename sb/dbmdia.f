@@ -38,10 +38,10 @@ C      WRITE ( IWR, 906 ) MAXBLK, MAXDSK, MAXALC, IBLKSZ
      &'                    BLOCK   BLOCKS'
      &,'  BLOCKS ',/)
 904   FORMAT(I7,3X,2A4,2X,I6,2X,I6,2X,I6 )
-905   FORMAT(/,' CURRENT IN-MEMORY BLOCKS =',I8
-     &      ,/,' CURRENT DISK BLOCKS      =',I8 )
-906   FORMAT(/,' MAXIMUM IN-MEMORY BLOCKS USED                   =',I8
-     &      ,/,' MAXIMUM DISK BLOCKS WRITTEN                     =',I8
-     &      ,/,' BLOCKS INITIALLY ALLOCATED FOR THE IN-MEMORY DB =',I8
-     &      ,/,' BLOCK SIZE                                      =',I8 )
+905   FORMAT(/,' CURRENT IN-MEMORY BLOCKS =',I16
+     &      ,/,' CURRENT DISK BLOCKS      =',I16 )
+906   FORMAT(/,' MAXIMUM IN-MEMORY BLOCKS USED                   =',I16
+     &      ,/,' MAXIMUM DISK BLOCKS WRITTEN                     =',I16
+     &      ,/,' BLOCKS INITIALLY ALLOCATED FOR THE IN-MEMORY DB =',I16
+     &      ,/,' BLOCK SIZE                                      =',I16)
       END
