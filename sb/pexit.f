@@ -28,7 +28,7 @@ C
       IF (LE(1).EQ.-1 .AND. LE(2).EQ.-1) GO TO 70
       WRITE  (NOUT,20) LE,DATE,HH,MM,SS
    20 FORMAT (////40X,'* * * END OF JOB * * *', /1H1, /,' JOB TITLE = ',
-     1       17A4, /,' DATE:',I3,1H/,I2,1H/,I4, /,' END TIME:',I3,1H:,
+     1       17A4, /,' DATE:',I3,1H/,I2,1H/,I2, /,' END TIME:',I3,1H:,
      2       I2,1H:,I2)
 C
 C     CDC TOTAL CPU TIME IS A BIG NUMBER. DON'T PRINT IT
