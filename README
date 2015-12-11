@@ -18,7 +18,8 @@ HOW TO USE:
 	
 	4. Run from there ..\bin\nastran or on windows  ..\bin\nastran.bat xxx
 	   where xxx is your problem file (without the file extension). For
-	   Android have a look at the android.sh script.
+	   Android have a look at the android.sh script. For Android you have
+	   to link the program statically, otherwise it will segfault.
 
 
 ISSUES:
