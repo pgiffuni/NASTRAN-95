@@ -39,7 +39,7 @@ ISSUES:
 	   (p. 28ff) and in: http://paginas.fe.up.pt/~rnatal/paper.pdf.
 	
 	-  There seems to be no corner stress output for the CQUAD4 element,
-	   whereas it is calculated with the SQUD42 subroutine.
+	   whereas it is calculated within the SQUD42 subroutine.
 	
 	-  There are no optimization capabilities, exept the FSD method as
 	   shown in the NASTRAN DEMONSTRATION PROBLEM NO. D01-16-1A
