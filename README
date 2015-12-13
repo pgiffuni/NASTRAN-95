@@ -30,9 +30,9 @@ ISSUES:
 	-  There are some features missing in comparision to the commercial
 	   Nastran versions. Some entities have different names.
 	   E.g.:  RBE3 <=> CRBE3
-	         IHEX1 <=> CHEXA
+	         CHEXA <=> CIHEX1
 	
-	-  The CQUAD4 and especially the IHEX1 (the Cosmic CHEXA) suffers from
+	-  The CQUAD4 and especially the CIHEX1 (the Cosmic CHEXA) suffers from
 	   shear locking. Two test cases are profided in the test directory. 
 	   This could be improved by implementing selective reduced integration
 	   as it is described in the Fourteenth NASTRAN Users' Colloquium
