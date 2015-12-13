@@ -1,9 +1,9 @@
 #!/bin/csh
 unalias rm
 clear
-set   rfdir=/usr/users/bob/nast95/rf
-set nasexec=/usr/users/bob/nast95/bin/nastrn.exe
-set naschk=/usr/users/bob/nast95/bin/chkfil.exe
+set rfdir=$NASTHOME/rf
+set nasexec=$NASTHOME/bin/nastrn.exe
+set naschk=$NASTHOME/bin/chkfil.exe
 set probname = $1
 echo ' '
   if ( $probname == '' ) then
@@ -15,29 +15,29 @@ echo ' '
 # set ft01=$probname.pun
 set dbmem=12000000
 set ocmem=2000000
-set ft01=none
-set ft04=$probname.dic
-set ft03=$probname.log
-set ft05=$probname.inp
-set ft06=$probname.out
-set ft08=none
+set FT01=none
+set FT04=$probname.dic
+set FT03=$probname.log
+set FT05=$probname.inp
+set FT06=$probname.out
+set FT08=none
 # set ft11=$probname.out11
-set ft11=none
-set plt2=none
+set FT11=none
+set PLT2=none
 set script=$probname.cmd
 set nasscr=$cwd/temp$$
-set ft12=none
-set ft15=none
-set ft16=none
-set sof1=none
-set sof2=none
-set sft12=
-set nptp=$probname.nptp
-set optp=none
-   if ( ! -e  $ft05 ) then
-   set sft05='(#### does not exist ####)'
+set FT12=none
+set FT15=none
+set FT16=none
+set SOF1=none
+set SOF2=none
+set SFT12=
+set NPTP=$probname.nptp
+set OPTP=none
+   if ( ! -e  $FT05 ) then
+   set SFT05='(#### does not exist ####)'
    else 
-   set sft05=
+   set SFT05=
    if ( -e nogood1 ) then
    rm nogood1
    endif
@@ -47,18 +47,18 @@ set optp=none
    if ( -e nogood3 ) then
    rm nogood3
    endif
-   $naschk < $ft05
+   $naschk < $FT05
 	if ( -e nogood1 ) then 
-	set ft04=$probname.dic
+	set FT04=$probname.dic
         rm nogood1
 	endif
 	if ( -e nogood2 ) then
-	set plt2=$probname.plt
+	set PLT2=$probname.PLT
         rm nogood2
 	endif
 	if ( -e nogood3) then
-	set ft04=$probname.dic
-	set plt2=$probname.plt
+	set FT04=$probname.dic
+	set PLT2=$probname.PLT
         rm nogood3
 	endif
    endif
@@ -68,81 +68,81 @@ clear
 echo '                               NASTRAN'
 echo ' '
 set snasexec=
-set sft01=
-set sft04=
-set sft03=
-set sft06=
-set sft08=
-set sft11=
-set sft15=
-set sft16=
-set splt2 =
-set snptp=
-set soptp=
+set SFT01=
+set SFT04=
+set SFT03=
+set SFT06=
+set SFT08=
+set SFT11=
+set SFT15=
+set SFT16=
+set SPLT2 =
+set SNPTP=
+set SOPTP=
 set sdir=
 set sscript=
-set ssof1=
-set ssof2=
+set SSOF1=
+set SSOF2=
 set nogo=1
-   if ( $nptp != 'none' ) then 
-      if ( -e $nptp ) then 
-      set snptp=' (#### will be replaced ####)'
+   if ( $NPTP != 'none' ) then 
+      if ( -e $NPTP ) then 
+      set SNPTP=' (#### will be replaced ####)'
       endif
-      if ( -e "$ft04" ) then
-      set sft04=' (#### will be replaced ####)'
+      if ( -e "$FT04" ) then
+      set SFT04=' (#### will be replaced ####)'
       endif
    endif 
-   if ( $sof1 != 'none' ) then
-      if( -e $sof1 ) then
-      set ssof1=
-      else set ssof1='(#### does not exist ####)'
+   if ( $SOF1 != 'none' ) then
+      if( -e $SOF1 ) then
+      set SSOF1=
+      else set SSOF1='(#### does not exist ####)'
       endif
    endif
-   if ( $sof2 != 'none' ) then
-      if( -e $sof2 ) then
-      set ssof2=
-      else set ssof2='(#### does not exist ####)'
+   if ( $SOF2 != 'none' ) then
+      if( -e $SOF2 ) then
+      set SSOF2=
+      else set SSOF2='(#### does not exist ####)'
       endif
    endif
-   if ( -e $plt2 ) then
-   set splt2='(#### will be replaced ####)'
-   else set splt2=
+   if ( -e $PLT2 ) then
+   set SPLT2='(#### will be replaced ####)'
+   else set SPLT2=
    endif
    if ( -d $nasscr ) then
    set sdir=' (#### will be recreated ####)'
    endif
-   if ( -e  $ft06 ) then
-   set sft06=' (#### will be replaced ####)'
+   if ( -e  $FT06 ) then
+   set SFT06=' (#### will be replaced ####)'
    endif
-   if ( -e $ft03 ) then 
-   set sft03=' (#### will be replaced ####)'
+   if ( -e $FT03 ) then 
+   set SFT03=' (#### will be replaced ####)'
    endif
-   if ( -e $ft01 ) then 
-   set sft01=' (#### will be replaced ####)'
+   if ( -e $FT01 ) then 
+   set SFT01=' (#### will be replaced ####)'
    endif
-   if ( -e "$ft11" ) then 
-   set sft11=' (#### will be replaced ####)'
+   if ( -e "$FT11" ) then 
+   set SFT11=' (#### will be replaced ####)'
    else
-   set sft11=
+   set SFT11=
    endif
    if ( -e  $script ) then 
    set sscript=' (#### will be replaced ####)'
    endif
-echo '  (i)  Input file       ===> '$ft05   $sft05      
-echo '  (o)  Output file      ===> '$ft06   $sft06
-echo '  (l)  Logfile          ===> '$ft03   $sft03
+echo '  (i)  Input file       ===> '$FT05   $SFT05      
+echo '  (o)  Output file      ===> '$FT06   $SFT06
+echo '  (l)  Logfile          ===> '$FT03   $SFT03
 echo '  (s)  Script file      ===> '$script $sscript
-echo '  (pu) Punch file       ===> '$ft01   $sft01
-echo '  (pl) Plot file        ===> '$plt2   $splt2
-echo '  (c)  Checkpoint NPTP  ===> '$nptp   $snptp
-echo '  (d)  Checkpoint dict. ===> '$ft04   $sft04
-echo '  (r)  Restart OPTP     ===> '$optp   $soptp
-echo '  (ou) FTN11 file       ===> '$ft11   $sft11
-echo '  (in) FTN12 file       ===> '$ft12   $sft12
-echo '  (s1) SOF1 file        ===> '$sof1   $ssof1
-echo '  (s2) SOF2 file        ===> '$sof2   $ssof2
-echo '  (i1) FTN15 file       ===> '$ft15   $sft15
-echo '  (i2) FTN16 file       ===> '$ft16   $sft16
+echo '  (pu) Punch file       ===> '$FT01   $SFT01
+echo '  (pl) Plot file        ===> '$PLT2   $SPLT2
+echo '  (c)  Checkpoint NPTP  ===> '$NPTP   $SNPTP
+echo '  (d)  Checkpoint dict. ===> '$FT04   $SFT04
+echo '  (r)  Restart OPTP     ===> '$OPTP   $SOPTP
+echo '  (ou) FTN11 file       ===> '$FT11   $SFT11
+echo '  (in) FTN12 file       ===> '$FT12   $SFT12
+echo '  (s1) SOF1 file        ===> '$SOF1   $SSOF1
+echo '  (s2) SOF2 file        ===> '$SOF2   $SSOF2
+echo '  (i1) FTN15 file       ===> '$FT15   $SFT15
+echo '  (i2) FTN16 file       ===> '$FT16   $SFT16
 echo ' '
 echo '  (oc) Memory for Open Core    ===> '$ocmem
 echo '  (im) In-Memory DB Allocation ===> '$dbmem
@@ -180,9 +180,9 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give input file ===> '
-	   set ft05 = $<
-	      if ( ! -e $ft05 ) then
-	      echo $ft05 'does not exist'
+	   set FT05 = $<
+	      if ( ! -e $FT05 ) then
+	      echo $FT05 'does not exist'
 	      else set ok = i0
                 if ( -e nogood1 ) then
                 rm nogood1
@@ -193,22 +193,22 @@ set  opt = $<
                 if ( -e nogood3 ) then
                 rm nogood3
                 endif
-	      $naschk < $ft05
-	      set sft05=
-              set nptp=$probname.nptp
-              set ft04=none
-              set plt2=none
+	      $naschk < $FT05
+	      set SFT05=
+              set NPTP=$probname.nptp
+              set FT04=none
+              set PLT2=none
 	         if ( -e nogood1 ) then
-		 set ft04=$probname.dic
+		 set FT04=$probname.dic
                  rm nogood1
 		 endif
 		 if ( -e nogood2 ) then 
-		 set plt2=$probname.plt
+		 set PLT2=$probname.PLT
                  rm nogood2
 		 endif
 		 if ( -e nogood3 ) then 
-		 set ft04=$probname.dic
-		 set plt2=$probname.plt
+		 set FT04=$probname.dic
+		 set PLT2=$probname.PLT
                  rm nogood3
 		 endif
 	      endif
@@ -218,10 +218,10 @@ set  opt = $<
        case 'g':
 	 set nogo=0
 	 clear
-	    if ( ! -e $ft05 ) then 
+	    if ( ! -e $FT05 ) then 
 	    echo '                ERROR'
 	    echo ' '
-	    echo $ft05 'does not exist--cannot create script'
+	    echo $FT05 'does not exist--cannot create script'
 	    set  nogo=i1
 	    set  anything =$<
 	    endif
@@ -246,9 +246,9 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give restart OPTP file ===> '
-	   set  optp = $<
-	      if ( ! -e $optp ) then 
-	      echo $optp '(#### does not exist ####)'
+	   set  OPTP = $<
+	      if ( ! -e $OPTP ) then 
+	      echo $OPTP '(#### does not exist ####)'
 	      else set ok=i0
 	      endif
 	   end
@@ -257,20 +257,20 @@ set  opt = $<
      case 'S1':
 	echo ' '
         echo -n 'Please give SOF1 file ===> ' 
-	set  sof1 = $<
-	   if ( ! -e $sof1 ) then 
-	   set  ssof1='(#### does not exist ####)'
-	   else set ssof1=
+	set  SOF1 = $<
+	   if ( ! -e $SOF1 ) then 
+	   set  SSOF1='(#### does not exist ####)'
+	   else set SSOF1=
 	   endif
 	 breaksw
      case 's2':
      case 'S2':
 	echo ' '
         echo -n 'Please give SOF2 file ===> ' 
-	set  sof2 = $<
-	   if ( ! -e $sof2 ) then 
-	   set ssof2='(#### does not exist ####)'
-	   else set ssof2=
+	set  SOF2 = $<
+	   if ( ! -e $SOF2 ) then 
+	   set SSOF2='(#### does not exist ####)'
+	   else set SSOF2=
 	   endif
 	 breaksw
      case 'RD':
@@ -281,11 +281,11 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give restart dict ===> '
-	   set ft08 = $<
-	      if ( ! -e $ft08 ) then 
-	      echo $ft08='(#### does not exist ####)'
+	   set FT08 = $<
+	      if ( ! -e $FT08 ) then 
+	      echo $FT08='(#### does not exist ####)'
 	      else set ok=i0
-	      set sft08=
+	      set SFT08=
 	      endif
 	   end
 	 breaksw
@@ -297,12 +297,12 @@ set  opt = $<
 	set ok=i1
 	while ($ok != i0 )
 	   echo -n 'Please give in12 file ===> '
-	   set ft12 = $<
-	      if ( ! -e $ft12  ) then 
-              set sft12='(#### does not exist ####)'
+	   set FT12 = $<
+	      if ( ! -e $FT12  ) then 
+              set SFT12='(#### does not exist ####)'
               set ok=i0
               else
-	      set sft12=
+	      set SFT12=
               set ok=i0
 	      endif
 	   end
@@ -315,12 +315,12 @@ set  opt = $<
 	set ok=i1
 	while ($ok != i0 )
 	   echo -n 'Please give out11 file ===> '
-	   set ft11 = $<
-	      if ( -e  $ft11 ) then 
-	      set sft11=
+	   set FT11 = $<
+	      if ( -e  $FT11 ) then 
+	      set SFT11=
 	      set ok=i0
 	      else set ok=i0
-	      set sft11='**** will be replaced ****'
+	      set SFT11='**** will be replaced ****'
 	      endif
 	   end
 	 breaksw
@@ -330,12 +330,12 @@ set  opt = $<
 	set ok=i1
 	while ($ok != i0 )
 	   echo -n 'Please give FT15 file ===> '
-	   set ft15 = $<
-	      if ( -e  $ft15 ) then 
-	      set sft15=
+	   set FT15 = $<
+	      if ( -e  $FT15 ) then 
+	      set SFT15=
 	      set ok=i0
 	      else set ok=i0
-	      set sft15='**** will be replaced ****'
+	      set SFT15='**** will be replaced ****'
 	      endif
 	   end
 	 breaksw
@@ -345,12 +345,12 @@ set  opt = $<
 	set ok=i1
 	while ($ok != i0 )
 	   echo -n 'Please give FT16 file ===> '
-	   set ft16 = $<
-	      if ( -e  $ft16 ) then 
-	      set sft16=
+	   set FT16 = $<
+	      if ( -e  $FT16 ) then 
+	      set SFT16=
 	      set ok=i0
 	      else set ok=i0
-	      set sft16='**** will be replaced ****'
+	      set SFT16='**** will be replaced ****'
 	      endif
 	   end
 	 breaksw
@@ -360,12 +360,12 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give output file ===> '
-	   set  ft06 = $<
-	      if ( -e $ft06 ) then
-	      echo -n $ft06 'exist, do you want to keep it? (y or n) '
+	   set  FT06 = $<
+	      if ( -e $FT06 ) then
+	      echo -n $FT06 'exist, do you want to keep it? (y or n) '
 	      set  ans = $<
 		 if (  $ans == 'n' ) then
-		 rm $ft06
+		 rm $FT06
 		 set ok=i0
 		 endif
 	      else set ok=i0
@@ -378,12 +378,12 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give log file ===> '
-	   set  ft03 = $<
-	      if ( -e  $ft03 ) then
-	      echo -n $ft03 'exist, do you want to keep it? (y or n) '
+	   set  FT03 = $<
+	      if ( -e  $FT03 ) then
+	      echo -n $FT03 'exist, do you want to keep it? (y or n) '
 	      set ans = $<
 		 if ( $ans == 'n' ) then 
-		 rm $ft03
+		 rm $FT03
 		 set ok=i0
 		 endif
 	      else set ok=i0
@@ -396,12 +396,12 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give checkpoint dict. ===> '
-	   set ft04 = $<
-	      if ( -e  $ft04 ) then 
-	      echo -n $ft04 'exist, do you want to keep it? (y or n) '
+	   set FT04 = $<
+	      if ( -e  $FT04 ) then 
+	      echo -n $FT04 'exist, do you want to keep it? (y or n) '
 	      set ans = $<
 		 if ( $ans == 'n' ) then
-		 rm $ft04
+		 rm $FT04
 		 set ok = i0
 		 endif
 	      else set ok = i0
@@ -416,12 +416,12 @@ set  opt = $<
 	set ok=i1
 	while ( $ok != i0 )
 	   echo -n 'Please give punch file ===> '
-	   set  ft01 =  $<
-	      if ( -e  $ft01 ) then
-	      echo -n $ft01 'exist, do you want to keep it? (y or n) '
+	   set  FT01 =  $<
+	      if ( -e  $FT01 ) then
+	      echo -n $FT01 'exist, do you want to keep it? (y or n) '
 	      set  ans = $<
 		 if ( $ans == 'n' ) then
-		 rm $ft01
+		 rm $FT01
 		 set ok = i0
 		 endif
 	      else set ok = i0
@@ -452,12 +452,12 @@ set  opt = $<
 	set ok = i1
 	while (  $ok != i0 )
 	   echo -n 'Please give checkpoint NPTP file ===> '
-	   set nptp = $<
-	      if ( -e  $nptp ) then 
-	      echo -n $nptp 'exist, do you want to keep it? (y or n) '
+	   set NPTP = $<
+	      if ( -e  $NPTP ) then 
+	      echo -n $NPTP 'exist, do you want to keep it? (y or n) '
 	      set ans = $<
 		 if ( $ans == 'n' ) then 
-		 rm $nptp
+		 rm $NPTP
 		 set ok = i0
 		 endif
 	      else set ok = i0
@@ -478,12 +478,12 @@ set  opt = $<
 	set ok = i1
 	while ( $ok != i0 )
 	   echo -n 'Please give plot file ===> '
-	   set plt2 = $<
-	      if ( -e '$plt2' ) then 
-	      echo -n $plt2 'exist, do you want to keep it? (y or n) '
+	   set PLT2 = $<
+	      if ( -e '$PLT2' ) then 
+	      echo -n $PLT2 'exist, do you want to keep it? (y or n) '
 	      set  ans =$<
 		 if ( $ans == 'n' ) then 
-		 then rm $plt2
+		 then rm $PLT2
 		 set ok = i0
 		 endif
 	      else set ok = i0
@@ -501,35 +501,37 @@ echo 'if ( -d ' $nasscr' ) then' >> $script
 echo 'rm -r '$nasscr >> $script
 echo 'endif' >> $script
 echo 'mkdir '$nasscr >> $script
-echo 'if ( -e '$nptp ' ) then'>> $script
-echo 'rm '$nptp >> $script
+echo 'if ( -e '$NPTP ' ) then'>> $script
+echo 'rm '$NPTP >> $script
 echo 'endif' >> $script
-echo 'if ( -e '$ft03 ' ) then'>> $script
-echo 'rm '$ft03 >> $script
+echo 'if ( -e '$FT03 ' ) then'>> $script
+echo 'rm '$FT03 >> $script
 echo 'endif' >> $script
-echo 'if ( -e '$ft01 ' ) then'>> $script
-echo 'rm '$ft01 >> $script
+echo 'if ( -e '$FT01 ' ) then'>> $script
+echo 'rm '$FT01 >> $script
 echo 'endif' >> $script
-echo 'if ( -e '$ft04 ' ) then'>> $script
-echo 'rm '$ft04 >> $script
+echo 'if ( -e '$FT04 ' ) then'>> $script
+echo 'rm '$FT04 >> $script
 echo 'endif' >> $script
-echo 'if ( -e '$ft06 ' ) then'>> $script
-echo 'rm '$ft06 >> $script
+echo 'if ( -e '$FT06 ' ) then'>> $script
+echo 'rm '$FT06 >> $script
 echo 'endif' >> $script
-echo 'if ( -e '$plt2 ' ) then'>> $script
-echo 'rm '$plt2 >> $script
+echo 'if ( -e '$PLT2 ' ) then'>> $script
+echo 'rm '$PLT2 >> $script
 echo 'endif' >> $script
 echo 'echo ==== NASTRAN is beginning execution of "'$probname'" ====' >> $script
-echo ' env  NPTPNM='$nptp '\' >> $script 
-echo '  PLTNM='$plt2 ' DICTNM='$ft04 ' PUNCHNM='$ft01 '\' >> $script 
-echo '  FTN11='$ft11 ' FTN12='$ft12 ' DIRCTY='$nasscr '\' >> $script 
-echo '  LOGNM='$ft03 ' OPTPNM='$optp ' RFDIR='$rfdir '\' >> $script 
-echo '  FTN13=none SOF1='$sof1 ' SOF2='$sof2  '\' >> $script 
+echo ' env  NPTPNM='$NPTP '\' >> $script
+echo '  PLTNM='$PLT2 ' DICTNM='$FT04 ' PUNCHNM='$FT01 '\' >> $script 
+echo '  FTN11='$FT11 ' FTN12='$FT12 ' DIRCTY='$nasscr '\' >> $script
+echo '  LOGNM='$FT03 ' OPTPNM='$OPTP ' RFDIR='$rfdir '\' >> $script 
+echo '  FT06='$FT06 ' FT05='$FT05 ' PROJ='$probname '\' >> $script
+echo '  FTN13=none SOF1='$SOF1 ' SOF2='$SOF2  '\' >> $script 
 echo '  FTN14=none FTN17=none FTN18=none FTN19=none FTN20=none \' >> $script
-echo '  FTN15='$ft15 ' FTN16='$ft16  '\' >> $script 
+echo '  FTN15='$FT15 ' FTN16='$FT16  '\' >> $script 
 echo '  FTN21=none FTN22=none FTN23=none \' >> $script 
 echo '  DBMEM='$dbmem ' OCMEM='$ocmem '\' >> $script
-echo    $nasexec' < '$ft05' >'$ft06 >> $script
+echo    $nasexec  >> $script
+#echo    $nasexec' < '$FT05' >'$FT06 >> $script
 echo 'rm -r '$nasscr >> $script
 echo 'if ( -e none  ) then'>> $script
 echo 'rm none' >> $script
