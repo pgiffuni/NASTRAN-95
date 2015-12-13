@@ -524,7 +524,7 @@ echo ' env  NPTPNM='$NPTP '\' >> $script
 echo '  PLTNM='$PLT2 ' DICTNM='$FT04 ' PUNCHNM='$FT01 '\' >> $script 
 echo '  FTN11='$FT11 ' FTN12='$FT12 ' DIRCTY='$nasscr '\' >> $script
 echo '  LOGNM='$FT03 ' OPTPNM='$OPTP ' RFDIR='$rfdir '\' >> $script 
-echo '  FT06='$FT06 ' FT05='$FT05 ' PROJ='$probname '\' >> $script
+echo '  FT06='$FT06 ' FT05='$FT05 ' PROJ=''.''' '\' >> $script
 echo '  FTN13=none SOF1='$SOF1 ' SOF2='$SOF2  '\' >> $script 
 echo '  FTN14=none FTN17=none FTN18=none FTN19=none FTN20=none \' >> $script
 echo '  FTN15='$FT15 ' FTN16='$FT16  '\' >> $script 
