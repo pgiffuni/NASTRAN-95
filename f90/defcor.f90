@@ -1,0 +1,3 @@
+SUBROUTINE defcor
+     RETURN
+END SUBROUTINE defcor

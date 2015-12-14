@@ -1,0 +1,382 @@
+SUBROUTINE emgout (rbuf,dbuf,lbuf,eoe,dict,FILE,inprec)
+     
+!     THIS ROUTINE OF THE -EMG- MODULE WRITES THE DATA IN -BUF- TO
+!     -FILE-.
+ 
+!     BEFORE CALLING THIS ROUTINE THE CALLING ROUTINE SETS UP THE
+!     FOLLOWING ARGUMENTS.....
+ 
+!     RBUF,DBUF  =  BOTH POINT TO THE SAME MATRIX ARRAY CONTAINING THE
+!                   MATRIX DATA TO BE OUTPUT.
+ 
+!     LBUF   = NUMBER OF DATA VALUES TO BE OUTPUT ON CURRENT CALL NOT
+!              CONSIDERING THE PRECISION OF THE DATA VALUES.
+ 
+!     EOE    = SEE BELOW.
+ 
+!     DICT   = ARRAY OF SIZE NLOCS (SEE BELOW) + 5.  WORDS 1 THROUGH 5
+!              OF THIS ARRAY ARE SET BY THE CALLING ROUITNE.(SEE BELOW)
+ 
+!     FILE   = SET TO 1 IF STIFFNESS MATRIX
+!              SET TO 2 IF MASS MATRIX
+!              SET TO 3 IF DAMPING MATRIX
+ 
+!     INPREC = PRECISION OF THE DATA  RBUF AND DBUF POINT TO.
+!              SET = 1 IF SINGLE AND SET TO 2 IF DOUBLE.
+ 
+!     --- IMPORTANT--- UNDER NO CIRCUMSTANCES SHOULD THE CALLING PROGRAM
+!     MODIFY DATA IN COMMON BLOCK /EMGDIC/.
+ 
+!     NOTE.  ON EACH CALL TO THIS ROUTINE THE CALLING ROUTINE MUST SEND
+!     AN AMOUNT OF DATA FOR ONE OR MORE GRID POINT-PARTITIONS OF THE
+!     TOTAL ELEMENT MATRIX.  THIS IS CONSIDERING DEGREES OF FREEDOM AND
+!     ANY CONDENSATION OF THE DATA IF A DIAGONAL MATRIX IS BEING SENT.)
+ 
+!     IE. FOR A MATRIX WHERE 6 DEGREES OF FREEDOM ARE LISTED IN THE CODE
+!     WORD OF THE DICTIONARY THEN THE FOLLWING WOULD BE CONSIDERED.
+ 
+!     IF THE MATRIX WAS DIAGONAL THE VALUE OF LBUF WOULD BE SIMPLY
+!     (0 TO NLOCS) TIMES 6
+ 
+!     IF THE MATRIX WAS SQUARE THEN LBUF WOULD BE
+!     (0 TO NLOCS) TIMES 6 TIMES NLOCS TIMES 6.  NOTE THE PRECISION DOES
+!     NOT ENTER INTO THE CALCULATION OF LBUF BY THE CALLING ROUTINE)
+ 
+!     IF -EOE- IS GREATER THAN 0, INDICATING END-OF-ELEMENT-DATA, THE
+!     DICTIONARY WILL BE WRITTEN TO THE APPROPRIATE COMPANION FILE
+!     OF -FILE-.  IF CONGRUENT LOGIC IS ACTIVE THE DICTIONARY WILL
+!     ALSO BE PLACED IN CORE IF POSSIBLE.
+ 
+!     CHECKS TO INSURE THAT THE CALLING ROUTINE SENT A REASONABLY
+!     CORRECT AMOUNT OF MATRIX DATA ARE MADE BY THIS ROUTINE.
+ 
+!     DICTIONARY FORMAT 1)ELEMENT-COUNTER-ID-POSITON-IN-EST
+!     ================= 2)F = 1 IF SQUARE, = 2 IF DIAGONAL FORMAT DATA.
+!     DICTIONARY        3)N = NUMBER OF CONNECTED GRID POINTS * FREEDOMS
+!     CAN EXPAND        4)COMPONENT-CODE-WORD
+!     THROUGH THE       5)DAMPING CONSTANT
+!     MIDDLE.                    .
+!           LDICT-NLOC+1)GINO-LOC. (FIRST PARTITION)
+!                                .
+!                                .
+!                                . (NLOCS GINO-LOC VALUES)
+!                                .
+!                LDICT-1)GINO-LOC. (NEXT TO LAST PARTITION)
+!                  LDICT)GINO-LOC. (LAST PARTITION OF THIS ELEMENT IF
+!                                  ALL -NLOCS- GRID POINTS CONNECTED.)
+ 
+!     THIS ROUTINE WILL WRITE PARTITIONS OF THE MATRIX WHERE THE NUMBER
+!     OF COLUMNS IN EACH PARTITION WRITTEN EQUALS ACTIVE FREEDOMS
+!     WHICH = NUMBER OF BITS ON IN THE CODE WORD ( DICT(4) ).
+ 
+!     THE VALUES OF DICT(1), DICT(2), DICT(3), DICT(4), AND DICT(5) MUST
+!     REMAIN CONSTANT BETWEEN CALLS TO THIS ROUTINE WITH RESPECT TO
+!     A PARTICULAR ELEMENT ID AND FILE TYPE.
+ 
+!     ONE OR MORE PARTITIONS WILL BE WRITTEN ON EACH CALL.
+ 
+ 
+ REAL, INTENT(IN)                         :: rbuf(lbuf)
+ DOUBLE PRECISION, INTENT(IN)             :: dbuf(lbuf)
+ INTEGER, INTENT(IN)                      :: lbuf
+ INTEGER, INTENT(IN OUT)                  :: eoe
+ INTEGER, INTENT(IN OUT)                  :: dict(5)
+ INTEGER, INTENT(IN OUT)                  :: FILE
+ INTEGER, INTENT(IN OUT)                  :: inprec
+ LOGICAL :: anycon, error, heat
+ INTEGER :: locs(3), outpt, z,  &
+     dictn, nlocs, part(3), eltype, elid, eor, precis,  &
+     estid, flags, qfile, fredms(3)
+ 
+ DOUBLE PRECISION :: da
+ CHARACTER (LEN=25) :: sfm
+ CHARACTER (LEN=29) :: uim
+ CHARACTER (LEN=25) :: uwm
+ CHARACTER (LEN=23) :: ufm
+ COMMON /xmssg /  ufm, uwm, uim, sfm
+ COMMON /BLANK /  xxxxx(3), nok4gg
+ COMMON /system/  ksystm(65)
+ COMMON /emgdic/  eltype, ldict, nlocs, elid, estid
+ COMMON /emgfil/  misc(5), matrix(3), dictn(3)
+ COMMON /emgprm/  icore, jcore, ncore, icstm, ncstm, imat, nmat,  &
+     ihmat, nhmat, idit, ndit, icong, ncong, lcong,  &
+     anycon, flags(3), precis, error, heat, icmbar, lcstm, lmat, lhmat, kflags(3)
+ COMMON /zzzzzz/  z(1)
+ COMMON /iemgot/  nval(3)
+ EQUIVALENCE      (ksystm(2), outpt), (fff,ifff)
+ DATA    eor   ,  noeor, maxfil / 1, 0, 3 /
+ 
+ IF (error) RETURN
+ IF (FILE >= 1 .AND. FILE <= maxfil) GO TO 30
+ 
+!     ILLEGAL FILE VALUE
+ 
+ WRITE  (outpt,10) sfm,FILE
+ 10 FORMAT (a25,' 3108, EMGOUT RECEIVES ILLEGAL FILE TYPE =',i10)
+ 20 error = .true.
+ RETURN
+ 
+!     ON FIRST CALL TO THIS ROUTINE FOR THIS ELEMENT THE SIZE OF COLUMN
+!     AND SIZE OF PARTITION BEING WRITTEN IS SET.
+!     IF NVAL(FILE) .GT. 0 THEN THIS IS NOT THE FIRST CALL.
+ 
+ 30 IF (kflags(FILE) == 0) RETURN
+ IF (nval(FILE) > 0) THEN
+   GO TO    80
+ END IF
+ 40 nval(FILE) = dict(3)
+ 
+!     DETERMINE NUMBER OF ACTIVE FREEDOMS BY COUNTING BITS ON IN CODE
+!     WORD.  THIS CODE ADDED AS AN TEMPORARY NECESSITY.
+ 
+ IF (dict(4) == 63) GO TO 46
+ i = dict(4)
+ itemp = 0
+ DO  j = 1,31
+   IF (MOD(i,2) > 0) THEN
+     GO TO    43
+   ELSE
+     GO TO    44
+   END IF
+   43 itemp = itemp + 1
+   44 i = i / 2
+   IF (i > 0) THEN
+     GO TO    45
+   ELSE
+     GO TO    47
+   END IF
+ END DO
+ GO TO 47
+ 
+ 46 itemp = 6
+ 47 fredms(FILE) = itemp
+ 
+!     CHECK NUMBER OF ACTIVE GRID POINTS FOR THIS ELEMENT TO BE
+!     LESS THAN OR EQUAL TO NLOCS.
+ 
+ igrids = dict(3)/fredms(FILE)
+ IF (igrids <= nlocs) GO TO 48
+ WRITE  (outpt,42) sfm,igrids,elid
+ 42 FORMAT (a25,' 3122,  EMGOUT HAS DETERMINED THAT THERE ARE',i10,  &
+     ' CONNECTING GRID POINTS FOR ELEMENT ID =',i10, /5X,  &
+     'THIS IS GREATER THAN THE MAXIMUM AS PER /GPTA1/ TABLE ',  &
+     'FOR THE TYPE OF THIS ELEMENT. PROBABLE ERROR IN ELEMENT',  &
+     ' ROUTINE PROGRAM')
+ GO TO 20
+ 
+ 48 locs(FILE) = ldict - nlocs
+ 
+!     ZERO ALL GINO-LOC SLOTS IN DICTIONARY.
+ 
+ i = ldict - nlocs + 1
+ DO  j = i,ldict
+   dict(j) = 0
+ END DO
+ IF (dict(2) == 1) GO TO 60
+ IF (dict(2) == 2) GO TO 70
+ WRITE  (outpt,50) sfm,dict(2),elid
+ 50 FORMAT (a25,' 3109, EMGOUT HAS BEEN SENT AN INVALID DICTIONARY ',  &
+     'WORD-2 =',i10,' FROM ELEMENT ID =',i10)
+ GO TO 20
+ 
+!     FULL SQUARE MATRIX WILL BE OUTPUT. (VALUES PER PARTITION TO WRITE)
+ 
+ 60 part(FILE) = dict(3)*fredms(FILE)
+ GO TO 80
+ 
+!     DIAGONAL MATRIX.  (VALUES PER PARTITION TO WRITE)
+ 
+ 70 part(FILE) = fredms(FILE)
+ 
+!     WRITE MATRIX DATA TO FILE DESIRED.
+ 
+ 80 nwords = part(FILE)
+ IF (MOD(lbuf,nwords) == 0) THEN
+   GO TO   110
+ END IF
+ 90 WRITE  (outpt,100) sfm,elid
+ 100 FORMAT (a25,' 3110, EMGOUT HAS BEEN CALLED TO WRITE AN INCORRECT',  &
+     ' NUMBER OF WORDS FOR ELEMENT ID =',i10)
+ GO TO 20
+ 
+ 110 iloc = locs(FILE)
+ IF (lbuf <= 0) GO TO 130
+ qfile = matrix(FILE)
+ IF (inprec /= precis) GO TO 121
+ 
+!     INPUT AND OUTPUT PRECISIONS ARE THE SAME
+ 
+ n2word = precis*nwords
+ k = 1
+ DO  i = 1,lbuf,nwords
+   iloc = iloc + 1
+   CALL WRITE (qfile,rbuf(k),n2word,eor)
+   CALL savpos (qfile,dict(iloc))
+   k = k + n2word
+ END DO
+ GO TO 129
+ 
+!     INPUT PRECISION IS DIFFERENT FROM OUTPUT PRECISION
+ 
+ 121 k = 0
+ DO  i = 1,lbuf,nwords
+   k = k + nwords
+   IF (precis == 2) GO TO 123
+   
+!     DOUBLE PRECISION INPUT AND SINGLE PRECISION OUTPUT
+   
+   DO  j = i,k
+     ra = dbuf(j)
+     CALL WRITE (qfile,ra,1,noeor)
+   END DO
+   GO TO 125
+   
+!     SINGLE PRECISION INPUT AND DOUBLE PRECISION OUTPUT
+   
+   123 DO  j = i,k
+     da = rbuf(j)
+     CALL WRITE (qfile,da,2,noeor)
+   END DO
+   125 iloc = iloc + 1
+   CALL WRITE (qfile,0,0,eor)
+   CALL savpos (qfile,dict(iloc))
+ END DO
+ 
+ 129 locs(FILE) = iloc
+ 
+!     IF -EOE- .GT. 0 (IMPLYING END-OF-ELEMENT-DATA) WRITE
+!     OUT THE COMPLETED DICTIONARY.
+ 
+ 130 IF (eoe > 0.0) THEN
+   GO TO   150
+ END IF
+ 140 RETURN
+ 
+!     OK -EOE- IS ON.  FIRST WRITE DICTIONARY OUT.
+!     INSURE ALL -LOCS- SET CONSIDERING THE NUMBER OF ACTIVE GRID POINTS
+!     FOR THIS PARTICULAR ELEMENT.
+ 
+ 150 IF (locs(FILE) == ldict-nlocs+dict(3)/fredms(FILE)) GO TO 170
+ WRITE  (outpt,160) sfm,elid,FILE
+ 160 FORMAT (a25,' 3111, INVALID NUMBER OF PARTITIONS WERE SENT EMGOUT'  &
+     ,      ' FOR ELEMENT ID =',i10, /5X,'WITH RESPECT TO DATA BLOCK ',  &
+     'TYPE =',i3,1H.)
+ GO TO 20
+ 
+ 170 IF (flags(FILE) >= 0) GO TO 172
+ flags(FILE) = IABS(flags(FILE))
+ CALL WRITE (dictn(FILE),eltype,3,noeor)
+ 172 flags(FILE) = flags(FILE) + 1
+ CALL WRITE (dictn(FILE),dict,ldict,noeor)
+ nval(FILE)  = 0
+ 
+!     EXISTENCE OF NON-ZERO DAMPING CONSTANT TURNS ON NOK4GG FLAG.
+ 
+ IF (nok4gg > 0) THEN
+   GO TO   179
+ END IF
+ 177 ifff = dict(5)
+ IF (fff == 0.0) THEN
+   GO TO   179
+ END IF
+ 178 nok4gg = 1
+ 
+!     CHECK FOR THIS ELEMENT BEING IN CONGRUENT LIST.
+ 
+!     EMGOUT WILL NEVER BE CALLED FOR AN ELEMENT WHICH IS IN THE
+!     CONGRUENT LIST AND ALREADY HAS A DICTIONARY.
+ 
+ 179 IF (.NOT. anycon) GO TO 140
+ CALL bisloc (*140,elid,z(icong),2,lcong/2,j)
+ 
+!     OK ELEMENT IS CONGRUENT, FIND PRIMARY ID.
+ 
+ iadd   = icong + j
+ 180 iprime = z(iadd)
+ 
+!     IPRIME .GT. 0 POINTS TO PRIMARY ID
+!     IPRIME .EQ. 0 IS PRIMARY ID TABLE POINTER AND NO TABLE EXISTS
+!     IPRIME .LT. 0 IS TABLE POINTER NEGATED.
+ 
+ IF (iprime < 0) THEN
+   GO TO   260
+ ELSE IF (iprime == 0) THEN
+   GO TO   210
+ END IF
+ 
+!     IPRIME POINTS TO PRIMARY ID
+ 
+ 200 iadd = iprime + 1
+ GO TO 180
+ 
+!     IPRIME IS TABLE POINTER AND NONE EXISTS YET.
+!     THUS ADD ONE TO CORE, FROM THE BOTTOM OF CORE.
+ 
+ 210 IF (ncore-maxfil > jcore) GO TO 240
+ 
+!     NOT ENOUGH CORE SO CONGRUENCY IS IGNORED.
+ 
+ icrq = jcore - ncore + maxfil
+ 220 CALL page2 (4)
+ WRITE  (outpt,230) uim,elid
+ 230 FORMAT (a29,' 3112, ELEMENTS CONGRUENT TO ELEMENT ID =',i10, /5X,  &
+     'WILL BE RE-COMPUTED AS THERE IS INSUFFICIENT CORE AT ',  &
+     'THIS MOMENT TO HOLD DICTIONARY DATA.')
+ WRITE  (outpt,232) icrq
+ 232 FORMAT (5X,24HADDITIONAL core needed =,i8,7H words.)
+ GO TO 140
+ 
+!     ALLOCATE SMALL TABLE FOR POINTERS TO DICTIONARY FOR EACH FILE TYPE
+!     POSSIBLE.
+ 
+!     NOTE THAT THE ELEMENT-ID (IF SECONDARY) WILL HAVE A POINTER TO THE
+!     PRIMARY-ID.  THE PRIMARY-ID  THEN WILL HAVE A POINTER TO A TABLE
+!     OF SIZE -MAXFIL- POINTING TO -MAXFIL- DICTIONARYS.  (SOME OF WHICH
+!     MAY NOT YET OR EVER BE CREATED).
+!     NO CORE IS USED UNTIL A DICTIONARY IS CREATED.
+ 
+ 240 i2    = ncore
+ ncore = ncore - maxfil
+ i1    = ncore + 1
+ DO  i = i1,i2
+   z(i)  = 0
+ END DO
+ 
+!     STORE ZERO ADDRESS OF THIS TABLE WITH PRIMARY ID.
+ 
+ z(iadd) = -ncore
+ iprime  = -ncore
+ 
+!     IPRIME IS NEGATIVE ZERO POINTER TO FILE-DICTIONARY-TABLE FOR THIS
+!     CONGRUENCY SET.
+ 
+ 260 itab = -iprime
+ 
+!     ALLOCATE DICTIONARY SPACE IN CORE, IF THERE IS CORE,
+!     SET FILE POSITION IN TABLE TO POINT TO THIS DICTIONARY,
+!     AND STORE THE DICTIONARY.
+ 
+ IF (ncore-ldict > jcore) GO TO 270
+ 
+!     INSUFFICIENT CORE THUS IGNORE CONGRUENCY, AND FOR SAFETY
+!     PURGE THIS CONGRUENCY FOR ALL FILES.
+ 
+ icrq = jcore - ncore + ldict
+ z(iadd) = 0
+ GO TO 220
+ 
+!     ALLOCATE AND WRITE DICTIONARY
+ 
+ 270 ncore = ncore - ldict
+ j = ncore
+ DO  i = 1,ldict
+   j = j + 1
+   z(j) = dict(i)
+ END DO
+ 
+!     STORE DICTIONARY ADDRESS IN TABLE(FILE), WHERE TABLE BEGINS
+!     AT Z(ITAB+1).
+ 
+ z(itab+FILE) = ncore + 1
+ GO TO 140
+END SUBROUTINE emgout

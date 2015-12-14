@@ -1,0 +1,7 @@
+SUBROUTINE second (rcpusc)
+     
+!     THIS SUBROUTINE OBTAINS THE CURRENT CPU TIME AS A REAL VALUE
+ 
+ CALL cputim (rcpusc, rcpusc, 1)
+ RETURN
+END SUBROUTINE second
