@@ -96,11 +96,11 @@ SUBROUTINE xrgsst (newsol)
  COMMON /phas31/ ipas31( 2)
  COMMON /phas37/ ipas37( 6)
  COMMON /system/ isysbf,optape,dum(98)
- DATA    BLANK / 1H  /, DELETE/ 1HD /, begin / 1HB /
-DATA    END   / 1HE /, lflag / 5*0 /
-DATA    one   / 1H1 /, five  / 1H5 /, seven / 1H7 /, eight / 1H8 /
-DATA    ind11 / 0   /, ind25 / 0   /, ind28 / 0   /, ind31 / 0   /
-DATA    ind37 / 0   /, insert/ 1HI /
+ DATA    blank / 1H  /, DELETE/ 1HD /, begin / 1HB /
+ DATA    end   / 1HE /, lflag / 5*0 /
+ DATA    one   / 1H1 /, five  / 1H5 /, seven / 1H7 /, eight / 1H8 /
+ DATA    ind11 / 0   /, ind25 / 0   /, ind28 / 0   /, ind31 / 0   /
+ DATA    ind37 / 0   /, insert/ 1HI /
 
 CALL xdcode
 icol  = 9
