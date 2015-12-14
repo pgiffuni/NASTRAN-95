@@ -1,0 +1,98 @@
+SUBROUTINE mesage (no,parm,NAME)
+     
+!     MESAGE IS USED TO QUEUE NON-FATAL MESSAGES DURING THE EXECUTION
+!     OF A MODULE, AND EXITS IF MESSAGE IS FATAL
+ 
+!     REVISED 1/92 BY G.CHAN/UNISYS.
+!     IF MESSAGE IS FATAL AND DIAG 1 IS ON -
+ 
+!     IBM, CDC AND UNIVAC - PRINT THE MESSAGE(S), GIVE A CORE DUMP AND
+!     CALL PEXIT
+ 
+!     VAX OR UNIX (MACHINE TYPE .GE. 5) - IF LAST MESSAGE IS NOT INSUFF.
+!     CORE OR INSUFFICIENT TIME, AND FATAL ERROR IS NOT IN LINK 1, PRINT
+!     ONLY THE MESSAGE NO(S). AND GIVE AN ERROR TRACEBACK. NO CORE DUMP.
+!     TO MAKE SURE THAT THE CURRENT MODULE (WHICH CALLS FATAL MESSAGE)
+!     IS UTILL IN CORE, THE MESSAGE PRINTOUT MODULE CAN NOT BE CALLED,
+!     AND THEREFORE THE TEXT(S) OF THE MESSAGE(S) CAN NOT BE PRINTED.
+ 
+ 
+ INTEGER, INTENT(IN)                      :: no
+ INTEGER, INTENT(IN)                      :: parm
+ INTEGER, INTENT(IN)                      :: NAME(2)
+ 
+ COMMON /system/ ibuf,nout,dum(19),linkno
+ COMMON /machin/ mach
+ COMMON /msgx  / n,m,msg(4,1)
+ DATA    link1 / 4HNS01 /
+ 
+!     N        =  CURRENT NUMBER OF MESSAGES STORED
+!     M        =  MAXIMUM NUMBER POSSIBLE
+!     MSG(4,I) =  STORAGE SPACE FOR THE MESSAGE PARAMETERS
+ 
+ n = n + 1
+ IF (n <= m) GO TO 10
+ n = m
+ IF (no > 0) GO TO 120
+ 
+ 10 msg(1,n) = no
+ msg(2,n) = parm
+ msg(3,n) = NAME(1)
+ msg(4,n) = NAME(2)
+ IF (no > 0) GO TO 120
+ 
+!     MESSAGE IS FATAL, TERMINATE RUN
+ 
+ CALL sswtch (1,j)
+ IF (j    == 0) GO TO 110
+ IF (mach == 5) GO TO 20
+ 
+!     ALL NON-VAX MACHINES
+ 
+ GO TO 110
+ 
+!     VAX, UNIX (MACHINE TYPE 5 AND HIGHER)
+ 
+ 20 IF (linkno == link1) GO TO 110
+ i  = IABS(msg(1,n))
+ IF (i == 8  .OR. i == 119 .OR. i == 45 .OR. i == 50) GO TO 110
+!             INSUFF. CORE             INSUFFICIENT TIME
+ 
+ IF (i /= 30) GO TO 30
+ j  = msg(2,n)
+ 
+!     INSUFFECIENT CORE
+ IF (j == 142 .OR. j == 289 .OR. j == 296 .OR. j == 253 .OR.  &
+     j == 365) GO TO 110
+ 
+!     INSUFFECIENT TIME
+ IF (j == 234 .OR. j == 228) GO TO 110
+ 
+ 30 WRITE (nout,40) n
+ 40 FORMAT ('0*** DUE TO SYSTEM ERROR-TRACEBACK, THE TEXT(S) OF THE ',  &
+     'FOLLOWING',i3,' MSG NO(S). CAN NOT BE PRINTED')
+ DO  k = 1,n
+   i = msg(1,k)
+   IF (IABS(i) == 30) GO TO 50
+   j = 3000 + IABS(i)
+   GO TO 60
+   50 i = msg(2,k)
+   j = 2000 + IABS(i)
+   60 WRITE  (nout,70) i,j
+   70 FORMAT (5X,'ERROR',i4,' (or ',i5,1H))
+   IF (i /= 30 .AND. msg(2,k) > 100 .AND. msg(2,k) < 400)  &
+       WRITE (nout,80) msg(2,k)
+   80 FORMAT (1H+,30X,'GINO UNIT=',i4)
+ END DO
+ WRITE  (nout,100)
+ 100 FORMAT (/5X,'(SEE MESSAGES IN USER MANUAL SECTIONS 6.4 AND 6.5,',  &
+     ' AND IGNORE ANY COMPUTER FATAL MESSAGE HEREAFTER ', 'OR IN THE LOG FILE)')
+ 
+!     FORCE A SYSTEM FATAL ERROR FOR TRACEBACK
+ 
+ CALL errtrc ('MESAGE  ',105)
+ 
+ 110 CALL msgwrt
+ CALL pexit
+ 120 RETURN
+END SUBROUTINE mesage

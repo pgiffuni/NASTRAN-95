@@ -1,0 +1,7 @@
+SUBROUTINE klock (icpusc)
+     
+!     THIS SUBROUTINE OBTAINS THE CURRENT CPU TIME AS AN INTEGER VALUE
+ 
+ CALL cputim (icpusc, icpusc, 0)
+ RETURN
+END SUBROUTINE klock

@@ -1,0 +1,27 @@
+SUBROUTINE emgsoc (icore,ncore,heat)
+     
+!     THIS .MDS VERSION IS USED ONLY IN THE VIRTUAL MACHINES (IBM, VAX,
+!     AND UNIX)
+!     CDC & UNIVAC, NON-VIRTUAL MACHINES, SHOULD USE THE EMGSOC.MIS
+!     VERSION
+ 
+!     ICORE = RELATIVE ADDRESS OF FIRST WORD OF OPEN CORE.
+!     NCORE = RELATIVE ADDRESS OF FINAL WORD OF OPEN CORE.
+ 
+!     IFILE = GINO FILE WHOSE TRAILER BITS INDICATE ACTIVE COMMON GROUPS
+ 
+!     BOUNDARY ALIGNMENT IS ASSURED BY THE FACT THAT ALL COMMON BLOCKS
+!     START AT AN ODD ADDRESS.
+ 
+ 
+ INTEGER, INTENT(OUT)                     :: icore
+ INTEGER, INTENT(OUT)                     :: ncore
+ REAL, INTENT(IN OUT)                     :: heat
+ COMMON /machin/ mach
+ COMMON /zzemgx/ ixxx
+ 
+ ncore = korsz(ixxx)
+ icore = 3
+ IF (mach == 3 .OR. mach == 4) STOP ' EMGSOC'
+ RETURN
+END SUBROUTINE emgsoc
