@@ -13,7 +13,7 @@ set projectdir=%nasthome%\test
 
 set probname=%1
 set dbmem=200000000
-set ocmem=100000000
+set ocmem=160000000
 set ft01=none
 set ft04=%probname%.dic
 set ft05=%probname%.inp
