@@ -16,18 +16,19 @@ SUBROUTINE ascm01 (NAME,iphase,isol,nogo)
  INTEGER, INTENT(IN OUT)                  :: isol
  INTEGER, INTENT(OUT)                     :: nogo
  INTEGER :: comnd(6,3),xtra(3),subnam(2),isave(21),  &
-     rdmap(18,29),rdmap1(18,9),rdmap2(18,9),  &
-     rdmap3(18,9),rdmap4(18,2),oct(3,13),oct1(3,13), ptbs(7,16),ptbs1(7,16)
+            rdmap(18,29),rdmap1(18,9),rdmap2(18,9),  &
+            rdmap3(18,9),rdmap4(18,2),oct(3,13),     &
+            oct1(3,13), ptbs(7,16),ptbs1(7,16)
  COMMON /phas11/ ipas11(8)
  COMMON /phas31/ ipas31(2)
  COMMON /asdbd / irdm,nrdm,ixtra,nxtra,ioct,noct,iptbs,nptbs,  &
-     iph,nph,idat(684)
+                 iph,nph,idat(684)
  EQUIVALENCE     (rdmap1(1,1),rdmap(1, 1)),(oct1(1,1),oct(1,1)),  &
-     (rdmap2(1,1),rdmap(1,10)),(ptbs1(1,1),ptbs(1,1)),  &
-     (rdmap3(1,1),rdmap(1,19)), (rdmap4(1,1),rdmap(1,28))
+                 (rdmap2(1,1),rdmap(1,10)),(ptbs1(1,1),ptbs(1,1)),  &
+                 (rdmap3(1,1),rdmap(1,19)), (rdmap4(1,1),rdmap(1,28))
  DATA comnd    / 4HSUBS    , 29    ,  3    , 13    , 16    ,  8  ,  &
-     4HSUBS    ,  8    ,  1    ,  0    ,  3    ,  0  ,  &
-     4HSUBS    ,  8    ,  1    ,  0    ,  3    ,  2  /
+                 4HSUBS    ,  8    ,  1    ,  0    ,  3    ,  0  ,  &
+                 4HSUBS    ,  8    ,  1    ,  0    ,  3    ,  2  /
  DATA slash    / 1H/       /
  DATA isave    / 3,13,1, 19,8,2, 26,13,3, 26,15,2, 26,17,1, 27,5,1, 28,4,3  /
  DATA rdmap 1  / 4HALTE,4HR   ,4H  (b,4HEGIN,4H) $ ,13*4H    ,  &

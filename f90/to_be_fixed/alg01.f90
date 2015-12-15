@@ -22,8 +22,8 @@ SUBROUTINE alg01 (xdata,ydata,ndata,xin,yout,slope,nxy,ntype,nwot)
  DO  i=2,n
    a(i)=(xdata(i+1)-xdata(i-1))/3.0-(xdata(i)-xdata(i-1))*b(i-1)/(6.0 *a(i-1))
    b(i)=(xdata(i+1)-xdata(i))/6.0
-   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i)-ydata(i  &
-       -1))/(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))*d(i-1)/(6.0*a(i-1 ))
+   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i) &
+        -ydata(i-1))/(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))*d(i-1)/(6.0*a(i-1 ))
  END DO
  a(ndata)=0.0
  b(ndata)=1.0
@@ -46,20 +46,20 @@ SUBROUTINE alg01 (xdata,ydata,ndata,xin,yout,slope,nxy,ntype,nwot)
    GO TO 130
    140  dx=xdata(j)-xdata(j-1)
    GO TO iy, (150,160)
-   150  yout(i)=m(j-1)/(6.0*dx)*(xdata(j)-xin(i))**3+m(j)/(6.0*dx)*(xin(i)  &
-       -xdata(j-1))**3+(xdata(j)-xin(i))*(ydata(j-1)/dx-m(j-1)/6.0*dx)+(x  &
-       in(i)-xdata(j-1))*(ydata(j)/dx-m(j)/6.0*dx)
+   150  yout(i)=m(j-1)/(6.0*dx)*(xdata(j)-xin(i))**3+m(j)/(6.0*dx) &
+               *(xin(i)-xdata(j-1))**3+(xdata(j)-xin(i))*(ydata(j-1)&
+               /dx-m(j-1)/6.0*dx)+(xin(i)-xdata(j-1))*(ydata(j)/dx-m(j)/6.0*dx)
    GO TO islope, (160,200)
-   160  slope(i)=(-m(j-1)*(xdata(j)-xin(i))**2/2.0+m(j)*(xin(i)-xdata(j-1)  &
-       )**2/2.0+ydata(j)-ydata(j-1))/dx-(m(j)-m(j-1))/6.0*dx
+   160  slope(i)=(-m(j-1)*(xdata(j)-xin(i))**2/2.0+m(j)*(xin(i)&
+                -xdata(j-1))**2/2.0+ydata(j)-ydata(j-1))/dx-(m(j)-m(j-1))/6.0*dx
    CYCLE
    170  jp=1
    kp=2
    GO TO 190
    180  jp=ndata
    kp=n
-   190  yprime=(ydata(kp)-ydata(jp))/(xdata(kp)-xdata(jp))-m(kp)/6.0*(xdat  &
-       a(kp)-xdata(jp))
+   190  yprime=(ydata(kp)-ydata(jp))/(xdata(kp)-xdata(jp))-m(kp)/6.0 &
+              *(xdata(kp)-xdata(jp))
    IF (nwot /= 1) yout(i)=ydata(jp)+(xin(i)-xdata(jp))*yprime
    IF (nwot /= 0) slope(i)=yprime
  END DO
@@ -75,8 +75,8 @@ SUBROUTINE alg01 (xdata,ydata,ndata,xin,yout,slope,nxy,ntype,nwot)
    240  IF (xin(i) <= xdata(j).OR.j == ndata) GO TO 250
    j=j+1
    GO TO 240
-   250  yout(i)=ydata(j-1)+(ydata(j)-ydata(j-1))/(xdata(j)-xdata(j-1))*(xi  &
-       n(i)-xdata(j-1))
+   250  yout(i)=ydata(j-1)+(ydata(j)-ydata(j-1))/(xdata(j)-xdata(j-1)) &
+               *(xin(i)-xdata(j-1))
  END DO
  IF (nwot /= 2) RETURN
  254  yprime=(ydata(2)-ydata(1))/(xdata(2)-xdata(1))

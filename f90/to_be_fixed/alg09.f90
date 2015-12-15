@@ -37,11 +37,11 @@ SUBROUTINE alg09
  IF(neval(i) > 0.AND.iprtc == 1) WRITE(log2,100) l1,i,l2
  IF(neval(i) < 0.AND.iprtc == 1) WRITE(log2,110) l1,i,l2
  100   FORMAT(2X,/,8X,57HLOSS coefficient determination for blade between  &
-     stations,i3,4H AND,i3,47H - as incorporated in above results  bla  &
-     de TYPE,i2,/,8X,116(1H*),/,2X)
- 110   FORMAT(2X,/,8X,57HLOSS coefficient determination for blade between  &
-     stations,i3,4H AND,i3,47H - for purposes of comparison only   bla  &
-     de TYPE,i2,/,8X,116(1H*),/,2X)
+     &stations,i3,4H AND,i3,47H - as incorporated in above results  bla&
+     &de TYPE,i2,/,8X,116(1H*),/,2X)
+ 110   FORMAT(2X,/,8X,57HLOSS coefficient determination for blade between &
+     &stations,i3,4H AND,i3,47H - for purposes of comparison only   bla&
+     &de TYPE,i2,/,8X,116(1H*),/,2X)
  116   l2=ndimen(i)+1
  SELECT CASE ( l2 )
    CASE (    1)
@@ -88,9 +88,9 @@ SUBROUTINE alg09
  206   q=-1.0
  208   DO  j=1,nstrms
    talph1(j)=(vw(j,l1)-xn*r(j,l1))/vm(j,l1)
-   dif(j)=1.0-vm(j,i)/vm(j,l1)*SQRT((1.0+tbeta(j,i)**2)/(1.0+talph1(j  &
-       )**2))+(vm(j,l1)*talph1(j)-vm(j,i)*tbeta(j,i))/(2.0*sol(j)*vm(j,l1  &
-       )*SQRT(1.0+talph1(j)**2))*q
+   dif(j)=1.0-vm(j,i)/vm(j,l1)*SQRT((1.0+tbeta(j,i)**2)/(1.0+talph1(j)**2))&
+       +(vm(j,l1)*talph1(j)-vm(j,i)*tbeta(j,i))/(2.0*sol(j)*vm(j,l1) &
+       *SQRT(1.0+talph1(j)**2))*q
  END DO
  l2=ABS(FLOAT(neval(i)))
  l3=ndiff(l2)
@@ -153,10 +153,10 @@ SUBROUTINE alg09
  CALL alg01(datac(l2),data1(l2),l3,xx2,xx3,x1,nstrms,nterp(l1),0)
  CALL alg01(datac(l2),data3(l2),l3,xx2,xx4,x1,nstrms,nterp(l1),0)
  DO  j=1,nstrms
-   x1=(ATAN((r(j,l1+1)-r(j,l1))/(x(j,l1+1)-x(j,l1)))+ATAN((r(j,l1)-r(  &
-       j,l1-1))/(x(j,l1)-x(j,l1-1))))/2.0
-   beta1(j)=ATAN((TAN(xx3(j)/c1)*(1.0-xx1(j)*TAN(x1))-TAN(x1)*TAN(xx4  &
-       (j)/c1)*SQRT(1.0+xx1(j)**2))*COS(x1))
+   x1=(ATAN((r(j,l1+1)-r(j,l1))/(x(j,l1+1)-x(j,l1)))+ATAN((r(j,l1)&
+     -r(j,l1-1))/(x(j,l1)-x(j,l1-1))))/2.0
+   beta1(j)=ATAN((TAN(xx3(j)/c1)*(1.0-xx1(j)*TAN(x1))&
+           -TAN(x1)*TAN(xx4(j)/c1)*SQRT(1.0+xx1(j)**2))*COS(x1))
    xinc(j)=(ATAN(talph1(j))-beta1(j))*q
  END DO
  340   DO  j=1,nstrms
@@ -177,8 +177,8 @@ SUBROUTINE alg09
    IF(x7 > x8)GO TO 374
    x9 = 1.0
    k=1
-   350   x10=x9-(x2+x9*x9)*(1.0+x9*x9)/(x9*x9*(x2-1.0))*(x3*ATAN(x9/x3)-ata  &
-       n(x9)-x7)
+   350   x10=x9-(x2+x9*x9)*(1.0+x9*x9)/(x9*x9*(x2-1.0))&
+            *(x3*ATAN(x9/x3)-atan(x9)-x7)
    IF(ABS(x10-x9) <= 0.00001)GO TO 376
    IF(k > 20)GO TO 360
    k=k+1
@@ -187,8 +187,8 @@ SUBROUTINE alg09
    360   IF(iprint == 0)GO TO 374
    CALL alg03(lnct,1)
    WRITE(log2,370)ipass,i,j
-   370   FORMAT(5X,4HPASS,i3,9H  station,i3,12H  streamline,i3,58H  prandtl  &
-       -meyer FUNCTION NOT converged - use inlet mach no)
+   370   FORMAT(5X,4HPASS,i3,9H  station,i3,12H  streamline,i3,58H  prandtl&
+       &-meyer FUNCTION NOT converged - use inlet mach no)
    374   x10=SQRT(x6-1.0)
    376   highm(j)=SQRT(1.0+x10*x10)
    x1=(highm(j)+SQRT(x6))/2.0
@@ -227,10 +227,10 @@ SUBROUTINE alg09
  410   FORMAT(1H1)
  lnct=4+nstrms
  420 IF(iprtc == 1) WRITE(log2,430)
- 430   FORMAT(5X,   'STREAM  INLET   OUTLET  CASCADE   DIFF       LOSS  &
-     DIFFUSION  BLADE  INCIDENCE  EXPANSION INLET  EXPANDED SHOCK   TOT  &
-     AL',/,5X,  '-LINE   RADIUS  RADIUS  SOLIDITY  FACTOR  PARAMETER  &
-     LOSS     ANGLE    ANGLE      ANGLE    M.NO  MACH NO   LOSS   LOSS ',/,2X)
+ 430   FORMAT(5X,   'STREAM  INLET   OUTLET  CASCADE   DIFF       LOSS &
+     &DIFFUSION  BLADE  INCIDENCE  EXPANSION INLET  EXPANDED SHOCK   TOT&
+     &AL',/,5X,  '-LINE   RADIUS  RADIUS  SOLIDITY  FACTOR  PARAMETER &
+     &LOSS     ANGLE    ANGLE      ANGLE    M.NO  MACH NO   LOSS   LOSS ',/,2X)
  lnct=lnct+3
  DO  j=1,nstrms
    x1=beta1(j)*c1*q

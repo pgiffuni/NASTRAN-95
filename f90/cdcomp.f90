@@ -1,34 +1,30 @@
-SUBROUTINE cdcmpd (*,ix,x,dx)
+SUBROUTINE cdcomp (*,ix,x,dx)
      
-!     DOUBLE-PRECISION VERSION OF CDCOMP
-!     (THIS ROUTINE WAS PREVIOUSLY CALLED CDCOMP AND IS NOW RENAMED
-!     TO CDCMPD)    BY G.CHAN/SPERRY  6/85
+!     CDCOMP WILL DECOMPOSE A COMPLEX UNSYMETRIC MATRIX INTO A UNIT
+!     LOWER TRIANGULAR MATRIX AND AN UPPER TRIANGULAR MATRIX,USING
+!     PARTIAL PIVOTING WITHIN THE LOWER BAND
  
-!     TO ELIMINATE IBM UNDERFLOW MESSAGES, THIS VERSION ZEROS OUT
-!     THE COMPUTED DX ELEMENT IF /IT/ IS LESS THAN 1.0D-38
- 
-!     CDCOMP WILL DECOMPOSE A COMPLEX UNSYMETRIC MATRIX INTO A UNIT LOWE
-!     TRIANGULAR MATRIX AND AN UPPER TRIANGULAR MATRIX,USING PARTIAL
-!     PIVOTING WITHIN THE LOWER BAND
+!     IMPORTANT - CALLER MUST FIRST INITIALIZE B AND/OR BBAR IN /CDCMPX/
  
 !     DEFINITION OF INPUT PARAMETERS
  
-!     FILEA    =  MATRIX CONTROL BLOCK FOR THE INPUT  MATRIX A
-!     FILEL    =  MATRIX CONTROL BLOCK FOR THE OUTPUT MATRIX L
-!     FILEU    =  MATRIX CONTROL BLOCK FOR THE OUTPUT MATRIX U
-!     SR1FIL   =  SCRATCH FILE
-!     SR2FIL   =  SCRATCH FILE
-!     SR3FIL   =  SCRATCH FILE
-!     NX       =  NUMBER OF CELLS OF CORE AVAILABLE AT IX
-!     DET      =  CELL WHERE THE DETERMINATE OF A WILL BE STORED
-!     POWER    =  SCALE FACTOR TO BE APPLIED TO THE DETERMINATE
-!                 (DETERMINATE = DET*10**POWER)
-!     MINDIA   =  CELL WHERE THE VALUE OF THE MINIMUM DIAGONAL WILL BE S
-!     IX       =  BLOCK OF CORE AVAILABLE AS WORKING STORAGE TO DECOMP
-!     X        =  SAME BLOCK AS IX, BUT TYPED REAL
-!     DX       =  SAME BLOCK AS IX, BUT TYPED DOUBLE PRECISION
+!     FILEA  =  MATRIX CONTROL BLOCK FOR THE  INPUT MATRIX A
+!     FILEL  =  MATRIX CONTROL BLOCK FOR THE OUTPUT MATRIX L
+!     FILEU  =  MATRIX CONTROL BLOCK FOR THE OUTPUT MATRIX U
+!     SR1FIL =  SCRATCH FILE
+!     SR2FIL =  SCRATCH FILE
+!     SR3FIL =  SCRATCH FILE
+!     NX     =  NUMBER OF CELLS OF CORE AVAILABLE AT IX
+!     DET    =  CELL WHERE THE DETERMINATE OF A WILL BE STORED
+!     POWER  =  SCALE FACTOR TO BE APPLIED TO THE DETERMINATE
+!               ( DETERMINATE = DET*10**POWER )
+!     MINDIA =  CELL WHERE THE VALUE OF THE MINIMUM DIAGONAL WILL BE
+!               STORED
+!     IX     =  BLOCK OF CORE AVAILABLE AS WORKING STORAGE TO DECOMP
+!     X      =  SAME BLOCK AS IX, BUT TYPED REAL
+!     DX     =  SAME BLOCK AS IX, BUT TYPED DOUBLE PRECISION
  
- 
+  
  INTEGER, INTENT(OUT)                     :: ix(1)
  REAL, INTENT(OUT)                        :: x(1)
  DOUBLE PRECISION, INTENT(OUT)            :: dx(1)
@@ -42,7 +38,7 @@ scrflg    ,END      ,bbbar    ,bbbar1   ,  &
     count     ,sr2fl    ,sr3fl    ,sr1fil   ,  &
     sr2fil    ,sr3fil   ,sqr      ,sym      , flag      ,itran(6)
 DOUBLE PRECISION :: dz(2)     ,da(2)    ,det      ,MAX(2)   ,  &
-    mindia    , dtrn(2)  ,dx1      , dx2       ,epsi
+    mindia    , dtrn(2)  ,dx1      , dx2       ,limit
 
 CHARACTER (LEN=29) :: uim
 CHARACTER (LEN=25) :: uwm
@@ -57,17 +53,18 @@ COMMON   /names /  rd        ,rdrew    ,wrt      ,wrtrew   ,  &
     rdp       ,csp      ,cdp      ,sqr      ,  &
     rect      ,diag     ,lowtri   ,uprtri   , sym       ,row      ,ident
 COMMON   /zntpkx/  a(4)      ,ii       ,eol
-COMMON   /descrp/  length    ,major
+!     COMMON   /DESCRP/  LENGTH    ,MAJOR
 COMMON   /zblpkx/  z(4)      ,jj
 COMMON   /unpakx/  itypex    ,ixy      ,jxy      ,incrx
 COMMON   /packx /  itype1    ,itype2   ,iy       ,jy       , incry
 EQUIVALENCE        (da(1),a(1))        ,(dz(1),z(1))       ,  &
     (forma,filea(4))    ,(typea,filea(5))   ,  &
-    (ncol,filea(3))     ,(typel,filel(5))   ,  &
-    (itran(1),itrn)     ,(itran(2),jtrn)    , (itran(3),dtrn(1))
-DATA      parm(3), parm(4)  /4HCDCO,4HMP  /
-DATA      ibegn  , iend     /4HBEGN,4HEND /
-DATA      epsi   / 1.0D-38  /
+    (ncol,filea(3))     ,(typel,filel(5))
+EQUIVALENCE        (itran(1),itrn)     ,(itran(2),jtrn)    ,  &
+    (itran(3),dtrn(1))
+DATA      parm(3), parm(4)/  4HCDCO,4HMP  /
+DATA      ibegn  / 4HBEGN /, iend  /4HEND /
+DATA      limit  / 1.0D-38/
 
 !     BUFFER ALLOCATION
 
@@ -105,12 +102,16 @@ fileu(3) = ncol
 fileu(4) = 5
 fileu(6) = 0
 fileu(7) = 0
+IF (ncol > 2) GO TO 10
+CALL com12 (*1720,ix(1),x(1),dx(1),iterm)
+parm(5) = iend
+CALL conmsg (parm(3),3,0)
+RETURN
 
-!     CALL GENVEC TO PICK B,BBAR,C,CBAR, AND R
+!     CALL GENVEC TO PICK B, BBAR, C, CBAR, AND R
 
-IF (b > 0 .AND. bbar > 0) GO TO 11
-CALL genvec (*1720,ix(bufa),filea(1),nx,ix(1),ncol,b,bbar,c,cbar, r,2)
-11 CONTINUE
+10 IF (b <= 0 .OR. bbar <= 0) CALL genvec (*1720,ix(bufa),filea(1),  &
+    nx,ix(1),ncol,b,bbar,c,cbar,r,2)
 bbar1  = bbar + 1
 bbbar  = MIN0(b+bbar,ncol)
 bbbar1 = bbbar - 1
@@ -118,10 +119,10 @@ scrflg = 0
 IF (r < bbbar1) scrflg = 1
 IF (scrflg == 0) GO TO 20
 icrq = (bbbar1-r)*4*bbar
-CALL page2(2)
+CALL page2 (2)
 WRITE  (nout,15) uim,icrq
 15 FORMAT (a29,' 2177, SPILL WILL OCCUR IN COMPLEX UNSYMMETRIC ',  &
-    'DECOMPOSITION.', /1X,i10, ' ADDITIONAL WORDS NEEDED TO STAY IN CORE.')
+    'DECOMPOSITION.', /i10, ' ADDITIONAL WORDS NEEDED TO STAY IN CORE.')
 
 !     INITIALIZE POINTERS TO SPECIFIC AREAS OF CORE
 
@@ -129,12 +130,12 @@ WRITE  (nout,15) uim,icrq
 ipak = i1 + 2*bbar*r + bbbar/2 + 1
 i1sp = bbar*r*4 + 1
 i2   = ipak
-i3sp = (i2  + 2*MIN0(ncol,bbbar + bbar))*2 - 1
-i3   = i2   + 2*MIN0(ncol,bbbar+bbar) + c
+i3sp = (i2+ 2*MIN0(ncol,bbbar+bbar))*2 - 1
+i3   = i2 + 2*MIN0(ncol,bbbar+bbar) + c
 i4sp = i3sp + (bbar+2)*c*4 - 2*c
-i4   = i3   + 2*bbar1*c + cbar
-i5   = i4   + 2*bbbar*cbar
-i6sp = (i5  + 2*c*cbar)*2 - 1
+i4   = i3 + 2*bbar1*c + cbar
+i5   = i4 + 2*bbbar*cbar
+i6sp = (i5 + 2*c*cbar)*2 - 1
 i7sp = i6sp + cbar
 parm(5) = ibegn
 CALL conmsg (parm(3),3,0)
@@ -142,8 +143,8 @@ END  = i7sp + c
 
 !     DEFINITION OF KEY PROGRAM PARAMETERS
 
-!     I1     =  POINTER TO AREA WHERE COMPLETED COLUMNS OF L ARE STORED
-!     I1SP   =  POINTER TO AREA WHERE THE PERMUTATION INDEXES ARE STORED
+!     I1     =  POINTER TO AREA WHERE COMPLETED COLUMNS OF L ARE STORE
+!     I1SP   =  POINTER TO AREA WHERE THE PERMUTATION INDEXES ARE STOR
 !     IPAK   =  POINTER TO AREA WHERE COLUMNS WILL BE PACKED FROM
 !     I2     =  POINTER TO AREA WHERE THE NEXT COLUMN OF A IS STORED
 !     I3     =  POINTER TO AREA WHERE ACTIVE COLUMNS ARE STORED
@@ -174,10 +175,8 @@ END  = i7sp + c
 !     BBBAR1 =  B + BBAR - 1
 !     SCRFLG =  NONZERO MEANS SPILL
 
-!     ****************************************************************
 !     RE-WRITE THE UPPER TRIANGLE OF ACTIVE ELEMENTS IN THE TRANSPOSED
 !     ORDER
-!     ****************************************************************
 
 parm(2) = filea(1)
 CALL OPEN (*1680,filea(1),ix(bufa),rdrew)
@@ -192,10 +191,8 @@ x(i) = 0.
 END DO
 IF (c == 0) GO TO 260
 
-!     ****************************************************************
-!     OPEN THE FILE CONTAINING THE TRANSPOSED ACTIVE ELEMENTS AND READ
-!     IN THE FIRST BBAR + 1 ROWS
-!     ****************************************************************
+!     OPEN THE FILE CONTAINING THE TRANSPOSED ACTIVE ELEMENTS AND READ I
+!     THE FIRST BBAR + 1 ROWS
 
 parm(2) = sr1fil
 CALL OPEN (*1680,sr1fil,ix(sr1buf),rd)
@@ -212,7 +209,7 @@ IF (jtrn <= bbbar) GO TO 60
 kk  = 0
 80 in1 = i3sp + kk
 IF (ix(in1) == jtrn) GO TO 90
-kk  = kk + 1
+kk = kk + 1
 IF (kk-c < 0) THEN
   GO TO    80
 ELSE IF (kk-c == 0) THEN
@@ -226,8 +223,6 @@ END IF
 90 in1 = i3 + 2*kk*bbar1 + k + k
 dx(in1  ) = dtrn(1)
 dx(in1+1) = dtrn(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 GO TO 60
 
 !     CREATE NEW ACTIVE COLUMN
@@ -236,20 +231,18 @@ GO TO 60
 kk  = 0
 110 in1 = i3sp + kk
 IF (ix(in1) == 0) GO TO 120
-kk  = kk + 1
-IF (kk - c < 0) THEN
+kk = kk + 1
+IF (kk-c < 0) THEN
   GO TO   110
 ELSE
   GO TO  1710
 END IF
 120 ix(in1) = jtrn
-in1 = in1 + c
-ix(in1) = k + 1
-in1 = i3 + 2*kk*bbar1 + k + k
+in1     = in1 + c
+ix(in1) = k  + 1
+in1     = i3 + 2*kk*bbar1 + k + k
 dx(in1  ) = dtrn(1)
 dx(in1+1) = dtrn(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 GO TO 60
 130 k = k + 1
 IF (k-bbar1 < 0) THEN
@@ -316,9 +309,7 @@ cbcnt = 0
 jposl = 0
 270 IF (jpos > ncol) GO TO 1670
 
-!     ****************************************************************
 !     READ NEXT COLUMN OF A INTO AREA II
-!     ****************************************************************
 
 ioff  = MAX0(1,jpos-bbbar1)
 count = cbcnt
@@ -340,8 +331,6 @@ k = jpos + bbar
 in1 = i2 + 2*(ii-ioff)
 dx(in1  ) = da(1)
 dx(in1+1) = da(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 310 IF (eol == 0.0) THEN
   GO TO   320
 ELSE
@@ -371,8 +360,6 @@ END IF
 360 in1 = i4 + 2*(kk+1)*bbbar - 2
 dx(in1  ) = da(1)
 dx(in1+1) = da(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 GO TO 310
 
 !     CREATE NEW ACTIVE ROW
@@ -392,8 +379,6 @@ ix(in1) = jpos
 in1 = i4 + (kk+1)*bbbar*2 - 2
 dx(in1  ) = da(1)
 dx(in1+1) = da(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 cbcnt = cbcnt + 1
 GO TO 310
 
@@ -464,7 +449,7 @@ ccount  = ccount - 1
 kk  = 0
 520 in2 = in1 + kk + kk
 in3 = i2  + kk + kk
-dx(in3  ) = dx(in3  ) + dx(in2  )
+dx(in3  ) = dx(in3  ) + dx(in2)
 dx(in3+1) = dx(in3+1) + dx(in2+1)
 dx(in2  ) = 0.d0
 dx(in2+1) = 0.d0
@@ -486,13 +471,13 @@ k   = 0
 540 in2 = i4sp + k
 IF (ix(in2) == 0) GO TO 560
 in3 = in1 + 2*k
-IF (DABS(dx(in3)) < epsi .AND. DABS(dx(in3+1)) < epsi) GO TO 560
+IF (dx(in3) == 0.d0 .AND. dx(in3+1) == 0.d0) GO TO 560
 IF (ix(in2) > jpos+bbar) GO TO 570
 
 !     STORE ELEMENT WITHIN THE LOWER BAND
 
 in2 = i2 + 2*(ix(in2)-ioff)
-dx(in2  ) = dx(in2  ) - dx(in3  )
+dx(in2  ) = dx(in2  ) - dx(in3)
 dx(in2+1) = dx(in2+1) - dx(in3+1)
 550 dx(in3  ) = 0.d0
 dx(in3+1) = 0.d0
@@ -510,23 +495,21 @@ END IF
 570 in2 = i4 + 2*(k+1)*bbbar - 2
 dx(in2+1) = dx(in2+1) - dx(in3+1)
 dx(in3+1) = 0.d0
-dx(in2  ) = dx(in2) - dx(in3)
-dx(in3  ) = 0.d0
+dx(in2) = dx(in2) - dx(in3)
+dx(in3) = 0.d0
 GO TO 550
 
 !     MOVE THE POINTERS IN AREA VII UP ONE
 
 580 in1 = i7sp + ccount - 1
 DO  i = i7sp,in1
-  ix(i) = ix(i+1)
+  ix(i    ) = ix(i+1)
 END DO
 ix(in1+1) = 0
 600 IF (lcol == 0) GO TO 830
 
-!     ****************************************************************
 !     OPERATE ON THE CURRENT COLUMN OF A BY ALL PREVIOUS COLUMNS OF L,
 !     MAKING NOTED INTERCHANGES AS YOU GO
-!     ****************************************************************
 
 IF (scrflg == 0) GO TO 630
 IF (lcol-(r-1) < 0) THEN
@@ -544,18 +527,18 @@ llll = 0
 
 !     PICK UP INTERCHANGE INDEX FOR COLUMN JPOSL + LL + 1
 
-640 in1 = i1sp + ll
+640 in1    = i1sp + ll
 intchn = ix(in1)
-in2 = i2 + ll + ll
+in2    = i2 + ll + ll
 IF (intchn == 0) GO TO 650
 
 !     PERFORM ROW INTERCHANGE
 
-in1 = in2 + 2*intchn
-da(  1) = dx(in1)
+in1     = in2 + 2*intchn
+da(1)   = dx(in1)
 dx(in1) = dx(in2)
 dx(in2) = da(1)
-da(1  ) = dx(in1+1)
+da(1)   = dx(in1+1)
 dx(in1+1) = dx(in2+1)
 dx(in2+1) = da(1)
 650 CONTINUE
@@ -563,7 +546,7 @@ dx(in2+1) = da(1)
 !     COMPUTE THE CONTRIBUTION FROM THAT COLUMN
 
 END = MIN0(bbar1,ncol-(jposl+ll))
-IF (DABS(dx(in2)) < epsi .AND. DABS(dx(in2+1)) < epsi) GO TO 720
+IF (dx(in2) == 0.d0 .AND. dx(in2+1) == 0.d0) GO TO 720
 in1 = i1 + 2*lll*bbar
 CALL cloop (dx(in2+2),dx(in1),dx(in2),END-1)
 IF (cbcnt == 0) GO TO 720
@@ -583,14 +566,8 @@ IF (ix(in1)-jposl-bbar1 <= ll) GO TO 710
 
 in4 = i2 + 2*(ix(in1)-ioff)
 k   = i4 + 2*(jposl+bbbar - jpos+ll + ix(in3)*bbbar)
-dx1 = dx(k  )
-dx2 = dx(k+1)
-IF (DABS(dx1) < epsi) dx1 = 0.0D0
-IF (DABS(dx2) < epsi) dx2 = 0.0D0
-dx(in4  ) = dx(in4  ) - dx1*dx(in2) + dx2*dx(in2+1)
-dx(in4+1) = dx(in4+1) - dx(in2+1)*dx1 - dx(in2)*dx2
-IF (DABS(dx(in4  )) < epsi) dx(in4  ) = 0.0D0
-IF (DABS(dx(in4+1)) < epsi) dx(in4+1) = 0.0D0
+dx(in4  ) = dx(in4  ) - dx(k)*dx(in2)   + dx(k+1)*dx(in2+1)
+dx(in4+1) = dx(in4+1) - dx(in2+1)*dx(k) - dx(in2)*dx(k+1)
 710 kkk = kkk + 1
 IF (kkk < cbcnt) GO TO 690
 720 ll  = ll  + 1
@@ -604,13 +581,13 @@ ELSE
   GO TO   760
 END IF
 730 IF (r == bbbar1) GO TO 640
-in1  = i1  + 2*ll*bbar
+in1 = i1 + 2*ll*bbar
 750 icrq = in1 + bbar*4 - 1 - sr3buf
 IF (icrq > 0) GO TO 1715
 ibbar4 = bbar*4
 CALL READ (*1690,*1700,sr2fl,dx(in1),ibbar4,0,flag)
 GO TO 640
-760 in1 = i1 + (lll-1)*bbar *2
+760 in1 = i1 + (lll-1)*bbar*2
 IF (ll == r .AND. lcol == bbbar1) GO TO 770
 CALL WRITE (sr3fl,dx(in1),4*bbar,0)
 770 lll = lll - 1
@@ -623,7 +600,7 @@ IF (cbcnt == 0) GO TO 830
 k   = 0
 790 in1 = i4sp + k
 IF (ix(in1) > jpos+bbar) GO TO 810
-800 k   = k + 1
+800 k = k + 1
 IF (k-cbar < 0) THEN
   GO TO   790
 ELSE IF (k-cbar == 0) THEN
@@ -641,10 +618,8 @@ in2 = in2 + 2*kkk
 820 in2 = in2 + 2
 kkk = kkk + 1
 in3 = in3 + 2
-dx(in1  ) = dx(in1  ) - dx(in2)*dx(in3) + dx(in2+1)*dx(in3+1)
+dx(in1  ) = dx(in1  ) - dx(in2)*dx(in3)   + dx(in2+1) *dx(in3+1)
 dx(in1+1) = dx(in1+1) - dx(in2+1)*dx(in3) - dx(in2)*dx(in3+1)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 IF (kkk-bbbar1 < 0) THEN
   GO TO   820
 ELSE IF (kkk-bbbar1 == 0) THEN
@@ -660,8 +635,8 @@ END IF
 in1 = i2 + (jpos-ioff)*2
 dx1 = 0.d0
 dx2 = 0.d0
-IF (DABS(dx(in1  )) > epsi)  dx1 = dx(in1  )**2
-IF (DABS(dx(in1+1)) > epsi)  dx2 = dx(in1+1)**2
+IF (DABS(dx(in1  )) > limit) dx1 = dx(in1  )**2
+IF (DABS(dx(in1+1)) > limit) dx2 = dx(in1+1)**2
 MAX(1) = dx1 + dx2
 intchn = 0
 END = MIN0(bbar1,ncol-jpos+1)
@@ -669,11 +644,11 @@ IF (END == 1) GO TO 870
 840 in2 = in1 + k + k
 dx1 = 0.d0
 dx2 = 0.d0
-IF (DABS(dx(in2  )) > epsi)  dx1 = dx(in2  )**2
-IF (DABS(dx(in2+1)) > epsi)  dx2 = dx(in2+1)**2
+IF (DABS(dx(in2  )) > limit) dx1 = dx(in2  )**2
+IF (DABS(dx(in2+1)) > limit) dx2 = dx(in2+1)**2
 dx2 = dx2 + dx1
 IF (dx2 > MAX(1)) GO TO 860
-850 k   = k + 1
+850 k = k + 1
 IF (k-END < 0) THEN
 GO TO   840
 ELSE IF (k-END == 0) THEN
@@ -689,11 +664,11 @@ GO TO 850
 
 !     INTERCHANGE ROWS IN AREA II
 
-det(1) = -det(1)
-det(2) = -det(2)
+det(1)  =-det(1)
+det(2)  =-det(2)
 
-MAX(1) = dx(in1)
-in2    = in1 + 2*intchn
+MAX(1)  = dx(in1)
+in2     = in1+2*intchn
 dx(in1) = dx(in2)
 dx(in2) = MAX(1)
 MAX(1)  = dx(in1+1)
@@ -709,10 +684,10 @@ ix(in2) = intchn
 
 880 dx1 = 0.d0
 dx2 = 0.d0
-IF (DABS(dx(in1  )) > epsi)  dx1 = dx(in1  )**2
-IF (DABS(dx(in1+1)) > epsi)  dx2 = dx(in1+1)**2
+IF (DABS(dx(in1  )) > limit) dx1 = dx(in1  )**2
+IF (DABS(dx(in1+1)) > limit) dx2 = dx(in1+1)**2
 da(1) = dx1 + dx2
-IF (DABS(da(1)) < epsi) GO TO 1720
+IF (da(1) == 0.d0) GO TO 1720
 MAX(1) = dx(in1  )/da(1)
 MAX(2) =-dx(in1+1)/da(1)
 mindia = DMIN1(DSQRT(da(1)),mindia)
@@ -736,11 +711,9 @@ k   = 1
 END = MIN0(bbar1,ncol-jpos+1)
 IF (END == 1) GO TO 930
 920 in2 = in1 + k + k
-da(1) = dx(in2)*MAX(1) - dx(in2+1)*MAX(2)
+da(1)     = dx(in2)*MAX(1) - dx(in2+1)*MAX(2)
 dx(in2+1) = dx(in2)*MAX(2) + dx(in2+1)*MAX(1)
-dx(in2  ) = da(1)
-IF (DABS(dx(in2  )) < epsi) dx(in2  ) = 0.0D0
-IF (DABS(dx(in2+1)) < epsi) dx(in2+1) = 0.0D0
+dx(in2) = da(1)
 k = k + 1
 IF (k-END < 0) THEN
 GO TO   920
@@ -755,11 +728,9 @@ END IF
 
 k   = 0
 in1 = i4 + 2*bbbar1
-940 da(    1) = dx(in1)*MAX(1) - dx(in1+1)*MAX(2)
+940 da(1)     = dx(in1)*MAX(1) - dx(in1+1)*MAX(2)
 dx(in1+1) = dx(in1)*MAX(2) + dx(in1+1)*MAX(1)
-dx(in1  ) = da(1)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
+dx(in1) = da(1)
 in1 = in1 + 2*bbbar
 k   = k + 1
 IF (k-cbar < 0) THEN
@@ -773,7 +744,7 @@ END IF
 
 !     INTERCHANGE ACTIVE COLUMNS AND ADD IN EFFECT OF THE CURRENT COLUMN
 
-IF (ccount  ==  0) GO TO 1000
+IF (ccount ==   0) GO TO 1000
 IF (jpos < bbbar) GO TO 1000
 intch = ix(i1sp)
 k   = 0
@@ -781,22 +752,20 @@ k   = 0
 IF (intch == 0) GO TO 970
 in1 = i3  + 2*k*bbar1
 in2 = in1 + intch + intch
-da(  1) = dx(in1)
+da(1)   = dx(in1)
 dx(in1) = dx(in2)
 dx(in2) = da(1)
-da(1  ) = dx(in1+1)
+da(1)   = dx(in1+1)
 dx(in1+1) = dx(in2+1)
 dx(in2+1) = da(1)
 970 kk  = 1
 in2 = i1 - 2
 in1 = i3 + 2*k*bbar1
-IF (DABS(dx(in1)) < epsi .AND. DABS(dx(in1+1)) < epsi) GO TO 990
+IF (dx(in1) == 0.d0 .AND. dx(in1+1) == 0.d0) GO TO 990
 980 in3 = in1 + kk + kk
 in4 = in2 + kk + kk
-dx(in3  ) = dx(in3  ) - dx(in1)*dx(in4) + dx(in1+1)*dx(in4+1)
+dx(in3  ) = dx(in3  ) - dx(in1)*dx(in4  ) + dx(in1+1)*dx(in4+1)
 dx(in3+1) = dx(in3+1) - dx(in1)*dx(in4+1) - dx(in1+1)*dx(in4)
-IF (DABS(dx(in3  )) < epsi) dx(in3  ) = 0.0D0
-IF (DABS(dx(in3+1)) < epsi) dx(in3+1) = 0.0D0
 kk = kk + 1
 IF (kk-bbar1 < 0) THEN
   GO TO   980
@@ -805,7 +774,7 @@ ELSE IF (kk-bbar1 == 0) THEN
 ELSE
   GO TO  1710
 END IF
-990 k  = k + 1
+990 k = k + 1
 IF (k-c < 0) THEN
   GO TO   960
 ELSE IF (k-c == 0) THEN
@@ -820,9 +789,9 @@ END IF
 CALL bldpk (cdp,typel,sr2fil,0,0)
 in1 = i2
 jj  = ioff
-1010 dz(1) = dx(in1  )
+1010 dz(1) = dx(in1)
 dz(2) = dx(in1+1)
-IF (DABS(dz(1)) < epsi .AND. DABS(dz(2)) < epsi) GO TO 1030
+IF (dz(1) == 0.d0 .AND. dz(2) == 0.d0) GO TO 1030
 CALL zblpki
 1030 in1 = in1 + 2
 jj  = jj  + 1
@@ -831,7 +800,7 @@ IF (jj-jpos > 0) THEN
 ELSE
   GO TO  1010
 END IF
-1040 IF (DABS(dx(in1-2)) < epsi .AND. DABS(dx(in1-1)) < epsi) GO TO 1720
+1040 IF (dx(in1-2) == 0.d0 .AND. dx(in1-1) == 0.d0) GO TO 1720
 
 !     PACK ACTIVE COLUMN ELEMENTS ALSO
 
@@ -852,8 +821,8 @@ END IF
 1080 in3 = i3 + 2*(ix(in1)*bbar1)
 dz(1) = dx(in3  )
 dz(2) = dx(in3+1)
-IF (DABS(dz(1)) < epsi .AND. DABS(dz(2)) < epsi) GO TO 1070
-jj  = ix(in2)
+IF (dz(1) == 0.d0 .AND.  dz(2) == 0.d0) GO TO 1070
+jj = ix(in2)
 CALL zblpki
 GO TO 1070
 1090 CALL bldpkn (sr2fil,0,fileu)
@@ -862,18 +831,16 @@ GO TO 1070
 
 IF (ccount == 0 .OR. cbcnt == 0) GO TO 1140
 IF (jpos < bbbar) GO TO 1140
-k   = 0
+k = 0
 1100 CONTINUE
 in1 = i3 + 2*k*bbar1
-IF (DABS(dx(in1)) < epsi .AND. DABS(dx(in1+1)) < epsi) GO TO 1130
+IF (dx(in1) == 0.d0 .AND. dx(in1+1) == 0.d0) GO TO 1130
 kk  = 0
 1110 in2 = i4 + 2*kk*bbbar
-IF (DABS(dx(in2)) < epsi .AND. DABS(dx(in2+1)) < epsi) GO TO 1120
+IF (dx(in2) == 0.d0 .AND. dx(in2+1) == 0.d0) GO TO 1120
 in3 = i5 + 2*(k*cbar+kk)
-dx(in3  ) = dx(in3  ) + dx(in2)*dx(in1) - dx(in2+1)*dx(in1+1)
+dx(in3  ) = dx(in3  ) + dx(in2)*dx(in1)   - dx(in2+1)*dx(in1+1)
 dx(in3+1) = dx(in3+1) + dx(in2)*dx(in1+1) + dx(in2+1)*dx(in1)
-IF (DABS(dx(in3  )) < epsi) dx(in3  ) = 0.0D0
-IF (DABS(dx(in3+1)) < epsi) dx(in3+1) = 0.0D0
 1120 kk = kk + 1
 IF (kk-cbar < 0) THEN
   GO TO  1110
@@ -903,7 +870,7 @@ in1 = i3  + 2*k*bbar1
 1160 in2 = in1 + kk + kk
 dx(in2  ) = dx(in2+2)
 dx(in2+1) = dx(in2+3)
-kk  = kk + 1
+kk = kk + 1
 IF (kk-bbar < 0) THEN
   GO TO  1160
 ELSE IF (kk-bbar == 0) THEN
@@ -913,7 +880,7 @@ ELSE
 END IF
 1170 dx(in2+2) = 0.d0
 dx(in2+3) = 0.d0
-1180 k   = k + 1
+1180 k = k + 1
 IF (k-c < 0) THEN
   GO TO  1150
 ELSE IF (k-c == 0) THEN
@@ -941,12 +908,12 @@ jj    = jposl
 dz(1) = ix(i1sp)
 dz(2) = 0.d0
 CALL zblpki
-k     = 0
-1210 jj    = jposl + k   + 1
-in2   = i1 + k + k
+k  = 0
+1210 jj = jposl + k + 1
+in2 = i1 + k + k
 dz(1) = dx(in2  )
 dz(2) = dx(in2+1)
-IF (DABS(dz(1)) < epsi .AND. DABS(dz(2)) < epsi) GO TO 1230
+IF (dz(1) == 0.d0 .AND. dz(2) == 0.d0) GO TO 1230
 CALL zblpki
 1230 k = k + 1
 IF (k-bbar < 0) THEN
@@ -967,7 +934,7 @@ in1 = ix(in1) + i4sp
 jj  = ix(in1)
 dz(1) = dx(in2  )
 dz(2) = dx(in2+1)
-IF (DABS(dz(1)) < epsi .AND. DABS(dz(2)) < epsi) GO TO 1270
+IF (dz(1) == 0.d0 .AND. dz(2) == 0.d0) GO TO 1270
 CALL zblpki
 1270 k = k + 1
 IF (k-cbcnt < 0) THEN
@@ -991,7 +958,7 @@ END DO
 k = 0
 IF (scrflg == 0) GO TO 1310
 CALL CLOSE (sr2fl,rew)
-CALL OPEN  (*1680,sr2fl,ix(sr2buf),rd)
+CALL OPEN (*1680,sr2fl,ix(sr2buf),rd)
 IF (r > 2) GO TO 1310
 icrq = i1 + bbar*4 - 1 - sr3buf
 IF (icrq > 0) GO TO 1715
@@ -999,9 +966,9 @@ ibbar4 = bbar*4
 CALL READ (*1690,*1700,sr2fl,dx(i1),ibbar4,0,flag)
 GO TO 1360
 1310 in1 = i1  + k*bbar*2
-in2 = in1 + bbar+bbar
+in2 = in1 + bbar + bbar
 CALL cxloop (dx(in1),dx(in2),bbar)
-k   = k + 1
+k = k + 1
 IF (k-r+2 < 0) THEN
   GO TO  1310
 ELSE IF (k-r+2 == 0) THEN
@@ -1032,11 +999,11 @@ k   = 0
 1380 in1 = i4sp + k
 IF (ix(in1) == 0) GO TO 1410
 kk  = 0
-in1 = i4 + 2*k*bbbar
-1390 in2 = in1 + kk+kk
+in1 = i4  + 2*k*bbbar
+1390 in2 = in1 + kk + kk
 dx(in2  ) = dx(in2+2)
 dx(in2+1) = dx(in2+3)
-kk  = kk + 1
+kk = kk + 1
 IF (kk-bbbar1 < 0) THEN
   GO TO  1390
 ELSE IF (kk-bbbar1 == 0) THEN
@@ -1046,7 +1013,7 @@ ELSE
 END IF
 1400 dx(in2+2) = 0.d0
 dx(in2+3) = 0.d0
-1410 k   = k + 1
+1410 k = k + 1
 IF (k-cbar < 0) THEN
   GO TO  1380
 ELSE IF (k-cbar == 0) THEN
@@ -1062,12 +1029,12 @@ END IF
 END = MIN0(bbar,ncol-jpos)
 IF (END == 0) GO TO 1480
 k   = 0
-in3 = i2 + 2*(jpos-ioff+1)
+in3 = i2  + 2*(jpos-ioff+1)
 1440 in2 = in1 + k + k
 in4 = in3 + k + k
 dx(in2  ) = dx(in4  )
 dx(in2+1) = dx(in4+1)
-k   = k + 1
+k = k + 1
 IF (k-END < 0) THEN
 GO TO  1440
 ELSE IF (k-END == 0) THEN
@@ -1097,7 +1064,7 @@ sr2fl = sr3fl
 sr3fl = in1
 1480 lcol  = lcol + 1
 IF (c == 0) GO TO 1570
-IF (jpos .LT . bbbar) GO TO 1570
+IF (jpos < bbbar) GO TO 1570
 
 !     READ IN THE NEXT ROW OF ACTIVE COLUMN ELEMENTS
 
@@ -1136,8 +1103,6 @@ ix(in1) = itrn
 in1 = i3 + 2*(k+1)*bbar1 - 2
 dx(in1  ) = dtrn(1)
 dx(in1+1) = dtrn(2)
-IF (DABS(dx(in1  )) < epsi) dx(in1  ) = 0.0D0
-IF (DABS(dx(in1+1)) < epsi) dx(in1+1) = 0.0D0
 ccount = ccount + 1
 GO TO 1550
 
@@ -1180,7 +1145,7 @@ GO TO 270
 1610 in1 = i5 + k + k
 in2 = i3 + bbar + bbar
 k   = 0
-1620 dx(in2  ) = dx(in2  ) - dx(in1  )
+1620 dx(in2  ) = dx(in2  ) - dx(in1)
 dx(in2+1) = dx(in2+1) - dx(in1+1)
 dx(in1  ) = 0.d0
 dx(in1+1) = 0.d0
@@ -1248,9 +1213,10 @@ CALL CLOSE (fileu(1),rew)
 CALL CLOSE (sr1fil,rew)
 CALL CLOSE (sr2fil,rew)
 CALL CLOSE (sr3fil,rew)
-fileu(2) = bbbar
+!WKBR SPR94018 4/95      FILEU(2) = BBBAR
+fileu(7) = bbbar
 RETURN 1
 
 1730 CALL mesage (parm(1),parm(2),parm(3))
 RETURN
-END SUBROUTINE cdcmpd
+END SUBROUTINE cdcomp

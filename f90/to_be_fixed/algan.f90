@@ -157,11 +157,11 @@ SUBROUTINE algan
  IF (iprtc == 1) WRITE (log2,330) (zr(j),b1(j),b2(j),pp(j),qq(j),  &
      rle(j),tc(j),te(j),zz(j),cord(j),delx(j),dely(j),j=1,nspec)
  330  FORMAT (/20X,'SECTION GEOMETRY SPECIFICATION', //10X,'STREAMLINE',  &
-     '  INLET',5X,6HOUTLET,4X,6HY2 LE/,4X,6HY2 te/,3X,48HLE radi  &
-     us MAX thick te thick  point of  chord OR,3X,7HX stack,3X,7HY stac  &
-     k, /11X,6HNUMBER,5X,5HANGLE,5X,5HANGLE,3X,19HMAX value MAX value,3  &
-     x,6H/chord,4X,6H/chord,3X,8H/2*chord,2X,18HMAX thick axial cd,4X,6  &
-     hoffset,4X,6HOFFSET, //,(10X,f7.2,3X,f8.3,f10.3,2F10.4,3F10.5,  &
+     '  INLET',5X,6HOUTLET,4X,6HY2 LE/,4X,6HY2 te/,3X,48HLE radi&
+     &us max thick te thick  point of  chord OR,3X,7HX stack,3X,7HY stac&
+     &k, /11X,6HNUMBER,5X,5HANGLE,5X,5HANGLE,3X,19HMAX value MAX value,3X  &
+     ,6H/chord,4X,6H/chord,3X,8H/2*chord,2X,18HMAX thick axial cd,4X,&
+     6Hoffset,4X,6HOFFSET, //,(10X,f7.2,3X,f8.3,f10.3,2F10.4,3F10.5,  &
      2F10.4,f11.6,f10.6))
  GO TO 390
  340  IF (lnct <= 50-2*nspec) GO TO 350
@@ -207,8 +207,8 @@ SUBROUTINE algan
    perspt(j) = rdata(5)
  END DO
  IF (iprtc == 1) WRITE (log2,410)
- 410  FORMAT (/20X,13HSPLITTER DATA, //10X,10HSTREAMLINE,2X,47HLE radius  &
-     MAX thick te thick  point of per cent, /11X,6HNUMBER,7X,6H/chord,  &
+ 410  FORMAT (/20X,13HSPLITTER DATA, //10X,10HSTREAMLINE,2X,47HLE radius &
+     &max thick te thick  point of per cent, /11X,6HNUMBER,7X,6H/chord,  &
      4X,6H/chord,3X,8H/2*chord,2X,9HMAX thick,2X,8HSPLITTER, /)
  IF (iprtc == 1) WRITE (log2,420) (zr(j),rles(j),tcs(j),tes(j),  &
      zzs(j),perspt(j),j=1,nspec)
@@ -427,10 +427,10 @@ SUBROUTINE algan
          (SQRT((xs(j,i-1)-xs(j,i))**2+(ys(j,i-1)-ys(j,i))**2) +  &
          SQRT((xp(j,i-1)-xp(j,i))**2+(yp(j,i-1)-yp(j,i))**2)) +  &
          (SQRT((xs(j-1,i)-xp(j-1,i))**2+(ys(j-1,i)-yp(j-1,i))**2) +  &
-         SQRT((xs(j-1,i-1)-xp(j-1,i-1))**2+(ys(j-1,i-1)-yp(j-1,i-1))  &
-         **2))*(SQRT((xs(j-1,i-1)-xs(j-1,i))**2+(ys(j-1,i-1)-  &
-         ys(j-1,i))**2)+SQRT((xp(j-1,i-1)-xp(j-1,i))**2+(yp(j-1,i-1)-  &
-         yp(j-1,i))**2)))*(zs(j,i)+zs(j,i-1)+zp(j,i)+zp(j,i-1)-  &
+         SQRT((xs(j-1,i-1)-xp(j-1,i-1))**2+(ys(j-1,i-1)-yp(j-1,i-1))&
+         **2))*(SQRT((xs(j-1,i-1)-xs(j-1,i))**2+(ys(j-1,i-1)-&
+         ys(j-1,i))**2)+SQRT((xp(j-1,i-1)-xp(j-1,i))**2+(yp(j-1,i-1)-&
+         yp(j-1,i))**2)))*(zs(j,i)+zs(j,i-1)+zp(j,i)+zp(j,i-1)-&
          zs(j-1,i)-zs(j-1,i-1)-zp(j-1,i)-zp(j-1,i-1))/32.0
    END DO
  END DO
@@ -475,14 +475,14 @@ SUBROUTINE algan
    lnct = 2
    950  lnct = lnct + idum + nlines
    IF (iprtc == 1) WRITE (log2,960) i,nlines
-   960  FORMAT (///48X,8HSTATION ,i2,5X,17HNUMBER of radii= ,i2,  //36X,6H  &
-       radius,5X,7HSECTION,6X,4HLEAN,9X,5HBLADE,7X,5HTHETA, /48X,5HANGLE,  &
+   960  FORMAT (///48X,8HSTATION ,i2,5X,17HNUMBER of radii= ,i2,  //36X,&
+       6Hradius,5X,7HSECTION,6X,4HLEAN,9X,5HBLADE,7X,5HTHETA, /48X,5HANGLE,  &
        6X,5HANGLE,7X,8HBLOCKAGE, /)
    DO  j = 1,nlines
      eps = (theta(j,i)-ATAN(rle(j)))*c1
      alphb = alpha(j,i)
-     alp = (ATAN((tanphi(i,j)*TAN(eps/c1)+alphb*SQRT(1.+tanphi(i,j)**2)  &
-         )/(1.-tanphi(i,j)*zq(j))))*c1
+     alp = (ATAN((tanphi(i,j)*TAN(eps/c1)+alphb*SQRT(1.+tanphi(i,j)**2))  &
+         /(1.-tanphi(i,j)*zq(j))))*c1
      alpb(i,j) = alp
      epslon(i,j) = ATAN(TAN(eps/c1)/SQRT(1.0+zq(j)**2))*c1
      IF (isplit < 1) GO TO 990
@@ -501,8 +501,8 @@ SUBROUTINE algan
  1040 IF (iprint == 1 .OR. iprint == 3) GO TO 1060
  lnct = 2
  IF (iprtc == 1) WRITE (log2,1050)
- 1050 FORMAT (1H1,27X,74HBLADE surface geometry in cartesian coordinates  &
-     at specified values of  z , /28X,18(4H****),2H**)
+ 1050 FORMAT (1H1,27X,74HBLADE surface geometry in cartesian coordinates &
+     &at specified values of  z , /28X,18(4H****),2H**)
  1060 IF (iprint == 1 .AND. ifplot <= 1) GO TO 1470
  xz = nz - 1
  dz = (zouter-zinner)/xz
@@ -543,7 +543,7 @@ SUBROUTINE algan
  1110 DO  j = 1,nz
    rd = SQRT((xs(j,1)-xp(j,1))**2+(ys(j,1)-yp(j,1))**2)/2.0
    area = pi*rd**2/2.0
-   beta1 = ATAN((ys(j,2)+yp(j,2)-ys(j,1)-yp(j,1))/(xs(j,2)+xp(j,2)-  &
+   beta1 = ATAN((ys(j,2)+yp(j,2)-ys(j,1)-yp(j,1))/(xs(j,2)+xp(j,2)-&
        xs(j,1)-xp(j,1)))
    xint = area*((xp(j,1)+xs(j,1))/2.0-COS(beta1)*4.0/(3.0*pi)*rd)
    yint = area*((yp(j,1)+ys(j,1))/2.0-SIN(beta1)*4.0/(3.0*pi)*rd)
@@ -551,15 +551,15 @@ SUBROUTINE algan
    n1 = npoint
    n  = n1
    n2 = n1 - 1
-   beta2 = ATAN((ys(j,n1)+yp(j,n1)-ys(j,n2)-yp(j,n2))/(xs(j,n1)+  &
+   beta2 = ATAN((ys(j,n1)+yp(j,n1)-ys(j,n2)-yp(j,n2))/(xs(j,n1)+&
        xp(j,n1)-xs(j,n2)-xp(j,n2)))
    xint = xint + area*((xp(j,n)+xs(j,n))/2.+COS(beta2)*4./(3.*pi)*rd)
    yint = yint + area*((yp(j,n)+ys(j,n))/2.+SIN(beta2)*4./(3.*pi)*rd)
    area = 2.*area
    1120 DO  i = 2,npoint
-     dela = (SQRT((xs(j,i)-xp(j,i))**2+(ys(j,i)-yp(j,i))**2)+  &
-         SQRT((xs(j,i-1)-xp(j,i-1))**2+(ys(j,i-1)-yp(j,i-1))**2))*  &
-         (SQRT((xs(j,i-1)-xs(j,i))**2+(ys(j,i-1)-ys(j,i))**2)+  &
+     dela = (SQRT((xs(j,i)-xp(j,i))**2+(ys(j,i)-yp(j,i))**2)+&
+         SQRT((xs(j,i-1)-xp(j,i-1))**2+(ys(j,i-1)-yp(j,i-1))**2))*&
+         (SQRT((xs(j,i-1)-xs(j,i))**2+(ys(j,i-1)-ys(j,i))**2)+&
          SQRT((xp(j,i-1)-xp(j,i))**2+(yp(j,i-1)-yp(j,i))**2))/4.0
      area = area + dela
      xint = xint + dela*(xs(j,i)+xs(j,i-1)+xp(j,i)+xp(j,i-1))/4.0
@@ -589,13 +589,13 @@ SUBROUTINE algan
    iy   = 0.0
    ixy  = 0.0
    DO  i = 2,npoint
-     xd   = (SQRT((xs(j,i-1)-xp(j,i-1))**2+(ys(j,i-1)-yp(j,i-1))**2)+  &
+     xd   = (SQRT((xs(j,i-1)-xp(j,i-1))**2+(ys(j,i-1)-yp(j,i-1))**2)+&
          SQRT((xs(j,i)-xp(j,i))**2+(ys(j,i)-yp(j,i))**2))/2.0
-     yd   = (SQRT((xs(j,i)-xs(j,i-1))**2+(ys(j,i)-ys(j,i-1))**2)+  &
+     yd   = (SQRT((xs(j,i)-xs(j,i-1))**2+(ys(j,i)-ys(j,i-1))**2)+&
          SQRT((xp(j,i)-xp(j,i-1))**2+(yp(j,i)-yp(j,i-1))**2))/2.0
      ixd  = yd*yd*yd*xd/12.0
      iyd  = xd*xd*xd*yd/12.0
-     ang  = ATAN((ys(j,i)+yp(j,i)-ys(j,i-1)-yp(j,i-1))/(xp(j,i)+xs(j,i)  &
+     ang  = ATAN((ys(j,i)+yp(j,i)-ys(j,i-1)-yp(j,i-1))/(xp(j,i)+xs(j,i)&
          -xp(j,i-1)-xs(j,i-1)))
      cosang = COS(2.0*ang)
      ixn  = (ixd+iyd+(ixd-iyd)*cosang)/2.0
@@ -621,14 +621,14 @@ SUBROUTINE algan
    IF (iprtc == 1) WRITE (log2,1170) j,zout(j),area,xint,yint,ix,  &
        iy,ixy,ipx,ang,ipy,ang
    1170 FORMAT (/50X,14HSECTION NUMBER,i3,3X,5H z  =,f9.4, /50X,    34H***  &
-       *******************************, ///20X,18HSECTION properties,7X,1  &
-       2HSECTION area,26X,1H=,1P,e12.4,//45X,20HLOCATION of centroid,11X,  &
-       4HXBAR,3X,1H=,e12.4, /45X,22HRELATIVE TO stack axis,9X,4HYBAR,3X,1  &
-       h=,e12.4, //45X,22HSECOND moments of area,9X,2HIX,5X,1H=,e12.4, /4  &
-       5X,14HABOUT centroid,17X,2HIY,5X,1H=,e12.4, /76X,3HIXY,4X,1H=,e12.  &
-       4, //45X,24HPRINCIPAL second moments,7X,3HIPX,4X,1H=,e12.4,4H (at,  &
-       0P,f7.2,21H degrees TO  x  axis),/45X,22HOF area about centroid,9X  &
-       ,3HIPY,4X,1H=,1P,e12.4,4H (at,0P,f7.2,21H degrees TO  y  axis))
+       *******************************, ///20X,18HSECTION properties,7X,&
+       12HSECTION area,26X,1H=,1P,e12.4,//45X,20HLOCATION of centroid,11X,  &
+       4HXBAR,3X,1H=,e12.4, /45X,22HRELATIVE to stack axis,9X,4HYBAR,3X,&
+       1H=,e12.4, //45X,22HSECOND moments of area,9X,2HIX,5X,1H=,e12.4,&
+       /45X,14HABOUT centroid,17X,2HIY,5X,1H=,e12.4, /76X,3HIXY,4X,1H=,e12.4 &
+       //45X,24HPRINCIPAL second moments,7X,3HIPX,4X,1H=,e12.4,4H (at,&
+       P,f7.2,21H degrees TO  x  axis),/45X,22HOF area about centroid,9X  &
+       ,3HIPY,4X,1H=,1P,e12.4,4H (at,0P,f7.2,21H degrees to  y  axis))
    IF (iprtc == 1) WRITE (log2,1180) torcon
    1180 FORMAT (/45X,18HTORSIONAL constant,20X,1H=,1P,e12.4, /)
    lnct = lnct + 3
@@ -832,7 +832,8 @@ SUBROUTINE algan
  1580 CONTINUE
  IF (naero == 1 .OR. ipunch == 1) CALL alg19 (log1,log2,log3,log5,  &
      nlines,nspec,kpts,rsta,xsta,r,zr,b1,b2,tc,pi,c1,nblade,ccord,  &
-     BLOCK,alpb,epslon,ifangs,ipunch,naero)
+     block,alpb,epslon,ifangs,ipunch,naero)
 !     IF (IFPLOT .NE. 0) CALL PLOT (0.0,0.0,-3)
+
  RETURN
 END SUBROUTINE algan

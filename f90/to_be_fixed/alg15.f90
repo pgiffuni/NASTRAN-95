@@ -57,14 +57,14 @@ SUBROUTINE alg15 (xdata,ydata,ndata,xin,yout,nxy,ntype)
  END IF
  110   j=1
  GO TO 80
- 120   yout(i)=ydata(j)+(ydata(j+1)-ydata(j))/(xdata(j+1)-xdata(j))*(xin(  &
-     i)-xdata(j))
+ 120   yout(i)=ydata(j)+(ydata(j+1)-ydata(j))/(xdata(j+1)-xdata(j))&
+              *(xin(i)-xdata(j))
  GO TO 150
- 130   yout(i)=ydata(1)+(ydata(2)-ydata(1))/(xdata(2)-xdata(1))*(xin(i)-x  &
-     DATA(1))
+ 130   yout(i)=ydata(1)+(ydata(2)-ydata(1))/(xdata(2)-xdata(1))*(xin(i)&
+              -xdata(1))
  GO TO 150
- 140   yout(i)=ydata(ndata-1)+(ydata(ndata)-ydata(ndata-1))/(xdata(ndata)  &
-     -xdata(ndata-1))*(xin(i)-xdata(ndata-1))
+ 140   yout(i)=ydata(ndata-1)+(ydata(ndata)-ydata(ndata-1))&
+              /(xdata(ndata)-xdata(ndata-1))*(xin(i)-xdata(ndata-1))
  150   IF (i-nxy < 0) THEN
    GO TO   160
  ELSE
@@ -78,10 +78,10 @@ SUBROUTINE alg15 (xdata,ydata,ndata,xin,yout,nxy,ntype)
  d(1)=0.0
  n=ndata-1
  DO  i=2,n
-   a(i)=(xdata(i+1)-xdata(i-1))/3.0-(xdata(i)-xdata(i-1))*b(i-1)/(6.0 *a(i-1))
+   a(i)=(xdata(i+1)-xdata(i-1))/3.0-(xdata(i)-xdata(i-1))*b(i-1)&/(6.0 *a(i-1))
    b(i)=(xdata(i+1)-xdata(i))/6.0
-   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i)-ydata(i  &
-       -1))/(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))*d(i-1)/6.0/a(i-1)
+   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i)-ydata(i-1))&
+       /(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))*d(i-1)/6.0/a(i-1)
  END DO
  m(ndata)=0.0
  DO  ii=2,n
@@ -147,5 +147,6 @@ SUBROUTINE alg15 (xdata,ydata,ndata,xin,yout,nxy,ntype)
  END IF
  360   i=i+1
  GO TO 210
+ 
  370   RETURN
 END SUBROUTINE alg15

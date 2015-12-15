@@ -11,9 +11,9 @@ SUBROUTINE ifp1e (isubc,symseq,nwdsc,i81,icaste)
  LOGICAL :: bit64
  INTEGER :: case(200,2),BLANK,casecc, core(1),corey(401)
  COMMON /zzzzzz/ corex(1)
- COMMON /xifp1 / BLANK,bit64
+ COMMON /xifp1 / blank,bit64
  COMMON /ifp1a / scr1,casecc,is,nwpc,ncpw4,nmodes,icc,nset,  &
-     nsym,zzzzbb,istr,isub,lencc,iben,equal,IEOR
+     nsym,zzzzbb,istr,isub,lencc,iben,equal,ieor
  EQUIVALENCE    (corex(1),corey(1),case(1,1)),(core(1),corey(401))
  DATA    NONE  / 4HNONE/
  

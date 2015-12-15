@@ -28,8 +28,8 @@ SUBROUTINE alg06(r1,r2,x1,x2,h,s,vm,tb1,tb2,w,xk,sclfac,speed,spd  &
  
  ntub=nstrms-1
  DO  j=1,nstrms
-   q1=h(j)-vm(j)**2*(1.0+(tb2(j)+r2(j)*speed*spdfac*pi/(sclfac*30.0*v  &
-       m(j)))**2)/(2.0*g*ej)
+   q1=h(j)-vm(j)**2*(1.0+(tb2(j)+r2(j)*speed*spdfac*pi&
+      /(sclfac*30.0*vm(j)))**2)/(2.0*g*ej)
    IF(q1 < hmin)q1=hmin
    xx1(j)=alg4(q1,s(j))
    xx2(j)=alg5(q1,s(j))
@@ -45,7 +45,7 @@ SUBROUTINE alg06(r1,r2,x1,x2,h,s,vm,tb1,tb2,w,xk,sclfac,speed,spd  &
  END DO
  CALL alg01(r2,xx1,nstrms,r,xx2,q1,150,0,0)
  DO  j=1,nstrms
-   xx3(j)=((r2(j)-r1(j))**2+(x2(j)-x1(j))**2)*(1.0+((tb1(j)+tb2(j))*0 .5)**2)
+   xx3(j)=((r2(j)-r1(j))**2+(x2(j)-x1(j))**2)*(1.0+((tb1(j)+tb2(j))*0.5)**2)
  END DO
  CALL alg01(r2,xx3,nstrms,r,xx1,q1,150,0,0)
  DO  j=1,nstrms

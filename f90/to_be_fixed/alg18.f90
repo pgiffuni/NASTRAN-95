@@ -1,7 +1,6 @@
-SUBROUTINE alg18 (beta1,beta2,i1,i2,fact,x0,y0,s0,xr,y1,x1,y2,rdi  &
-        us,s,c1)
-     
- 
+SUBROUTINE alg18 (beta1,beta2,i1,i2,fact,x0,y0,s0,xr,y1,x1,y2,&
+                  rdius,s,c1)
+
  
  REAL, INTENT(IN OUT)                     :: beta1
  REAL, INTENT(IN OUT)                     :: beta2
@@ -18,7 +17,6 @@ SUBROUTINE alg18 (beta1,beta2,i1,i2,fact,x0,y0,s0,xr,y1,x1,y2,rdi  &
  REAL, INTENT(IN OUT)                     :: us
  REAL, INTENT(OUT)                        :: s(80)
  REAL, INTENT(IN)                         :: c1
- 
  
  delx=xr/FLOAT(i2-i1)
  xx=x0
@@ -46,5 +44,6 @@ SUBROUTINE alg18 (beta1,beta2,i1,i2,fact,x0,y0,s0,xr,y1,x1,y2,rdi  &
    s(j)=(xx-x0)*SQRT(am*am+1.0)+s0
  END DO
  y2=am*(xx-x0)+y0
+ 
  RETURN
 END SUBROUTINE alg18

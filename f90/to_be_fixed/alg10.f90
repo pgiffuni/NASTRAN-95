@@ -60,11 +60,12 @@ SUBROUTINE alg10
  vinh=vinh+SQRT((x(1,i)-x(1,i-1))**2+(r(1,i)-r(1,i-1))**2)*((vm(1,i  &
      )+vm(1,i-1))/2.0)**4/sclfac
  delh(i)=v5*(c1h+0.016*vinh)**0.8/vm(1,i)**3.4*sclfac*shape
- 140   wwbl(i)=0.5*wwbl(i)+0.5*(((2.0*r(nstrms,i)-delt(i)*COS(phi(nstrms)  &
-     ))*delt(i)/cppg(nstrms)+(2.0*r(1,i)+delh(i)*COS(phi(1)))*delh(i)/c  &
-     ppg(1))/((r(nstrms,i)+r(1,i))*xl(nstrms,i)))
+ 140   wwbl(i)=0.5*wwbl(i)+0.5*(((2.0*r(nstrms,i)-delt(i)*COS(phi(nstrms)))&
+              *delt(i)/cppg(nstrms)+(2.0*r(1,i)+delh(i)*COS(phi(1)))*delh(i)&
+              /cppg(1))/((r(nstrms,i)+r(1,i))*xl(nstrms,i)))
  IF(wwbl(i) > 0.3)wwbl(i)=0.3
  IF(wwbl(i) < 0.0)wwbl(i)=0.3
  150   CONTINUE
+ 
  RETURN
 END SUBROUTINE alg10

@@ -28,8 +28,8 @@ SUBROUTINE alg14 (xdata,ydata,ndata,xin,yout,yprime,nxy,nwot)
    GO TO    40
  END IF
  20    DO  i=1,nxy
-   yout(i)=((ydata(2)-ydata(1))/(xdata(2)-xdata(1)))*(xin(i)-xdata(1)  &
-       )+ydata(1)
+   yout(i)=((ydata(2)-ydata(1))/(xdata(2)-xdata(1)))*(xin(i)&
+          -xdata(1))+ydata(1)
  END DO
  40    IF (nwot > 0) THEN
    GO TO    50
@@ -48,10 +48,11 @@ SUBROUTINE alg14 (xdata,ydata,ndata,xin,yout,yprime,nxy,nwot)
  d(1)=0.0
  n=ndata-1
  DO  i=2,n
-   a(i)=(xdata(i+1)-xdata(i-1))/3.0-(xdata(i)-xdata(i-1))*b(i-1)/(6.0 *a(i-1))
-   b(i)=(xdata(i+1)-xdata(i))/6.0
-   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i)-ydata(i  &
-       -1))/(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))*d(i-1)/6.0/a(i-1)
+   a(i)=(xdata(i+1)-xdata(i-1))/3.0-(xdata(i)-xdata(i-1))*b(i-1)&
+       /(6.0 *a(i-1))b(i)=(xdata(i+1)-xdata(i))/6.0
+   d(i)=(ydata(i+1)-ydata(i))/(xdata(i+1)-xdata(i))-(ydata(i)&
+       -ydata(i-1))/(xdata(i)-xdata(i-1))-(xdata(i)-xdata(i-1))&
+       *d(i-1)/6.0/a(i-1)
  END DO
  a(ndata)=-e2
  b(ndata)=1.0
@@ -89,22 +90,22 @@ SUBROUTINE alg14 (xdata,ydata,ndata,xin,yout,yprime,nxy,nwot)
  IF (nwot-1 == 0) THEN
    GO TO   170
  END IF
- 160   yout(i)=m(j)/(6.0*dx)*(xdata(j+1)-xin(i))**3+m(j+1)/(6.0*dx)*(xin(  &
-     i)-xdata(j))**3+(xdata(j+1)-xin(i))*(ydata(j)/dx-m(j)/6.0*dx)+(xin  &
-     (i)-xdata(j))*(ydata(j+1)/dx-m(j+1)/6.0*dx)
+ 160   yout(i)=m(j)/(6.0*dx)*(xdata(j+1)-xin(i))**3+m(j+1)/(6.0*dx)&
+              *(xin(i)-xdata(j))**3+(xdata(j+1)-xin(i))*(ydata(j)&
+              /dx-m(j)/6.0*dx)+(xin(i)-xdata(j))*(ydata(j+1)/dx-m(j+1)/6.0*dx)
  IF (nwot == 0) THEN
    GO TO   180
  END IF
- 170   yprime(i)=(-m(j)*(xdata(j+1)-xin(i))**2/2.0+m(j+1)*(xin(i)-xdata(j  &
-     ))**2/2.0+ydata(j+1)-ydata(j))/dx-(m(j+1)-m(j))/6.0*dx
+ 170   yprime(i)=(-m(j)*(xdata(j+1)-xin(i))**2/2.0+m(j+1)*(xin(i)&
+                -xdata(j))**2/2.0+ydata(j+1)-ydata(j))/dx-(m(j+1)-m(j))/6.0*dx
  180   i=i+1
  IF (i-nxy > 0) THEN
    GO TO   240
  ELSE
    GO TO   100
  END IF
- 190   ydash=(ydata(2)-ydata(1))/(xdata(2)-xdata(1))-(m(1)/3.0+m(2)/6.0)*  &
-     (xdata(2)-xdata(1))
+ 190   ydash=(ydata(2)-ydata(1))/(xdata(2)-xdata(1))-(m(1)/3.0+m(2)/6.0)&
+            *(xdata(2)-xdata(1))
  IF (nwot-1 == 0) THEN
    GO TO   210
  END IF
@@ -114,8 +115,8 @@ SUBROUTINE alg14 (xdata,ydata,ndata,xin,yout,yprime,nxy,nwot)
  END IF
  210   yprime(i)=ydash
  GO TO 180
- 220   ydash=(ydata(ndata)-ydata(n))/(xdata(ndata)-xdata(n))+(m(ndata)/3.  &
-     0+m(n)/6.0)*(xdata(ndata)-xdata(n))
+ 220   ydash=(ydata(ndata)-ydata(n))/(xdata(ndata)-xdata(n))+(m(ndata)&
+            /3.0+m(n)/6.0)*(xdata(ndata)-xdata(n))
  IF (nwot-1 == 0) THEN
    GO TO   210
  END IF
@@ -125,5 +126,6 @@ SUBROUTINE alg14 (xdata,ydata,ndata,xin,yout,yprime,nxy,nwot)
  ELSE
    GO TO   210
  END IF
+ 
  240   RETURN
 END SUBROUTINE alg14

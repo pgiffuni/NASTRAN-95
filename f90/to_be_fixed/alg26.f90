@@ -2,15 +2,15 @@ SUBROUTINE alg26
      
  REAL :: loss,lami,lamip1,lamim1
  
- DIMENSION xx1(21),dsdm(21),drvwdm(21),dl(21),dsdl(21),fx1(21),fx2(  &
-     21),vvold(21),afun(20),bfun(20),hs(20),xm2(20),dvmdvm(20),dvmdm(21  &
-     ),tbip1(21),teip1(21)
+ DIMENSION xx1(21),dsdm(21),drvwdm(21),dl(21),dsdl(21),fx1(21),fx2(21),&
+         vvold(21),afun(20),bfun(20),hs(20),xm2(20),dvmdvm(20),dvmdm(21),  &
+         tbip1(21),teip1(21)
  
  COMMON /ud300c/ nstns,nstrms,nmax,nforce,nbl,ncase,nsplit,nread,  &
      npunch,npage,nset1,nset2,istag,icase,ifailo,ipass,i,ivfail,iffail,  &
      nmix,ntrans,nplot,iloss,lnct,itub,imid,ifail,iter,log1,log2,log3,  &
      log4,log5,log6,iprint,nmany,nstplt,neqn,nspec(30),nwork(30),  &
-     nloss(30),ndata(30),nterp(30),nmach(30),nl1(30),nl2(30),ndimen(30)  &
+     nloss(30),ndata(30),nte_rp(30),nmach(30),nl1(30),nl2(30),ndimen(30)  &
      ,is1(30),is2(30),is3(30),neval(30),ndiff(4),ndel(30),nliter(30),  &
      nm(2),nrad(2),ncurve(30),nwhich(30),nout1(30),nout2(30),nout3(30),  &
      nblade(30),dm(11,5,2),wfrac(11,5,2),r(21,30),xl(21,30),x(21,30),  &
@@ -65,7 +65,7 @@ SUBROUTINE alg26
    xx1(j)=xl(j,i+1)/xl(nstrms,i+1)
  END DO
  190   l1=is2(i+1)
- CALL alg01(datac(l1),data4(l1),ndata(i+1),xx1,xx1,x1,nstrms,nterp (i+1),0)
+ CALL alg01(datac(l1),data4(l1),ndata(i+1),xx1,xx1,x1,nstrms,nte_rp (i+1),0)
  DO  j=1,nstrms
    lamip1(j)=1.0-xx1(j)
  END DO
@@ -81,8 +81,8 @@ SUBROUTINE alg26
    dvmdm(j)=0.0
    IF(ipass == 1)CYCLE
    dsdm(j)=((s(j,i+1)-s(j,i))/x1+(s(j,i)-s(j,i-1))/x2)/2.0*g*ej
-   drvwdm(j)=((r(j,i+1)*vw(j,i+1)-r(j,i)*vw(j,i))/x1+(r(j,i)*vw(j,i)-  &
-       rim1(j)*vw(j,i-1))/x2)/(2.0*r(j,i))
+   drvwdm(j)=((r(j,i+1)*vw(j,i+1)-r(j,i)*vw(j,i))/x1+(r(j,i)*vw(j,i)&
+            -rim1(j)*vw(j,i-1))/x2)/(2.0*r(j,i))
    dvmdm(j)=((vm(j,i+1)-vm(j,i))/x1+(vm(j,i)-vm(j,i-1))/x2)*0.5
  END DO
  IF(ipass == 1.OR.ndata(i) == 0.OR.neqn == 3.OR.nwork(i) /= 0.OR.nw  &
@@ -114,7 +114,7 @@ SUBROUTINE alg26
    teip1(j)=xl(j,i)/xl(nstrms,i)
  END DO
  229   l1=is2(i)
- CALL alg01(datac(l1),data3(l1),ndata(i),teip1,teip1,x1,nstrms,nte rp(i),0)
+ CALL alg01(datac(l1),data3(l1),ndata(i),teip1,teip1,x1,nstrms,nte_rp(i),0)
  x1=speed(i+1)*spdfac(icase)*pi/(30.0*sclfac)
  DO  j=1,nstrms
    teip1(j)=TAN(teip1(j)/c1)
@@ -168,7 +168,7 @@ SUBROUTINE alg26
    xx1(j)=xl(j,2)/xl(nstrms,2)
  END DO
  370   l1=is2(2)
- CALL alg01(datac(l1),data4(l1),ndata(2),xx1,xx1,x1,nstrms,nterp(2 ),0)
+ CALL alg01(datac(l1),data4(l1),ndata(2),xx1,xx1,x1,nstrms,nte_rp(2 ),0)
  DO  j=1,nstrms
    lamip1(j)=1.0-xx1(j)
  END DO
@@ -217,8 +217,8 @@ SUBROUTINE alg26
    lnct=1
    480   lnct=lnct+1
    WRITE(log2,490)ipass,i,iter,j,x1
-   490   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu  &
-       be,i3,53H  static enthalpy below limit in momentum equation at,e13 .5)
+   490   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu&
+        &be,i3,53H  static enthalpy below limit in momentum equation at,e13 .5)
    500   FORMAT(1H1)
    510   ifail=1
    x1=hmin
@@ -226,17 +226,18 @@ SUBROUTINE alg26
    x7=alg7(x1,x2)
    x2=(cppg(j)+cppg(j+1))*0.5
    x3=(sppg(j)+sppg(j+1))*0.5
-   afun(j)=-2.0*x3*(dvmdm(j)+dvmdm(j+1))/(vvold(j)+vvold(j+1))-x2*(cr  &
-       (j)+cr(j+1))
+   afun(j)=-2.0*x3*(dvmdm(j)+dvmdm(j+1))/(vvold(j)+vvold(j+1))&
+          -x2*(cr(j)+cr(j+1))
    bfun(j)=2.0*(fx2(j)-x7*dsdl(j)-fx1(j))
    IF(ipass == 1.OR.i == nstns)GO TO 580
-   IF(ndata(i) == 0.OR.neqn == 3.OR.(nwork(i) == 0.AND.nwork(i+1) ==  &
-       0))GO TO 560
+   IF(ndata(i) == 0.OR.neqn == 3.OR.(nwork(i) == 0.AND.&
+    nwork(i+1) == 0))GO TO 560
    IF(nwork(i) == 0)GO TO 540
    x4=(tbeta(j,i)+tbeta(j+1,i))*0.5
    x5=(taneps(j)+taneps(j+1))*0.5
-   530   bfun(j)=bfun(j)+x7*(dsdm(j)+dsdm(j+1))*(x3/(1.0+x4*x4)-x5*x4/(1.0+  &
-       x4*x4)*0.5)-x5*(drvwdm(j)+drvwdm(j+1))*(vvold(j)+vvold(j+1))*0.5
+   530   bfun(j)=bfun(j)+x7*(dsdm(j)+dsdm(j+1))*(x3/(1.0+x4*x4)-x5*x4&
+                /(1.0+x4*x4)*0.5)-x5*(drvwdm(j)+drvwdm(j+1))&
+                *(vvold(j)+vvold(j+1))*0.5
    GO TO 580
    540   x4=(tbip1(j)+tbip1(j+1))*0.5
    x5 = (teip1(j)+teip1(j+1))*0.5
@@ -260,8 +261,8 @@ SUBROUTINE alg26
  lnct=1
  600   lnct=lnct+1
  WRITE(log2,610)ipass,i,iter,jj,x1
- 610   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu  &
-     be,i3,43H  momentum equation exponent above limit at,e13.5)
+ 610   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu&
+     &be,i3,43H  momentum equation exponent above limit at,e13.5)
  620   ifail=1
  x1=88.0
  630   x1=EXP(x1)
@@ -280,8 +281,8 @@ SUBROUTINE alg26
    IF(ipass <= nforce)GO TO 674
    CALL alg03(lnct,1)
    WRITE(log2,672)ipass,i,iter,j
-   672   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-       NE,i3,50H  meridional velocity greater than twice mid value)
+   672   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+       &ne,i3,50H  meridional velocity greater than twice mid value)
    674   vv(j)=4.0*vvold(imid)**2
    676   IF(vv(j) >= 1.0)GO TO 702
    IF(ipass <= nforce)GO TO 700
@@ -290,8 +291,8 @@ SUBROUTINE alg26
    lnct=1
    680   lnct=lnct+1
    WRITE(log2,690)ipass,i,iter,j,vv(j)
-   690   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-       NE,i3,46H  (meridional velocity) squared below limit at,e13.5)
+   690   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+       &ne,i3,46H  (meridional velocity) squared below limit at,e13.5)
    700   vv(j)=1.0
    ifail=1
    CYCLE
@@ -299,7 +300,7 @@ SUBROUTINE alg26
  END DO
  x1=0.0
  DO  j=k,itub
-   x1=x1+(xl(j+1,i)-xl(j,i))*ABS((vv(j+1)+vv(j))/(vvold(j+1)+vvold(j) )-1.0)
+   x1=x1+(xl(j+1,i)-xl(j,i))*ABS((vv(j+1)+vv(j))/(vvold(j+1)+vvold(j))-1.0)
  END DO
  x1=x1/(xl(nstrms,i)-xl(k,i))
  x2=0.1
@@ -309,8 +310,8 @@ SUBROUTINE alg26
  END DO
  IF(nloss(i) == 1.AND.nl2(i) == 0)CALL alg07
  DO  j=1,itub
-   hs(j)=(h(j,i)+h(j+1,i))/2.0-(((vv(j)+vv(j+1))/2.0)**2+((vw(j,i)+vw  &
-       (j+1,i))/2.0)**2)/(2.0*g*ej)
+   hs(j)=(h(j,i)+h(j+1,i))/2.0-(((vv(j)+vv(j+1))/2.0)**2+((vw(j,i)&
+        +vw(j+1,i))/2.0)**2)/(2.0*g*ej)
    IF(hs(j) >= hmin)GO TO 800
    IF(ipass <= nforce)GO TO 790
    IF(lnct < npage)GO TO 770
@@ -337,8 +338,8 @@ SUBROUTINE alg26
  ifaie=0
  iconf2=0
  x2=(tbeta(j,i)+tbeta(jold,i))/2.0
- x1=(xi(j)+xi(jold))/2.0+((xn*(r(j,i)+r(jold,i))/2.0)**2-vav**2*(1.  &
-     0+x2*x2))/(2.0*g*ej)
+ x1=(xi(j)+xi(jold))/2.0+((xn*(r(j,i)+r(jold,i))/2.0)**2-vav**2&
+    *(1.0+x2*x2))/(2.0*g*ej)
  IF(x1 >= hmin)GO TO 870
  IF(ipass <= nforce)GO TO 860
  IF(lnct < npage)GO TO 840
@@ -346,8 +347,8 @@ SUBROUTINE alg26
  lnct=1
  840   lnct=lnct+1
  WRITE(log2,850)ipass,i,iter,jj,loop,x1
- 850   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu  &
-     be,i3,6H  loop,i3,43H  static h in momentum equn. below limit at,e 13.5)
+ 850   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamtu&
+     &be,i3,6H  loop,i3,43H  static h in momentum equn. below limit at,e 13.5)
  860   ifaie=1
  iconf2 = 1
  x1=hmin
@@ -377,8 +378,8 @@ SUBROUTINE alg26
  x1=SQRT(x1)
  x2=3.0*vvold(imid)
  WRITE(log2,934)ipass,i,iter,j,loop,x1,x2
- 934   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-     NE,i3,6H  loop,i3,33H  meridional velocity above limit,e13.5,9H  l  &
+ 934   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+     &ne,i3,6H  loop,i3,33H  meridional velocity above limit,e13.5,9H  l  &
      imit =,e13.5)
  936   x1=9.0*vvold(imid)**2
  938   IF(x1 >= 1.0)GO TO 950
@@ -388,8 +389,8 @@ SUBROUTINE alg26
  lnct=1
  930   lnct=lnct+1
  WRITE(log2,940)ipass,i,iter,j ,loop,x1
- 940   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-     NE,i3,6H  loop,i3,46H  (meridional velocity) squared below limit a t,e13.5)
+ 940   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+     &ne,i3,6H  loop,i3,46H  (meridional velocity) squared below limit a t,e13.5)
  944   x1=1.0
  ifaie=1
  iconf2=1
@@ -405,8 +406,8 @@ SUBROUTINE alg26
  lnct=1
  970   lnct=lnct+1
  WRITE(log2,980)ipass,i,iter,j,vv(j),vold
- 980   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-     NE,i3,38H  meridional velocity unconverged  vm=,e13.6,9H vm(OLD)=, e13.6)
+ 980   FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+     &ne,i3,38H  meridional velocity unconverged  vm=,e13.6,9H vm(OLD)=, e13.6)
  990   IF(ifaie == 1)ifail=1
  IF(iconf2 == 1)iconf1=1
  IF(j == nstrms)GO TO 1000
@@ -444,8 +445,8 @@ SUBROUTINE alg26
  x2=bblock(i)*bdist(i)
  x3=bblock(i)*(1.0-bdist(i))/xl(nstrms,i)
  DO  j=1,itub
-   x1=dl(j)*(r(j+1,i)+r(j,i))*alg5(hs(j),(s(j,i)+s(j+1,i))/2.0)*(vv(j  &
-       )+vv(j+1))*(cppg(j)+cppg(j+1))*pi/(4.0*sclfac**2)
+   x1=dl(j)*(r(j+1,i)+r(j,i))*alg5(hs(j),(s(j,i)+s(j+1,i))/2.0)&
+      *(vv(j)+vv(j+1))*(cppg(j)+cppg(j+1))*pi/(4.0*sclfac**2)
    x1=x1*((lami(j)+lami(j+1))/2.0-wwbl(i)-x2-x3*(xl(j,i)+xl(j+1,i)))
    delw(j+1)=delw(j)+x1
    x4=0.0
@@ -463,8 +464,8 @@ SUBROUTINE alg26
    l1=l1+1
    GO TO 1140
    1150  x4=x4/FLOAT(j-imid+1)
-   1200  dwdv=dwdv+x1*(1.0-xm2(j))*2.0/((vv(j)+vv(j+1))*(1.0-((xl(j,i)+xl(j  &
-       +1,i))*0.5-xl(imid,i))*x4))
+   1200  dwdv=dwdv+x1*(1.0-xm2(j))*2.0/((vv(j)+vv(j+1))*(1.0-((xl(j,i)&
+             +xl(j+1,i))*0.5-xl(imid,i))*x4))
  END DO
  w=delw(nstrms)
  fm2=dwdv/w*vv(imid)
@@ -491,8 +492,8 @@ SUBROUTINE alg26
    lnct=1
    1240  lnct=lnct+1
    WRITE(log2,1250)ipass,i,iter,j,vv(j)
-   1250  FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli  &
-       NE,i3,50H  meridional velocity below limit in continuity at,e13.5)
+   1250  FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,12H  streamli&
+       &ne,i3,50H  meridional velocity below limit in continuity at,e13.5)
    1260  vv(j)=1.0
    ifail=1
  END DO
@@ -509,8 +510,8 @@ SUBROUTINE alg26
  lnct=1
  1310  lnct=lnct+1
  WRITE(log2,1320)ipass,i,iter
- 1320  FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,43H  other co  &
-     ntinuity equation branch required)
+ 1320  FORMAT(5X,4HPASS,i3,9H  station,i3,11H  iteration,i3,43H  other co&
+     &ntinuity equation branch required)
  GO TO 1230
  1330  IF(vv(imid) > vmax.AND.iconf1 == 0)vmax=vv(imid)
  dv=0.1*vv(imid)
@@ -524,8 +525,8 @@ SUBROUTINE alg26
  GO TO 1390
  1354  IF(iter >= itmax)GO TO 1360
  IF(i == 1)GO TO 460
- IF((nloss(i) == 1.AND.nl2(i) == 0).OR.(nwork(i) >= 5.AND.nloss(i).  &
-     EQ.2))CALL alg07
+ IF((nloss(i) == 1.AND.nl2(i) == 0).OR.(nwork(i) >= 5.AND.&
+            nloss(i) == 2))CALL alg07
  GO TO 460
  1360  IF(ipass <= nforce)GO TO 1390
  IF(lnct < npage)GO TO 1370
@@ -537,9 +538,9 @@ SUBROUTINE alg26
  x3=vv(imid)/vvold(imid)
  x4=vv(nstrms)/vvold(nstrms)
  WRITE(log2,1380)ipass,i,x1,x2,x3,x4
- 1380  FORMAT(5X,4HPASS,i3,9H  station,i3,49H  momentum AND/OR continuity  &
-     unconverged w/wspec=,f8.5,16H vm/vm(OLD) hub=,f8.5,5H mid=,f8.5,5  &
-     h tip=,f8.5)
+ 1380  FORMAT(5X,4HPASS,i3,9H  station,i3,49H  momentum AND/OR continuity &
+     &unconverged w/wspec=,f8.5,16H vm/vm(OLD) hub=,f8.5,5H mid=,f8.5,&
+     5H tip=,f8.5)
  1390  IF(ifail /= 0.AND.ifailo == 0)ifailo=i
  DO  j=1,nstrms
    vm(j,i)=vv(j)
@@ -566,5 +567,6 @@ SUBROUTINE alg26
    h(j,i)=xi(j)+xn*r(j,i)*vw(j,i)/(g*ej)
  END DO
  1480  CONTINUE
+ 
  RETURN
 END SUBROUTINE alg26
