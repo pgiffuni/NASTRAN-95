@@ -27,8 +27,8 @@ SUBROUTINE amgt1d (ajj,tsonx,tamach,tredf,nstns2)
    IF(nline == 1) GO TO 90
    IF(tamach(nline) >= 1.0) GO TO 20
 !       SUBSONIC
-   IF(nline . EQ.2) nline1=1
-   IF(nline . EQ.2) GO TO 93
+   IF(nline == 2) nline1=1
+   IF(nline == 2) GO TO 93
    17 nline1 = nline -2
    nline2 = nline -1
    GO TO 70

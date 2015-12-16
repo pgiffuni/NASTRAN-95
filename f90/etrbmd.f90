@@ -46,7 +46,7 @@ SUBROUTINE etrbmd
  COMMON /emgprm/  dum(15),ismb(3),iprec,nogo
  COMMON /matin /  matid,inflag,eltemp,stress,sinth,costh
  COMMON /matout/  g11,g12,g13,g22,g23,g33,rho,alpha1,alpha2,alp12,  &
-     t_sub_0,g sub e,sigten,sigcom,sigshe, g2x211,g2x212,g2x222,SPACE(2)
+     t_sub_0,g_sub_e,sigten,sigcom,sigshe, g2x211,g2x212,g2x222,SPACE(2)
  COMMON /emgest/  ielid,ngrid(3),angle,matid1,eye,matid2,t2,fmu,  &
      z11,z22,dummy1,x1,y1,z1,dummy2,x2,y2,z2,dummy3, x3,y3,z3,dumb(76)
  COMMON /emgtrx/  a(225),prod9(9),temp9(9),xsubb,xsubc,ysubc,  &

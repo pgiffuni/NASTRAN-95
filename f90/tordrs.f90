@@ -50,7 +50,7 @@ SUBROUTINE tordrs
      ,                  sinth         ,costh
  COMMON   /matout/ e(3)          ,anu(3)  &
      ,                  rho           ,g(3)  &
-     ,                  alf(3)        ,tzero,    gsube
+     ,                  alf(3)        ,tzero,    g_sub_e
  COMMON  /system/ ksystm(55),heat
  
  COMMON  /emgprm/ dum(15), ismb(3),iprec,nogo,iheat
@@ -61,7 +61,7 @@ SUBROUTINE tordrs
  
  EQUIVALENCE (dict5,dict(5))
  EQUIVALENCE (iecpt(1),ecpt(1),idel)
- EQUIVALENCE ( constd(2) , twopi  )
+ EQUIVALENCE ( constd(2) , two_pi  )
  EQUIVALENCE ( constd(4) , degrad )
  EQUIVALENCE        (a1, alph(1)), (a2, alph(2))
  EQUIVALENCE        (gambqf(1), gambq(1))
@@ -322,7 +322,7 @@ SUBROUTINE tordrs
  vpt= anu(1)
  vtp= vpt * et / ep
  del = 1. - vpt*vtp
- dict5 = g sube
+ dict5 = g_sub_e
  
  
 ! GENERATE THE ELASTIC CONSTANTS MATRIX(2X2)
@@ -343,8 +343,8 @@ SUBROUTINE tordrs
  d(2) = d(1) * d(7)
  d(3) = d(2) * d(7)
  d(4) = vpt * d(7)
- d(5) =(ep * tm / (d(1) - vpt**2)) * twopi
- d(6) = (ep*tf**3)/(12.*(d(1)-vpt**2))*twopi
+ d(5) =(ep * tm / (d(1) - vpt**2)) * two_pi
+ d(6) = (ep*tf**3)/(12.*(d(1)-vpt**2))*two_pi
  
 ! CALL THE DMATRIX SUBROUTINE TO COMPUTE THE STIFFNESS MATRIX (10X10)
  
@@ -413,7 +413,7 @@ SUBROUTINE tordrs
  am( 99) = delint(55)
  am(100) = delint(61)
  
- d(1) = two pi * rho * tm
+ d(1) = two_pi * rho * tm
  DO    i=1,100
    am(i)= d(1) * am(i)
  END DO

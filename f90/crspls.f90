@@ -6,16 +6,14 @@ SUBROUTINE crspls (*,jump,mu,bp,rs,again,n23)
 !     SINGLE PRECISION VERSION
  
  
- , INTENT(IN)                             :: *
  INTEGER, INTENT(IN OUT)                  :: jump
  INTEGER, INTENT(OUT)                     :: mu
  INTEGER, INTENT(IN)                      :: bp
  INTEGER, INTENT(OUT)                     :: rs(3)
  LOGICAL, INTENT(IN OUT)                  :: again
  INTEGER, INTENT(OUT)                     :: n23
- IMPLICIT INTEGER (a-z)
  LOGICAL :: debug
- INTEGER :: mcode(2),NAME(2),sild(6)
+ INTEGER :: mcode(2),NAME(2),sild(6),retn1,retn2,retn3,retn4,retn
  REAL :: z(1),zk,wt,dl,coeff
  REAL :: x1,x2,x3,y1,y2,y3,z1,z2,z3,a(3),b(3),c(3),d(9),  &
      LEN,leng,one,zero,half,eps,espx,ans,di,fac,ln3,  &
@@ -695,5 +693,6 @@ SUBROUTINE crspls (*,jump,mu,bp,rs,again,n23)
  GO TO 30
  
  1300 IF (nogox == 1) nogo = 1
+ 
  RETURN
 END SUBROUTINE crspls

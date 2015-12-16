@@ -553,8 +553,8 @@ SUBROUTINE ktshls
        IF (uniben) EXIT
      END DO
      160 CONTINUE
-     sb 7 = 0.0
-     sb 9 = 0.0
+     sb_7 = 0.0
+     sb_9 = 0.0
      sb10 = 0.0
      sb18 = 0.0
      sb21 = 0.0
@@ -596,25 +596,25 @@ SUBROUTINE ktshls
        sb37 = 0.0
        sb39 = 0.0
        sb40 = 0.0
-       IF (ixmyr > 0)  sb 1 =-g11*rix*h4*cab(k)*f(ixmyr,jxnys1)
+       IF (ixmyr > 0)  sb1 =-g11*rix*h4*cab(k)*f(ixmyr,jxnys1)
        iymxr  = iy + mx + rk(k)
        jynxs1 = jy + nx + sk(k) + 1
-       IF (iymxr > 0)  sb 2 =-g11*riy*h4*cab(k)*f(iymxr,jynxs1)
+       IF (iymxr > 0)  sb2 =-g11*riy*h4*cab(k)*f(iymxr,jynxs1)
        mxmyr1 = mx + my + rk(k) + 1
        nxnys1 = nx + ny + sk(k) + 1
-       sb 3 = g11*h4**2*cab(k)*f(mxmyr1,nxnys1)
+       sb3 = g11*h4**2*cab(k)*f(mxmyr1,nxnys1)
        kxmyr1 = kx + my + rk(k) + 1
        lxnys  = lx + ny + sk(k)
-       IF (lxnys > 0)  sb 4 =-g22*rlx*h6*cab(k)*f(kxmyr1,lxnys)
+       IF (lxnys > 0)  sb4 =-g22*rlx*h6*cab(k)*f(kxmyr1,lxnys)
        mxkyr1 = mx + ky + rk(k) + 1
        nxlys  = nx + ly + sk(k)
-       IF (nxlys > 0)  sb 5 =-g22*rly*h6*cab(k)*f(mxkyr1,nxlys)
+       IF (nxlys > 0)  sb5 =-g22*rly*h6*cab(k)*f(mxkyr1,nxlys)
        mxmyr1 = mx + my + rk(k) + 1
        nxnys1 = nx + ny + sk(k) + 1
-       sb 6 = g22*h6**2*cab(k)*f(mxmyr1,nxnys1)
+       sb6 = g22*h6**2*cab(k)*f(mxmyr1,nxnys1)
        ixmyr1 = ix + my + rk(k) + 1
        jxnys  = jx + ny + sk(k)
-       IF(jxnys > 0)  sb 8 =-g33*rjx*h5*cab(k)*f(ixmyr1,jxnys)
+       IF(jxnys > 0)  sb8 =-g33*rjx*h5*cab(k)*f(ixmyr1,jxnys)
        kxmyr  = kx + my + rk(k)
        lxnys1 = lx + ny + sk(k) + 1
        IF (kxmyr > 0)  sb11 =-g33*rkx*h5*cab(k)*f(kxmyr,lxnys1)
@@ -683,7 +683,7 @@ SUBROUTINE ktshls
        IF (kxmyr > 0)  sb39 =-g23*rkx*h6*cab(k)*f(kxmyr,lxnys1)
        mxkyr1 = mx + ky + rk(k) + 1
        nxlys  = nx + ly + sk(k)
-       IF (nxlys. GT. 0)  sb40 =-g23*rly*h5*cab(k)*f(mxkyr1,nxlys)
+       IF (nxlys > 0)  sb40 =-g23*rly*h5*cab(k)*f(mxkyr1,nxlys)
        sb41 = sb3 + sb6 + sb14 + sb17 + sb25 + sb35
        IF (i <= 12) sb41 = 0.0
        st =  st   + sb1  + sb2  + sb4  + sb5  + sb7  + sb8  + sb9  +  &

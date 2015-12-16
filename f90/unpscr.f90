@@ -78,9 +78,8 @@ SUBROUTINE unpscr (in,out,z,buf1,buf2,maxz,tysign,flag)
  INTEGER, INTENT(IN)                      :: maxz
  INTEGER, INTENT(IN)                      :: tysign
  INTEGER, INTENT(IN)                      :: flag
- IMPLICIT INTEGER (a-z)
  LOGICAL :: flag23,debug
- INTEGER :: nam(2),tyiijj(4),SAVE(4)
+ INTEGER :: nam(2),tyiijj(4),SAVE(4),type
  CHARACTER (LEN=8) :: fbwd,forwd,backwd
  CHARACTER (LEN=25) :: sfm
  CHARACTER (LEN=29) :: uim

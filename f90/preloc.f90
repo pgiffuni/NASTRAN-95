@@ -3,8 +3,6 @@ SUBROUTINE preloc (*,buf,FILE)
 !     PRELOC OPENS AND POSITIONS REQUESTED FILE TO FIRST DATA RECORD.
 !     LOCATE POSITIONS FILE TO REQUESTED DATA RECORD WITHIN FILE.
  
- 
- , INTENT(IN OUT)                         :: *
  INTEGER, INTENT(OUT)                     :: buf(2)
  INTEGER, INTENT(IN)                      :: FILE
  EXTERNAL        andf
@@ -58,6 +56,7 @@ SUBROUTINE preloc (*,buf,FILE)
  20 CALL READ (*50,*20,trl(1),trl(2),3,0,flag)
  IF (trl(2) /= id(1)) GO TO 22
  flg = trl(4)
+ 
  RETURN
  
 !     SKIP RECORD. READ ID WORDS FROM NEXT RECORD. IF MATCH,RETURN.
@@ -70,6 +69,7 @@ SUBROUTINE preloc (*,buf,FILE)
  30 CALL READ (*50,*3,trl(1),trl(5),3,0,flag)
  IF (trl(5) /= id(1)) GO TO 32
  flg = trl(7)
+ 
  RETURN
  
  32 IF (trl(5) /= trl(2)) GO TO 25
@@ -77,6 +77,7 @@ SUBROUTINE preloc (*,buf,FILE)
 !WKBD IF (J .NE. 0) CALL ERRTRC ('LOCATE  ',35)
  CALL mesage (30,72,id)
  CALL fwdrec (*2,trl(1))
+ 
  RETURN 1
  
 !     CODE TO POSITION FILE TO FIRST DATA RECORD.
@@ -86,4 +87,5 @@ SUBROUTINE preloc (*,buf,FILE)
  last = 1
  CALL fwdrec (*2,trl(1))
  GO TO ret, (20,30)
+ 
 END SUBROUTINE preloc

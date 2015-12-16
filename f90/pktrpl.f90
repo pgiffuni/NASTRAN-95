@@ -72,7 +72,7 @@ SUBROUTINE pktrpl
  COMMON /condas/ consts(5)
  COMMON /matin / matid,inflag,eltemp,stress,sinth,costh
  COMMON /matout/g11,g12,g13,g22,g23,g33,rho,alpha1,alpha2,alp12,  &
-     t_sub_0, g sub e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222
+     t_sub_0, g_sub_e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222
  COMMON /pla42c/ npvt, dum1(3) ,                  dumcl(145)         ,nogo
  COMMON /pla4es/ ecpt(100)
  COMMON /pla42d/ a(81)         ,s(18)         ,t(9)  &

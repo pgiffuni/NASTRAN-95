@@ -37,4 +37,6 @@ BLOCK DATA vdrbd
  
  DATA   cei    /4HCEIG,4HEN  /,frq   /4HFREQ,4HRESP/  &
      ,trn    /4HTRAN,4HRESP/,modal /4HMODA,4HL   / ,DIRECT /4HDIRE,4HCT  /
-END SUBROUTINE vdrb
+
+END 
+

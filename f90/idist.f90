@@ -33,6 +33,7 @@ FUNCTION idist (ns,ml,maxlev,ig,ic,ideg,idis,iw,icc,jg)
      GO TO    50
    END IF
    40 idis(i) = 0
+   50 CONTINUE
  END DO
  ll = 1
  l  = 0
@@ -75,6 +76,7 @@ FUNCTION idist (ns,ml,maxlev,ig,ic,ideg,idis,iw,icc,jg)
    150 idis(ia) = l
    ko = ko + 1
    iw(ko) = ia
+   200 CONTINUE
  END DO
  IF (ko-nnc < 0) THEN
    GO TO   130
@@ -94,5 +96,6 @@ FUNCTION idist (ns,ml,maxlev,ig,ic,ideg,idis,iw,icc,jg)
  215 l = 0
  GO TO 205
  220 idist = 1
+ 
  RETURN
 END FUNCTION idist

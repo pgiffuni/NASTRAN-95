@@ -55,7 +55,7 @@ SUBROUTINE triaax
  COMMON /emgest/ idel,igp(3),dgama,dm1,matid,spa(14),ics1,r1,zz1,  &
      zer,ics2,r2,zz2,zer2,ics3,r3,zz3,zer3,tempe
  COMMON /matin / matidc,matflg,eltemp,stress,sinth,costh
- COMMON /matout/ e(3),anu(3),rho,g(3),alf(3),tzero,gsube,moskp(9), setmat
+ COMMON /matout/ e(3),anu(3),rho,g(3),alf(3),tzero,g_sub_e,moskp(9), setmat
  COMMON /condad/ consts(5)
  COMMON /matpz / pzout(51)
  
@@ -241,10 +241,10 @@ SUBROUTINE triaax
  alf(2) = pzout(48)
  alf(3) = pzout(49)
  tzero  = pzout(50)
- gsube  = pzout(51)
+ g_sub_e  = pzout(51)
  220 CONTINUE
  IF (setmat == 2.) GO TO 7780
- dict5 = g sub e
+ dict5 = g_sub_e
  IF (ksys78 > 0) GO TO 249
  
 !     SET MATERIAL PROPERTIES IN DOUBLE PRECISION VARIABLES

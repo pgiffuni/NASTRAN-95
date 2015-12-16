@@ -39,7 +39,7 @@ SUBROUTINE pkrod
  DIMENSION        iecpt(200)
  
 !     PLA42 PARAMETERS COMMUNICATION BLOCK
- COMMON /pla42c/  npvt,g NEW,g OLD,dumcl(146),nogo
+ COMMON /pla42c/  npvt,g_new,g_old,dumcl(146),nogo
  
 !     ECPT COMMON BLOCK
  COMMON /pla42e/  ecpt(100)
@@ -50,8 +50,8 @@ SUBROUTINE pkrod
  
 !     INPUT AND OUTPUT BLOCKS FOR SUBROUTINE MAT
  COMMON /matin /  matidc,matflg,temdum,plaarg,matdum(2)
- COMMON /matout/  e sub 0,g sub 0,dummat(18)
- EQUIVALENCE      (iecpt(1),ecpt(1)) ,(plaans,esub0)
+ COMMON /matout/  e_sub_0,g_sub_0,dummat(18)
+ EQUIVALENCE      (iecpt(1),ecpt(1)) ,(plaans,e_sub_0)
  
 !     BEGIN EXECUTION
  
@@ -145,8 +145,8 @@ SUBROUTINE pkrod
 !     COMPUTE CURRENT STRAIN AND ESTIMATED NEXT STRAIN
  
  eps1   = epsin2 + deps1
- gamma  = g NEW
- gammas = g OLD
+ gamma  = g_new
+ gammas = g_old
  eps2   = eps1 + gamma*deps1
  
 !     CALL MAT ROUTINE TWICE TO GET SIGMA1 AND SIGMA2 AS A FUNCTION OF
@@ -167,7 +167,7 @@ SUBROUTINE pkrod
  IF (ecpt(19) /= 0.0) GO TO 41
  matflg = 1
  CALL mat (iecpt(1))
- d(2)   = e sub 0
+ d(2)   = e_sub_0
  sigma1 = d(2)*eps1
  
 !     FOR STIFFNESS MATRIX GENERATION, COMPUTE THE NEW MATERIAL
@@ -182,8 +182,8 @@ SUBROUTINE pkrod
  
  44 matflg = 1
  CALL mat (iecpt(1))
- d(2) = e sub 0
- d(4) = gsub0
+ d(2) = e_sub_0
+ d(4) = g_sub_0
  
 !     SET UP STIFFNESS MATRIX CONSTANTS IN DSCL AND DSCR
  

@@ -30,7 +30,7 @@ SUBROUTINE ktrbsc (iopt)
  COMMON /sma1cl/  iopt4,k4ggsw,npvt,dumcl(7),link(10),idetck, dodet,nogo
  COMMON /matin /  matid,inflag,eltemp,stress,sinth,costh
  COMMON /matout/  g11,g12,g13,g22,g23,g33,rho,alpha1,alpha2,alp12,  &
-     t_sub_0, g sub e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222
+     t_sub_0, g_sub_e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222
  COMMON /sma1et/  necpt(1),ngrid(3),angle,matid1,eye,matid2,t2,fmu,  &
      z11,z22,dummy1,x1,y1,z1,dummy2,x2,y2,z2,dummy3, x3,y3,z3,dumb(76)
  COMMON /sma1dp/  a(225),prod9(9),temp9(9),xsubb,xsubc,ysubc,e(18),  &
@@ -651,7 +651,7 @@ SUBROUTINE ktrbsc (iopt)
 !     SHIP TO SMA1B
    
    CALL sma1b (a(100),necpt(j+1),-1,ifkgg,0.0D0)
-   temp = g sub e
+   temp = g_sub_e
    IF (iopt4 == 0) THEN
      GO TO   800
    END IF
@@ -660,7 +660,7 @@ SUBROUTINE ktrbsc (iopt)
    END IF
    802 CALL sma1b (a(100),necpt(j+1),-1,if4gg,temp)
    k4ggsw = 1
-   
+   800 CONTINUE   
  END DO
  
  RETURN

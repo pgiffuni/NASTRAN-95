@@ -7,10 +7,9 @@ SUBROUTINE mpy3dr (z)
  
  
  INTEGER, INTENT(IN OUT)                  :: z(1)
- IMPLICIT INTEGER (a-z)
  EXTERNAL         andf,orf,complf,lshift
  LOGICAL :: e
- INTEGER :: mpy(3),mcb(7,3),NAME(2)
+ INTEGER :: mpy(3),mcb(7,3),NAME(2),ac,aelms,ar,bc,belms,ttg
  REAL :: rhoa,rhob,rhoe,tcol,timcon,timem,timem1,timem2, timem3
  DOUBLE PRECISION :: dd,nn,mm,pp,xx
  CHARACTER (LEN=29) :: uim
@@ -382,5 +381,6 @@ GO TO 1001
 meth = kmeth
 mpy(3) = jend
 CALL conmsg (mpy,3,0)
+
 RETURN
 END SUBROUTINE mpy3dr

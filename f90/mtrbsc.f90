@@ -38,7 +38,7 @@ SUBROUTINE mtrbsc
      ,                  link(10)           ,nogo
  COMMON /matin / matid,inflag,eltemp,stress,sinth,costh
  COMMON /matout/g11,g12,g13,g22,g23,g33,rho,alpha1,alpha2,alp12,  &
-     t_sub_0, g sub e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222, SPACE(2)
+     t_sub_0, g_sub_e, sigten, sigcom, sigshe, g2x211, g2x212, g2x222, SPACE(2)
  
 !     ECPT BLOCK
  COMMON /sma2et/ necpt(1)      ,ngrid(3)  &

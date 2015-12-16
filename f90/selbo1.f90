@@ -56,7 +56,7 @@ SUBROUTINE selbo1
  COMMON /sdr2x5/ jelid,jsilno(2),sa(36),sb(36),out(21),therm(30)
  COMMON /sdr2x6/ ke(144),kep(144),dela(6),delb(6)
  COMMON /matin / matidc,matflg,eltemp,stress,sinth,costh
- COMMON /matout/ e,g,nu,rho,alpha,t_sub_0,gsube,sigt,sigc,sigs
+ COMMON /matout/ e,g,nu,rho,alpha,t_sub_0,g_sub_e,sigt,sigc,sigs
  EQUIVALENCE     (ielid,ecpt(1),iecpt(1)), (ta(10),tb(1)),  &
      (kee(1,1),ke(1),s(1,1))
  DATA    dcr   / .017453292 /
@@ -161,7 +161,7 @@ SUBROUTINE selbo1
  IF (isop == 3) matflg = 12
  eltemp = tempel
  CALL mat (iecpt(1))
- dampc = g sub e
+ dampc = g_sub_e
  
 !     SET UP INTERMEDIATE VARIABLES FOR ELEMENT STIFFNESS MATRIX
 !     CALCULATION

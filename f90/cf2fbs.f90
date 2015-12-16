@@ -212,6 +212,7 @@ SUBROUTINE cf2fbs (tpose,xout,iobuf)
      GO TO   410
    ELSE
      GO TO   500
+     500 CONTINUE
    END IF
  END DO
  CALL CLOSE (mcbut(1),rew)

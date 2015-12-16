@@ -56,6 +56,7 @@ SUBROUTINE inverd (ndim,a,n,b,m,determ,ising,INDEX)
        irow = j
        icolum = k
        amax = DABS(a(j,k))
+       30 CONTINUE
      END DO
    END DO
    INDEX(icolum,3) = INDEX(icolum,3) + 1

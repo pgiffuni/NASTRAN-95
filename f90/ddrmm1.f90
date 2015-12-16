@@ -1,19 +1,14 @@
 SUBROUTINE ddrmm1 (*,*,*,*)
      
 !     PERFORMS SORT1 TYPE PROCESSING FOR MODULE DDRMM.
- 
- 
- , INTENT(IN OUT)                         :: *
- , INTENT(IN OUT)                         :: *
- , INTENT(IN OUT)                         :: *
- , INTENT(IN OUT)                         :: *
+
  LOGICAL :: sort2    ,col1     ,frstid   ,idout    ,trnsnt  , anyxy    ,lminor
  INTEGER :: buf1     ,buf2     ,buf3     ,buf4     ,buf5    ,  &
      buf6     ,buff     ,eor      ,rd       ,rdrew   ,  &
      wrt      ,wrtrew   ,cls      ,clsrew   ,elem    ,  &
      ia(4)    ,sets     ,entrys   ,sysbuf   ,outpt   ,  &
-     passes   ,outfil   ,FILE     ,dhsize   ,filnam  ,  &
-     setid    ,FORM     ,device   ,phase    ,scrt    ,  &
+     passes   ,outfil   ,file     ,dhsize   ,filnam  ,  &
+     setid    ,form     ,device   ,phase    ,scrt    ,  &
      scrt1    ,scrt2    ,scrt3    ,scrt4    ,scrt5   ,  &
      scrt6    ,scrt7    ,dvamid(3),buf(150) ,z(1)    ,  &
      uvsol    ,subcas   ,savdat   ,savpos   ,bufsav
@@ -29,7 +24,7 @@ SUBROUTINE ddrmm1 (*,*,*,*)
  COMMON /system/ sysbuf   ,outpt
  COMMON /names / rd       ,rdrew    ,wrt      ,wrtrew   ,clsrew  , cls
  COMMON /zblpkx/ a(4)     ,irow
- COMMON /zntpkx/ aout(4)  ,irowo    ,ieol     , IEOR
+ COMMON /zntpkx/ aout(4)  ,irowo    ,ieol     , ieor
  COMMON /gpta1 / nelem    ,last     ,incr     ,elem(1)
  COMMON /zzzzzz/ rz(1)
  COMMON /mpyadx/ mcba(7)  ,mcbb(7)  ,mcbc(7)  ,mcbd(7)  ,lz      ,  &
@@ -41,7 +36,7 @@ SUBROUTINE ddrmm1 (*,*,*,*)
      icc      ,ncc      ,ilist    ,nlist    ,nwds    ,  &
      setid    ,trnsnt   ,i1       ,i2       ,phase   ,  &
      itype1   ,itype2   ,nptsf    ,lsf      ,nwdsf   ,  &
-     scrt(7)  ,ierror   ,itemp    ,device   ,FORM    ,  &
+     scrt(7)  ,ierror   ,itemp    ,device   ,form    ,  &
      istlst   ,lstlst   ,uvsol    ,nlambs   ,nwords  , omega    ,ipass    ,subcas
  COMMON /condas/ pi       ,twopi
  EQUIVALENCE     (scrt1,scrt(1)), (scrt2,scrt(2)), (scrt3,scrt(3)),  &
@@ -60,7 +55,7 @@ SUBROUTINE ddrmm1 (*,*,*,*)
  frstid = .true.
  setid  = sets(1,ipass)
  device = sets(2,ipass)
- FORM   = sets(3,ipass)
+ form   = sets(3,ipass)
  istlst = sets(4,ipass)
  lstlst = sets(5,ipass)
  

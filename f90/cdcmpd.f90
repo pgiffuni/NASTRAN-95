@@ -1097,7 +1097,7 @@ sr2fl = sr3fl
 sr3fl = in1
 1480 lcol  = lcol + 1
 IF (c == 0) GO TO 1570
-IF (jpos .LT . bbbar) GO TO 1570
+IF (jpos < bbbar) GO TO 1570
 
 !     READ IN THE NEXT ROW OF ACTIVE COLUMN ELEMENTS
 

@@ -8,20 +8,20 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
  INTEGER, INTENT(IN OUT)                  :: isol
  INTEGER, INTENT(OUT)                     :: nogo
  INTEGER :: comnd(6,1),xtra(11),subnam(2),isave(39),  &
-     rdmap(18,30),rdmap1(18,9),rdmap2(18,9),  &
-     rdmap3(18,9),rdmap4(18,3),oct(3,20),oct1(3,18),  &
-     oct2(3,2),ptbs(7,53),ptbs1(7,18),ptbs2(7,18), ptbs3(7,17)
+     rdmap(18,30),rdmap_1(18,9),rdmap_2(18,9),  &
+     rdmap_3(18,9),rdmap_4(18,3),oct(3,20),oct_1(3,18),  &
+     oct_2(3,2),ptbs(7,53),ptbs_1(7,18),ptbs_2(7,18), ptbs_3(7,17)
  COMMON /asdbd/ irdm,nrdm,ixtra,nxtra,ioct,noct,iptbs,nptbs,  &
      iph,nph,idat( 982)
- EQUIVALENCE    (rdmap1(1,1),rdmap(1, 1)),(oct1(1,1),oct(1, 1)),  &
-     (rdmap2(1,1),rdmap(1,10)),(oct2(1,1),oct(1,19)),  &
-     (rdmap3(1,1),rdmap(1,19)),(ptbs1(1,1),ptbs(1,1)),  &
-     (rdmap4(1,1),rdmap(1,28)),(ptbs2(1,1),ptbs(1,19)), (ptbs3 (1,1),ptbs (1,37))
+ EQUIVALENCE    (rdmap_1(1,1),rdmap(1, 1)),(oct_1(1,1),oct(1, 1)),  &
+     (rdmap_2(1,1),rdmap(1,10)),(oct_2(1,1),oct(1,19)),  &
+     (rdmap_3(1,1),rdmap(1,19)),(ptbs_1(1,1),ptbs(1,1)),  &
+     (rdmap_4(1,1),rdmap(1,28)),(ptbs_2(1,1),ptbs(1,19)), (ptbs_3 (1,1),ptbs (1,37))
  DATA comnd   / 4HCRED    , 30    , 11    , 20    , 53    ,  0  /
  DATA slash   / 1H/       /
  DATA isave   / 2,15,1,  3,11,2,  5,12,1,  5,16,3,  6, 5,1, 23,8,1, 23,9,1,  &
      23,10,1, 24, 8,1, 24, 9,1, 24,10,1, 27,14,2, 29, 6,2         /
- DATA rdmap 1 /  &
+ DATA rdmap_1 /  &
      4HPARA,4HM   ,4H  //,4H*nop,4H*/al,4HWAYS,4H=-1 ,4H$   ,4H    ,  &
      4H    ,8*4H    ,  &
      4HMRED,4H1   ,4H  ca,4HSECC,4H,geo,4HM4,d,4HYNAM,4HICS,,4HCSTM,  &
@@ -39,7 +39,7 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      4H    ,8*4H    ,  &
      4HEQUI,4HV   ,4H  mn,4HOA,m,4HFFX/,4HNOFI,4HX $ ,4H    ,4H    ,  &
      4H    ,8*4H         /
- DATA rdmap 2 /  &
+ DATA rdmap_2 /  &
      4HEQUI,4HV   ,4H  bn,4HOA,b,4HFFX/,4HNOFI,4HX $ ,4H    ,4H    ,  &
      4H    ,8*4H    ,  &
      4HEQUI,4HV   ,4H  k4,4HNOA,,4HK4FF,4HX/no,4HFIX ,4H$   ,4H    ,  &
@@ -57,7 +57,7 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      4H    ,8*4H    ,  &
      4HCEAD,4H    ,4H  kf,4HFX,b,4HFFX,,4HMFFX,4H,eed,4HR,/p,4HHIDR,  &
      4H,cla,4HMA,o,4HCEIG,4HS,ph,4HIDL/,4HNEIG,4HVS $,4H    ,4H    /
- DATA rdmap 3 /  &
+ DATA rdmap_3 /  &
      4HOFP ,4H    ,4H  cl,4HAMA,,4HOCEI,4HGS,,,4H,,//,4H $  ,4H    ,  &
      4H    ,8*4H    ,  &
      4HEQUI,4HV   ,4H  ph,4HIDR,,4HPHIF,4HR/no,4HFIX ,4H$   ,4H    ,  &
@@ -74,13 +74,13 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      4HQST,,4HUSET,4HR,kn,4HOA,m,4HNOA,,4HBNOA,4H,k4n,4HOA,p,4HNOA/,  &
      4H    ,4H    ,4H  kn,4HOB,m,4HNOB,,4HBNOB,4H,k4n,4HOB,p,4HNOB,,  &
      4HPONO,4HB/st,4HP/s,,4HN,dr,4HY!*P,4HVEC*,4H $  ,4H    ,4H    /
- DATA rdmap 4 / 4HLABE,4HL   ,4H  lb,4HM3ST,4HP $ ,13*4H    ,  &
+ DATA rdmap_4 / 4HLABE,4HL   ,4H  lb,4HM3ST,4HP $ ,13*4H    ,  &
      4HLODA,4HPP  ,4H  pn,4HOB,p,4HONOB,4H/!*N,4HAMEB,4H   *,4H/S,N,  &
      4H,dry,4H $  ,7*4H    ,  &
      4HCOND,4H    ,4H  fi,4HNIS,,4HDRY ,4H$   ,12*4H        /
  DATA xtra    / 4HNAME,4HBOUN,4HFIXE,4HMETH,4HRANG,4HNMAX,4HUSER,  &
      4HOUTP,4HOLDM,4HGPAR,4HRSAV/
- DATA oct 1   / 7    ,         8    ,         0  ,  &
+ DATA oct_1   / 7    ,         8    ,         0  ,  &
      8    ,         8    ,         1  , 9    ,         8    ,         2  ,  &
      10    ,         8    ,        16  , 11    ,         8    ,        32  ,  &
      12    ,         8    ,         0  , 13    ,         8    ,         0  ,  &
@@ -90,9 +90,10 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      20    ,         8    ,         0  , 21    ,         8    ,         0  ,  &
      22    ,         8    ,         0  , 23    ,         8    ,         0  ,  &
      24    ,         8    ,         0  /
- DATA oct 2   / 25    ,         8    ,         0  ,  &
+ DATA oct_2   / 25    ,         8    ,         0  ,  &
      29    ,         0    ,         8  /
- DATA ptbs 1  / 2  , 59  , 59  ,  8  ,4HNAMA  ,         0  ,  0  ,  &
+ DATA ptbs_1  / &
+     2  , 59  , 59  ,  8  ,4HNAMA  ,         0  ,  0  ,  &
      3  , 19  , 19  ,  3  ,4HSTEP  ,         0  ,  0  ,  &
      4  , 15  , 15  ,  3  ,4HSTEP  ,         0  ,  0  ,  &
      5  , 12  , 13  ,  3  ,4HNONA  ,         1  , -1  ,  &
@@ -110,7 +111,8 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      12  , 15  , 15  ,  3  ,4HSTEP  ,         0  ,  0  ,  &
      13  , 17  , 18  ,  3  ,4HNONA  ,         1  ,  0  ,  &
      13  , 22  , 23  ,  3  ,4HNONA  ,         2  ,  0  /
- DATA ptbs 2  / 13  , 27  , 28  ,  3  ,4HNONA  ,        16  ,  0  ,  &
+ DATA ptbs_2  / &
+     13  , 27  , 28  ,  3  ,4HNONA  ,        16  ,  0  ,  &
      13  , 32  , 34  ,  3  ,4HNONA  ,        32  ,  0  ,  &
      13  , 38  , 42  ,  0  ,4HNAMA  ,         1  ,  0  ,  &
      13  , 43  , 47  ,  0  ,4HNAMA  ,         1  ,  0  ,  &
@@ -128,7 +130,7 @@ SUBROUTINE ascm13 (NAME,iphase,isol,nogo)
      26  , 18  , 23  ,  0  ,4HNAMA  ,        55  ,  0  ,  &
      26  , 24  , 29  ,  0  ,4HNAMA  ,        55  ,  0  ,  &
      26  , 30  , 35  ,  0  ,4HNAMA  ,        55  ,  0  /
- DATA ptbs 3  / 26  , 47  , 48  ,  3  ,4HNONA  ,         1  ,  0  ,  &
+ DATA ptbs_3  / 26  , 47  , 48  ,  3  ,4HNONA  ,         1  ,  0  ,  &
      26  , 52  , 53  ,  3  ,4HNONA  ,         2  ,  0  ,  &
      26  , 57  , 58  ,  3  ,4HNONA  ,        16  ,  0  ,  &
      26  , 62  , 64  ,  3  ,4HNONA  ,        32  ,  0  ,  &

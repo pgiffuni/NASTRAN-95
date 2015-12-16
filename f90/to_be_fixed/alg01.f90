@@ -3,10 +3,10 @@ SUBROUTINE alg01 (xdata,ydata,ndata,xin,yout,slope,nxy,ntype,nwot)
  
  REAL, INTENT(IN)                         :: xdata(2)
  REAL, INTENT(IN)                         :: ydata(2)
- INTEGER, INTENT(IN)                      :: ndata
  REAL, INTENT(IN)                         :: xin(1)
  REAL, INTENT(OUT)                        :: yout(1)
  REAL, INTENT(OUT)                        :: slope(1)
+ INTEGER, INTENT(IN)                      :: ndata
  INTEGER, INTENT(IN)                      :: nxy
  INTEGER, INTENT(IN OUT)                  :: ntype
  INTEGER, INTENT(IN OUT)                  :: nwot
@@ -83,5 +83,6 @@ SUBROUTINE alg01 (xdata,ydata,ndata,xin,yout,slope,nxy,ntype,nwot)
  DO  i=1,nxy
    slope(i)=yprime
  END DO
+ 
  RETURN
 END SUBROUTINE alg01
