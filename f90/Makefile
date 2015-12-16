@@ -1,7 +1,7 @@
 # Declaration of variables
 FC = gfortran
-FFLAGS = -w -fno-range-check -fno-automatic -fcray-pointer
-# -fdefault-integer-8 -fdefault-real-8  -std=legacy 
+FFLAGS = -w -fno-automatic -fno-range-check -fcray-pointer
+# -fdefault-integer-8 -fdefault-real-8  -std=legacy  
 
 # file names
 EXEC=nastran.exe

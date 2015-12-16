@@ -215,13 +215,13 @@ SUBROUTINE xyout (iopt,buf,rbuf)
  210 FORMAT (1H )
  220 FORMAT (6X,44HXY-pairs within frame limits will be plotted)
  230 FORMAT (6X,46HXY-pairs between xmin AND xmax will be printed)
- 240 FORMAT (6X,64HXY-pairs between xmin AND xmax will be punched bigin  &
-     ning on card,i8)
+ 240 FORMAT (6X,64HXY-pairs between xmin AND xmax will be punched bigin&
+     &ning on card,i8)
  250 FORMAT (//5X,13HTHIS is curve,i4,4H of ,a4,a2,5HFRAME,i5)
  260 FORMAT (//5X,14HCURVE  title =,28A4,/6X,14HX-axis title =,28A4,  &
      /6X,14HY-axis title =,28A4)
- 270 FORMAT (/////5X,62HTHE following information is for the above defi  &
-     ned curve only. )
+ 270 FORMAT (/////5X,62HTHE following information is for the above defi&
+     &ned curve only. )
  280 FORMAT (//5X,36HWITHIN the x-limits of all DATA (x =,1P,e14.6,  &
      8H TO  x =,1P,e14.6,1H))
  290 FORMAT (///6X,36HWITHIN the frame x-limits       (x =,1P,e14.6,  &
@@ -230,7 +230,7 @@ SUBROUTINE xyout (iopt,buf,rbuf)
  310 FORMAT (//30X,22HTHE largest  y-value =,1P,e14.6,7H at x =,e15.6, //)
  320 FORMAT (//45X,27HE n d   o f   s u m m a r y)
  330 FORMAT (//25X,69HP r i n t e d   d a t a   f o r   t h i s   c u r  &
-     v e   f o l l o w s)
+     &v e   f o l l o w s)
  340 FORMAT (//5X,4A4,12HCURVE   id =,i9,5X,11HCOMPONENT =,i3,5X,a4,a2,  &
      5HFRAME,///27X,12HPRINT NUMBER,10X,7HX-value,14X,  &
      7HY-value,14X,11HCARD NUMBER  )

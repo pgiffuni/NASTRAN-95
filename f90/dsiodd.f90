@@ -1,5 +1,6 @@
 SUBROUTINE dsiodd
-     INCLUDE 'GINOX.COM'
+ 
+ INCLUDE 'GINOX.COM'
  INCLUDE 'DSIOF.COM'
  lginox = 5*numfcb + numsof + 2
  lhalf  = 16
