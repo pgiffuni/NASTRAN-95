@@ -11,7 +11,7 @@ SUBROUTINE conmsg (mesage, nwords, idummy)
  CHARACTER (LEN=41) :: ahead
  CHARACTER (LEN=8) :: ctime
  
- CHARACTER (LEN=1) :: (LEN=12) real_clock(3), time
+ CHARACTER (LEN=12) ::  real_clock(3), time
  INTEGER :: values(8)
  CHARACTER (LEN=1) :: 4) cvalues(8)
  EQUIVALENCE(values,cvalues)
