@@ -27,5 +27,6 @@ SUBROUTINE ampc1(INPUT,output,ncol,z,mcb)
 20      CALL bldpk(it1,it2,output,0,0)
         CALL bldpkn(output,0,mcb)
     END DO
+
     RETURN
 END SUBROUTINE ampc1

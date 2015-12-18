@@ -22,5 +22,6 @@ SUBROUTINE axis (xa,ya,xb,yb,penx,opt)
     pen = pen - npens*((pen-1)/npens)
  
 110 CALL axis10 (xa,ya,xb,yb,pen,opt)
+
     RETURN
 END SUBROUTINE axis

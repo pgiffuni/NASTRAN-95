@@ -68,5 +68,6 @@ SUBROUTINE ampb2(a,a11,a12,a21,a22,rp,cp,n1,n2)
    IF(mcba21(1) > 0)CALL wrttrl(mcba21)
    IF(mcba12(1) > 0)CALL wrttrl(mcba12)
    IF(mcba22(1) > 0)CALL wrttrl(mcba22)
+
    RETURN
 END SUBROUTINE ampb2
