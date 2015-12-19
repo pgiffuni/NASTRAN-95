@@ -100,6 +100,7 @@ SUBROUTINE elelbl (gplst,x,u,deform,buf1)
    ELSE
      GO TO  1023
    END IF
+   1023 CONTINUE
  END DO
  i = 5
  1025 ngpel = i - 1
@@ -200,6 +201,7 @@ SUBROUTINE elelbl (gplst,x,u,deform,buf1)
    114 IF (slp >= minslp) CYCLE
    115 k = i
    minslp = slp
+   116 CONTINUE
  END DO
  
  IF (k == 1) GO TO 122
