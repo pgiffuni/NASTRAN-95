@@ -1,4 +1,4 @@
-SUBROUTINE table_v (*,in,ll,trl,NAME,p4,ibuf,z5)
+SUBROUTINE tablev (*,in,ll,trl,NAME,p4,ibuf,z5)
      
 !     TABLE-V IS CALLED ONLY BY INPUT5 TO GENERATE A GINO TABLE
 !     DATA BLOCK IN 'OUT' FROM AN INPUT FILE 'IN' - A REVERSE PROCESS
@@ -157,4 +157,4 @@ SUBROUTINE table_v (*,in,ll,trl,NAME,p4,ibuf,z5)
  180  CALL mesage (1,out,sub)
  
  200  RETURN 1
-END SUBROUTINE table_v
+END SUBROUTINE tablev

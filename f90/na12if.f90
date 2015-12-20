@@ -1,4 +1,4 @@
-SUBROUTINE na1_2_if (*,a,n,b,INT)
+SUBROUTINE na12if (*,a,n,b,INT)
      
 !     VAX, IBM AND UNIVAC VERSION (CHARACTER FUNCTION PROCESSING)
 !     ===========================
@@ -36,7 +36,7 @@ SUBROUTINE na1_2_if (*,a,n,b,INT)
  CALL b2k (a,temp,n)
  GO TO 20
  
- ENTRY nk1_2_if (*,c,n,b,INT)
+ ENTRY nk12if (*,c,n,b,INT)
 !     ****************************
  
  IF (n > 12) GO TO 150
@@ -92,4 +92,4 @@ SUBROUTINE na1_2_if (*,a,n,b,INT)
  160  FORMAT (5X,'*** N.GT.12/NA12IF',i6)
  
  170  RETURN 1
-END SUBROUTINE na1_2_if
+END SUBROUTINE na12if

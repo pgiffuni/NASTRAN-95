@@ -1,4 +1,4 @@
-SUBROUTINE a4_2_a8 (a,b,c)
+SUBROUTINE a42a8 (a,b,c)
      
     !     MERGES TWO A4 BCD WORDS (A AND B) TO ONE A8 BCD WORD (C)
  
@@ -21,7 +21,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY a4_2_k8 (a,b,kc)
+    ENTRY a42k8 (a,b,kc)
     !     ======================
  
     !     MERGES TWO A4 BCD WORDS (A AND B) TO ONE A8 CHARACTER WORD (KC)
@@ -30,7 +30,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY a4_2_k4 (a,ka,notuse)
+    ENTRY a42k4 (a,ka,notuse)
     !     ===========================
  
     !     CONVERTS ONE A4 BCD WORD (A) TO ONE A4 CHARACTER WORD (KA)
@@ -40,7 +40,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY a8_2_k8 (c,kc,notuse)
+    ENTRY a82k8 (c,kc,notuse)
     !     ===========================
  
     !     CONVERTS ONE A8 BCD WORD (C) TO ONE A4 CHARACTER WORD (KC)
@@ -50,7 +50,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY k4_2_k8 (ka,kb,kc)
+    ENTRY k42k8 (ka,kb,kc)
     !     ========================
  
     !     MERGES TWO A4 CHARACTER WORDS (KA AND KB) TO ONE A8 CHARACTER
@@ -63,7 +63,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY k4_2_a8 (ka,kb,c)
+    ENTRY k42a8 (ka,kb,c)
     !     =======================
  
     !     MERGES TWO A4 CHARACTER WORDS (KA AND KB) TO ONE A8 BCD WORD (C)
@@ -74,7 +74,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY k4_2_a4 (ka,a,notuse)
+    ENTRY k42a4 (ka,a,notuse)
     !     ===========================
  
     !     CONVERTS ONE A4 CHARACTER WORD (KA) TO ONE A4 BCD WORD (A)
@@ -83,7 +83,7 @@ SUBROUTINE a4_2_a8 (a,b,c)
     RETURN
  
  
-    ENTRY k8_2_a8 (kc,c,notuse)
+    ENTRY k82a8 (kc,c,notuse)
     !     ===========================
  
     !     CONVERTS ONE A8 CHARACTER WORD (KC) TO ONE A8 BCD WORD (C)
@@ -92,4 +92,4 @@ SUBROUTINE a4_2_a8 (a,b,c)
     IF (ncpw >= 8) READ (kc,20) c(1)
     RETURN
  
-END SUBROUTINE a4_2_a8
+END SUBROUTINE a42a8

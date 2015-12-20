@@ -18,7 +18,7 @@ SUBROUTINE page2 (lines)
  
  
  INTEGER, INTENT(IN OUT)                  :: lines
- INTEGER :: titlex(18),NAME(2),fchar
+ INTEGER :: titlex(18),NAME(2),fchar,date,page
  CHARACTER (LEN=7) ::  machos
  CHARACTER (LEN=11) :: mchnam
  CHARACTER (LEN=30) :: ahead
@@ -59,9 +59,9 @@ SUBROUTINE page2 (lines)
  35 FORMAT (a2)
  fchar = fchar + 3
  ahead(fchar:30) = mchnam(1:ncmnam) // ' ' // machos(1:ncmos) // ' NASTRAN'
- 
  WRITE  (nout,40) titlex, ahead, month(in),date(2),date(3),page
- 40 FORMAT (1H1,4X,17A4,a2,' /',a30,'/ ',a3,1X,i2,', ',i2, ' / PAGE',i6)
+ 40 FORMAT (1H1, 4X, 17A4, a2, ' /', a30, '/ ',a3, 1X, i2, ', ', i2, &
+            ' / PAGE', i6)
  WRITE  (nout,50) subtit
  50 FORMAT ( 5X,31A4,a3)
  WRITE  (nout,60) label

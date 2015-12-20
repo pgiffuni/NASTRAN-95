@@ -1,4 +1,4 @@
-SUBROUTINE cx_trn_y (x,y,alpha)
+SUBROUTINE cxtrny (x,y,alpha)
     !*******
     !     CX TRN Y FORMS THE DOT PRODUCT X TRANSPOSE * Y = ALPHA WHERE
     !     X AND Y ARE COMPLEX
@@ -20,4 +20,4 @@ SUBROUTINE cx_trn_y (x,y,alpha)
     END DO
  
     RETURN
-END SUBROUTINE cx_trn_y
+END SUBROUTINE cxtrny

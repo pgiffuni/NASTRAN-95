@@ -44,16 +44,16 @@ SUBROUTINE nsinfo (jump)
 !WKBR 8/94 SUN DATA    EQU   , R  ,  S  ,  BNK      ,   EQUALS   , NAME         /
 !WKBR 8/94 SUN1        1H=   , 1HR,  1HS,  4H       ,   4H====   , 4HNSIN,2HFO  /
  DATA    equ   , s  ,  bnk      ,   equals   , NAME         /  &
-     1H=   , 1HS,  4H       ,   4H====   , 4HNSIN,2HFO  /
+         1H=   , 1HS,  4H       ,   4H====   , 4HNSIN,2HFO  /
  
  DATA    relse , tpg,  pop,  tim,  mxl,   bsz      , s3s   ,skp3  /  &
-     4HELEA, 3HTPG,3HPOP,3HTIM,3HMXL, 3HBSZ    , 3HS3S ,0     /
+         4HELEA, 3HTPG,3HPOP,3HTIM,3HMXL, 3HBSZ    , 3HS3S ,0     /
 DATA    lpp   , hic,  bnd,  ech,  nos,   pru,  npr,  pch,  END   /  &
-3HLPP , 3HHIC,3HBND,3HECH,3HNOS, 3HPRU,3HNPR,3HPCH,3HEND /
+        3HLPP , 3HHIC,3HBND,3HECH,3HNOS, 3HPRU,3HNPR,3HPCH,3HEND /
 DATA    s88   , s89,  s90,  s92,  s94,   s96,  s97,  s98,  s99   /  &
-    3HS88 , 3HS89,3HS90,3HS92,3HS94, 3HS96,3HS97,3HS98,3HS99 /
+        3HS88 , 3HS89,3HS90,3HS92,3HS94, 3HS96,3HS97,3HS98,3HS99 /
 DATA    diag48                         , dd   ,dic  ,cod  ,key   /  &
-    4H d i, 4H a g, 4H   4, 2H 8   , 3H$. ,3HDIC,3HCOD,3HKEY /
+        4H d i, 4H a g, 4H   4, 2H 8   , 3H$. ,3HDIC,3HCOD,3HKEY /
 
 SELECT CASE ( jump )
   CASE (    1)
@@ -281,5 +281,6 @@ GO TO 230
 540  IF (l20 == 0) GO TO 550
 CLOSE (UNIT=lu)
 CALL pexit
+
 550  RETURN
 END SUBROUTINE nsinfo

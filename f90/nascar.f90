@@ -1,11 +1,11 @@
 SUBROUTINE nascar
      
 !     NASCAR READS THE NASTRAN CARD (IF PRESENT) AND CALLS TTLPGE.
- 
- IMPLICIT INTEGER (a-z)
+
  EXTERNAL        rshift,orf,complf
- INTEGER :: hdg(14),nstrn(2),bdt(7),files(2), modcom(9),keywds(2,17),buf(75)
- REAL :: s1,rtolel
+ INTEGER :: hdg(14),nstrn(2),bdt(7),files(2), modcom(9),keywds(2,17),buf(75),&
+            outtap 
+ REAL :: s1,rtolel 
  CHARACTER (LEN=16) :: s2
  CHARACTER (LEN=25) :: uwm
  CHARACTER (LEN=23) :: ufm
@@ -42,7 +42,6 @@ SUBROUTINE nascar
  DATA topt   /  -9  /
 !     DATA ADD    /4H@ASG,4H,T  ,4HLOG-,4HFILE,4H.,F ,4H .  /
  DATA s1,s2  /4HWORD, ' OF /SYSTEM/ IS '/
- 
  
 !     CONMSG (BCD7,1,1)
  mask1 = complf(0)
