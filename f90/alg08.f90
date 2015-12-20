@@ -86,7 +86,7 @@ SUBROUTINE alg08
        rim1(j)*vw(j,i-1))/x2)/(2.0*r(j,i))
  END DO
  IF(ipass == 1.OR.ndata(i) == 0.OR.neqn == 1.OR.nwork(i) /= 0&
-              .OR.nork(i+1) == 0)GO TO 390
+              .OR.nwork(i+1) == 0)GO TO 390
  l1=ndimen(i)+1
  SELECT CASE ( l1 )
    CASE (    1)

@@ -1,4 +1,4 @@
-SUBROUTINE a8_2_int (*,a,n,b,INT)
+SUBROUTINE a82int (*,a,n,b,INT)
  
  REAL, INTENT(IN OUT)                     :: a(2)
  INTEGER, INTENT(IN OUT)                  :: n
@@ -20,33 +20,33 @@ SUBROUTINE a8_2_int (*,a,n,b,INT)
  nt = +1
  GO TO 20
  
- ENTRY k8_2_int (*,c,n,b,int)
+ ENTRY k82int (*,c,n,b,int)
 !     ****************************
  
  nt = +1
  GO TO 30
  
- ENTRY a8_2_fp (*,a,n,b,int)
+ ENTRY a82fp (*,a,n,b,int)
 !     ***************************
  
  nt = -1
  
  20   IF (n > 8) GO TO 50
  INT = nt
- CALL na_12_if (*80,a,n,b,int)
+ CALL na12if (*80,a,n,b,int)
  RETURN
  
- ENTRY k8_2_fp (*,c,n,b,int)
+ ENTRY k82fp (*,c,n,b,int)
 !     ***************************
  
  nt = -1
  
  30   IF (n > 8) GO TO 50
  INT = nt
- CALL nk_12_if (*80,c,n,b,int)
+ CALL nk12if (*80,c,n,b,int)
  RETURN
  
  50   WRITE  (nout,60) n,nt
  60   FORMAT ('  N.GT.8/A82INT',i5,7X,'NT=',i2)
  80   RETURN 1
-END SUBROUTINE a8_2_int
+END SUBROUTINE a82int

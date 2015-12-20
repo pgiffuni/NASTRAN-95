@@ -1,4 +1,4 @@
-SUBROUTINE m_tims_u (y,x,buf)
+SUBROUTINE mtimsu (y,x,buf)
      
 !     M TIMS U  FORMS THE  PRODUCT  X = M*Y
  
@@ -48,4 +48,4 @@ SUBROUTINE m_tims_u (y,x,buf)
  CALL skprec (filem,1)
  nzero = ncol - nzero
  RETURN
-END SUBROUTINE m_tims_u
+END SUBROUTINE mtimsu

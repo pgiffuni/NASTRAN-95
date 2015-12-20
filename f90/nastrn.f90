@@ -119,5 +119,6 @@ PROGRAM nastrn
  IF ( dsnames(4) /= 'none' ) OPEN ( 4, FILE=dsnames(4),STATUS='UNKNOWN')
  IF ( dsnames(1) /= 'none' ) OPEN ( 1, FILE=dsnames(1),STATUS='UNKNOWN')
  CALL xsem00
+ 
  STOP
 END PROGRAM nastrn

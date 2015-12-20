@@ -1,6 +1,6 @@
 # Declaration of variables
 FC = gfortran
-FFLAGS = -w -fno-automatic -fno-range-check -fcray-pointer
+FFLAGS = -w -pg -fno-automatic -fno-range-check -fcray-pointer
 # -fdefault-integer-8 -fdefault-real-8  -std=legacy  
 
 # file names
@@ -10,7 +10,7 @@ OBJECTS = $(SOURCES:.f90=.o)
 
 # Main target
 $(EXEC):$(OBJECTS)
-	$(FC) $(OBJECTS) -g -o $(EXEC)
+	$(FC) $(OBJECTS) -pg -g -o $(EXEC)
 	
 # To obtain the object files
 %.o:%.f90
