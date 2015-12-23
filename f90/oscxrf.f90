@@ -1,5 +1,6 @@
 SUBROUTINE oscxrf (iop,avail)
  
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: iop
  INTEGER, INTENT(IN)                      :: avail
  EXTERNAL        lshift,rshift,andf,orf,complf
@@ -12,20 +13,20 @@ SUBROUTINE oscxrf (iop,avail)
  COMMON /zzzzzz/ z(1)
  COMMON /xvps  / vps(3)
  EQUIVALENCE     (ksys(2),op), (ksys(9),nlpp), (ksys(12),nline)
- DATA    ihd1  / 7*4H    ,4HCOSM,4HIC /,4H nas,4HTRAN,4H dma,  &
-                 4HP co  ,4HMPIL,4HER -,4H dma,4HP cr,4HOSS ,  &
-                 4HREFE  ,4HRENC,4HE li,4HSTIN,4HG   ,9*4H    /
+ DATA    ihd1  / 7*4H    ,4HCOSM,4HIC /,4H NAS,4HTRAN,4H DMA,  &
+                 4HP CO  ,4HMPIL,4HER -,4H DMA,4HP CR,4HOSS ,  &
+                 4HREFE  ,4HRENC,4HE LI,4HSTIN,4HG   ,9*4H    /
  DATA    ihd2  / 32*4H     /
- DATA    ihd3  / 4HMODU,4HLE n,4HAME ,4HDMAP,4H sta,4HTEME,  &
-                 4HNT n,4HUMBE,4HRS  ,23*4H     /
- DATA    ihd4  / 4HDATA,4H blo,4HCK  ,4HDMAP,4H sta,4HTEME,  &
+ DATA    ihd3  / 4HMODU,4HLE n,4HAME ,4HDMAP,4H STA,4HTEME,  &
+                 4HNT N,4HUMBE,4HRS  ,23*4H     /
+ DATA    ihd4  / 4HDATA,4H blo,4HCK  ,4HDMAP,4H STA,4HTEME,  &
                  4HNT n,4HUMBE,4HRS  ,23*4H     /
  DATA    ihd5  / 4HPARA,4HMETE,4HR   ,4HTYPE,4H    ,4HDMAP,  &
-                 4H sta,4HTEME,4HNT n,4HUMBE,4HRS  ,21*4H     /
+                 4H STA,4HTEME,4HNT N,4HUMBE,4HRS  ,21*4H     /
  DATA    lab   / 4HI   ,4HR   ,4HBCD ,4HRDP ,4HCSP ,4HCDP     /
  DATA    pool  / 4HPOOL  /
  DATA    nblank/ 4H      /    ,iout  /32*4H     /
- DATA    nastk / 4H*     /    ,notapp/4HN.a.    /
+ DATA    nastk / 4H*     /    ,notapp/4HN.A.    /
  
 !     RESTRICT OPEN CORE DUE TO LIMITED FIELD SIZE FOR POINTERS
  

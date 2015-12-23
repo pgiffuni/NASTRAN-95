@@ -1,6 +1,6 @@
 SUBROUTINE factor (INPUT,lower,scr1,scr2,scr3,scr4)
      
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: INPUT
  INTEGER, INTENT(IN OUT)                  :: lower
  INTEGER, INTENT(IN OUT)                  :: scr1

@@ -77,18 +77,18 @@ SUBROUTINE inptt1
  COMMON /xmssg / ufm,uwm,uim,sfm
  COMMON /machin/ mach
  COMMON /BLANK / p1,p2,p3(2),p4(2) /system/ ksystm(65)  &
-     /zzzzzz/ x(1)
+        /zzzzzz/ x(1)
  EQUIVALENCE     (ksystm(1),nb  ), (ksystm( 2),nout),  &
-     (ksystm(9),nlpp), (ksystm(12),line)
+                 (ksystm(9),nlpp), (ksystm(12),line)
  DATA    subnam/ 4HINPT, 4HT1  / , msc      / 4HMSC /
  DATA    out   / 201,202,203,204,205/, mask / 65535 /
  DATA    zero  , mone,mtwo,mtre,mfor/ 0,-1,-2,-3,-4 /,  &
-     mfiv  , msix,mete,mnin     /-5,-6,-8,-9    /
+         mfiv  , msix,mete,mnin     /-5,-6,-8,-9    /
  DATA    inn   / 4HINPT,4HINP1,4HINP2,4HINP3,4HINP4 ,  &
-     4HINP5,4HINP6,4HINP7,4HINP8,4HINP9 /
- DATA    idhdr / 4HNAST,4HRAN ,4HUSER,4H tap,4HE id,4H cod,4HE - /
+                 4HINP5,4HINP6,4HINP7,4HINP8,4HINP9 /
+ DATA    idhdr / 4HNAST,4HRAN ,4HUSER,4H TAP,4HE ID,4H CDE,4HE - /
  DATA    bcdbin/ 4HBCD ,4H    ,4HBINA,4HRY          /
- DATA    NONE  / 4H (no,4HNE) /, ipt1,ipt4/ 1H1,1H4 /
+ DATA    none  / 4H (NO,4HNE) /, ipt1,ipt4/ 1H1,1H4 /
  
  
  iptx = ipt1

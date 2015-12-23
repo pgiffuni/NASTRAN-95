@@ -21,7 +21,7 @@ SUBROUTINE mpy4t (iz,z,dz)
  
 !     WRITTEN BY G.CHAN/UNISYS   1/92
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: iz(1)
  REAL, INTENT(IN OUT)                     :: z(1)
  DOUBLE PRECISION, INTENT(IN OUT)         :: dz(1)

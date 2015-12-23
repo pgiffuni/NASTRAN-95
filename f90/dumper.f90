@@ -20,8 +20,8 @@ SUBROUTINE dumper
  DATA   mask1,   mask2,      mask3,        mask4,      mask5     /  &
      32767,   32768, 1073676288,   1073741824,     983040     /
  DATA   con1,    con2 /     4HCONS,4HTANT                        /
- DATA   ihd/2*4H    ,4H COS,4HMIC ,4H/ na,4HSTRA,4HN dm,4HAP c,  &
-     4HOMPI,4HLER ,4H- os,4HCAR ,4HLIST,4HING ,82*4H    /
+ DATA   ihd/2*4H    ,4H COS,4HMIC ,4H/ NA,4HSTRA,4HN DM,4HAP C,  &
+     4HOMPI,4HLER ,4H- OS,4HCAR ,4HLIST,4HING ,82*4H    /
  DATA   ixtra/4H(con,4HTINU,4HED)  /
  DATA   ion, ioff /  4HON  ,4HOFF  /
  
@@ -69,9 +69,9 @@ SUBROUTINE dumper
  WRITE  (op,110)
  110 FORMAT (/1X,18(4H****))
  WRITE  (op,120) recno,itype,iexflg,oscar(i+3),oscar(i+4),dmapno
- 120 FORMAT (2X,20HOSCAR record NUMBER ,i3,5X,14HMODULE TYPE = ,i2,  &
-     5X,16HEXECUTE flag -- , a4, /2X,  &
-     15HMODULE NAME -  ,2A4,5X,21HDMAP instruction no. ,i3)
+ 120 FORMAT (2X,20HOSCAR RECORD NUMBER ,i3,5X,14HMODULE TYPE = ,i2,  &
+     5X,16HEXECUTE FLAG -- , a4, /2X,  &
+     15HMODULE NAME -  ,2A4,5X,21HDMAP INSTRUCTION NO. ,i3)
  i   = i + 6
  nwe = nwe - 6
  SELECT CASE ( itype )
@@ -92,7 +92,7 @@ SUBROUTINE dumper
  nlines = nlines + 2
  140 CONTINUE
  WRITE  (op,150) nip
- 150 FORMAT (/10X,29HSUMMARY of INPUT DATA blocks(,i2,2H ) )
+ 150 FORMAT (/10X,29HSUMMARY OF INPUT DATA BLOCKS(,i2,2H ) )
  j = 1
  160 iname(1) = oscar(i+1)
  iname(2) = oscar(i+2)
@@ -116,7 +116,7 @@ SUBROUTINE dumper
  nlines = nlines + 1
  200 CONTINUE
  WRITE  (op,210) j
- 210 FORMAT (20X,24H********INPUT DATA BLOCK,i3,8H is null)
+ 210 FORMAT (20X,24H********INPUT DATA BLOCK,i3,8H IS NULL)
  GO TO 250
  220 nlines = nlines + 1
  IF (nlines < nlpp) GO TO 230
@@ -124,7 +124,7 @@ SUBROUTINE dumper
  nlines = nlines + 1
  230 CONTINUE
  WRITE  (op,240) j
- 240 FORMAT (20X,25H********output DATA BLOCK,i3,8H is null)
+ 240 FORMAT (20X,25H********OUTPUT DATA BLOCK,i3,8H IS NULL)
  250 i = i + 3
  j = j + 1
  IF (j <= nip) GO TO 160
@@ -142,7 +142,7 @@ SUBROUTINE dumper
  nlines = nlines + 2
  260 CONTINUE
  WRITE  (op,270) nip
- 270 FORMAT (/10X,30HSUMMARY of output DATA blocks(,i2,2H ))
+ 270 FORMAT (/10X,30HSUMMARY OF OUTPUT DATA BLOCKS(,i2,2H ))
  j = 1
  GO TO 160
  
@@ -159,7 +159,7 @@ SUBROUTINE dumper
  nlines = nlines + 2
  290 CONTINUE
  WRITE  (op,300) nparm
- 300 FORMAT (/10X,22HSUMMARY of parameters(,i2,2H ))
+ 300 FORMAT (/10X,22HSUMMARY OF PARAMETERS(,i2,2H ))
  310 IF (oscar(i+1) > 0.0) THEN
    GO TO   320
  ELSE
@@ -294,7 +294,7 @@ SUBROUTINE dumper
  nlines = nlines + 2
  560 CONTINUE
  WRITE  (op,570) ndb
- 570 FORMAT (/10X,31HDATA blocks TO be checkpointed(,i2,2H ))
+ 570 FORMAT (/10X,31HDATA BLOCKS TO BE CHECKPOINTED(,i2,2H ))
  ist  = i + 1
  ifin = ist + 2 * ndb - 1
  npage = (10+ndb)/10+1
@@ -320,7 +320,7 @@ SUBROUTINE dumper
  nlines = nlines + 2
  620 CONTINUE
  WRITE  (op,630) nparm
- 630 FORMAT (/10X,23HPARAMETERS TO be saved(,i2,2H ))
+ 630 FORMAT (/10X,23HPARAMETERS TO BE SAVED(,i2,2H ))
  640 FORMAT (20X,2A4,2X,i5)
  j = 1
  650 ivps = oscar(i+1)

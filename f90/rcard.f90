@@ -3,7 +3,7 @@ SUBROUTINE rcard (out,FMT,nflag,in)
  
 !     CDIR$ IS CRAY COMPILER DIRECTIVE. 64 BIT INTEGER IS USED LOCALLY
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(OUT)                     :: out(1)
  INTEGER, INTENT(OUT)                     :: FMT(1)
  INTEGER, INTENT(OUT)                     :: nflag

@@ -6,7 +6,7 @@ SUBROUTINE merge (irp,icp,core)
 !     THE ARGUMENTS ARE EXACTLY THE SAME IN MEANING AND OPTION AS FOR
 !     PARTITION
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: irp(1)
  INTEGER, INTENT(IN)                      :: icp(1)
  INTEGER, INTENT(OUT)                     :: core(1)

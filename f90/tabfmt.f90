@@ -32,7 +32,7 @@ SUBROUTINE tabfmt
  COMMON /tabftx/ la,na(2,21)  ,  hx(32,40)  , re(21)
  COMMON /zzzzzz/ ix(1)
  EQUIVALENCE     (rx(1),x(1),ix(1))
- DATA    NONE  / 4H (no , 4HNE)  /
+ DATA    NONE  / 4H (NO , 4HNE)  /
  DATA    subnam/ 4HTABF , 4HMT   /
  DATA    f     / 101   /
  DATA    zero  / 4H  0 /, one    / 4H  1 / , two / 4H  2 /

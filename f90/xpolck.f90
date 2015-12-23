@@ -1,6 +1,6 @@
 SUBROUTINE xpolck (dbn1,dbn2,fn,l)
      
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: dbn1
  INTEGER, INTENT(IN)                      :: dbn2
  INTEGER, INTENT(OUT)                     :: fn

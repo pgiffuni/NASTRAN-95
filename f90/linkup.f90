@@ -1,5 +1,6 @@
 SUBROUTINE linkup (*,NAME)
-     
+ 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: NAME(2)
  EXTERNAL        lshift,rshift,andf,orf,complf
  

@@ -13,7 +13,7 @@ SUBROUTINE rcard2 (out,FMT,nflag,in)
  
 !     RCARD2 ASSUMES ALL INPUT FIELDS IN 'IN' ARE LEFT-ADJUSTED.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(OUT)                     :: out(1)
  INTEGER, INTENT(OUT)                     :: FMT(1)
  INTEGER, INTENT(OUT)                     :: nflag

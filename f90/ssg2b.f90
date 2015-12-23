@@ -1,6 +1,6 @@
 SUBROUTINE ssg2b (kfs,cdt,pabar,sr1,t1,iprec1,ia1,sr2)
      
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: kfs
  INTEGER, INTENT(IN)                      :: cdt
  INTEGER, INTENT(IN)                      :: pabar

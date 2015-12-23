@@ -27,8 +27,8 @@ SUBROUTINE optpr2
  COMMON /system/ sysbuf,outtap
  COMMON /gpta1 / ntypes,last,incr,NE(1)
  EQUIVALENCE     (y(1),iy(1),parm(8)), (core(1),MAX,parm(1)),  &
-     (parm(4),iprn ), (parm(7),iprnt)
- DATA    NAME  / 4H opt,4HPR2  /,   NONE / 4H (no,4HNE)   /
+                 (parm(4),iprn ), (parm(7),iprnt)
+ DATA    NAME  / 4H opt,4HPR2  /,   NONE / 4H (NO,4HNE)   /
  DATA    ptpty , ptely,ptpry,ptply,ptrry / 5*0 /
 !     DATA    DEBUG / .FALSE /
  

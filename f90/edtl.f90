@@ -3,7 +3,7 @@ SUBROUTINE edtl (nedt,ilist,pg)
 !     THIS SUBROUTINE COMPUTES THE ELEMENT TEMPERATURE AND ENFORCED
 !     DEFORMATION LOADS
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: nedt
  INTEGER, INTENT(IN)                      :: ilist(1)
  INTEGER, INTENT(IN OUT)                  :: pg(7)

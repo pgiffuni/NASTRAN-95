@@ -9,7 +9,7 @@ SUBROUTINE partn3 (FILE,size,ones,iz,nz,here,buf,core)
 !     THE RESPECTIVE POSITIONS OCCUPIED BY NON-ZERO ELEMENTS IN THE
 !     COLUMN VECTOR WHICH IS STORED ON FILE.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: FILE
  INTEGER, INTENT(OUT)                     :: size
  INTEGER, INTENT(OUT)                     :: ones

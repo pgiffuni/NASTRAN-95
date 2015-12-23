@@ -5,7 +5,7 @@ SUBROUTINE crspls (*,jump,mu,bp,rs,again,n23)
  
 !     SINGLE PRECISION VERSION
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: jump
  INTEGER, INTENT(OUT)                     :: mu
  INTEGER, INTENT(IN)                      :: bp

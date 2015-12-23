@@ -77,7 +77,7 @@ SUBROUTINE table5 (*,in,out,trl,ibuf,wrt,lfn,fn)
 !     WRITTEN BY G.CHAN/UNISYS,  1989
  
 !  $MIXED_FORMATS
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(OUT)                     :: in
  INTEGER, INTENT(IN)                      :: out
  INTEGER, INTENT(OUT)                     :: trl(7)

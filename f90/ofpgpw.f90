@@ -29,25 +29,26 @@ SUBROUTINE ofpgpw (*,FILE,out,from)
  line = line + 44
  WRITE  (l,350) (out(i),i=1,45)
  350 FORMAT (37X, 'MO - RIGID BODY MASS MATRIX IN BASIC COORDINATE SYSTEM',  &
-     /16X,3H***,93X,3H***, /6(16X,1H*,1P,6D16.8,2H *,/),16X,  &
-     3H***,93X,3H***, /40X,  &
-     51HS - transformation matrix for scalar mass partition,  &
-     /2(40X,3H***,5X), /3(40X,1H*,1P,3D16.8,2H *,/),2(40X,3H***,  &
-     5X),  /25X,9HDIRECTION, /20X,20HMASS axis system (s),7X,  &
-     4HMASS,17X,6HX-c.g.,11X,6HY-c.g.,11X,6HZ-c.g.)
+             /16X,'***',93X,'***', /6(16X,'*',1P,6D16.8,' *',/),16X, &
+     	     '***',93X,'***', /40X, &
+     	     'S - TRANSFORMATION MATRIX FOR SCALAR MASS PARTITION', &
+     	     /2(40X,'***',5X), /3(40X,'*',1P,3D16.8,' *',/),2(40X,'***', &
+     	     5X),  /25X,'DIRECTION', /20X,'MASS AXIS SYSTEM (S)',7X, &
+     	     'MASS',17X,'X-C.G.',11X,'Y-C.G.',11X,'Z-C.G.')
  from = 355
  CALL READ (*2020,*60,FILE,out(1),66,1,flag)
  WRITE  (l,360) (out(i),i=1,12)
- 360 FORMAT (28X,1HX,1P,d27.9,1P,d21.9,1P,2D17.9,/  &
-     28X,1HY,1P,d27.9,1P,d21.9,1P,2D17.9,/ 28X,1HZ,1P,d27.9,1P,d21.9,1P,2D17.9)
+ 360 FORMAT (28X,'X',1P,D27.9,1P,D21.9,1P,2D17.9,/  &
+             28X,'Y',1P,D27.9,1P,D21.9,1P,2D17.9,/  &
+             28X,'Z',1P,D27.9,1P,D21.9,1P,2D17.9)
  WRITE  (l,370) (out(i),i=13,33)
- 370 FORMAT (/49X,33HI(s) - inertias relative TO c.g. , /2(38X,3H***,  &
-     11X), /3(38X,1H*,1P,3D17.9,3H  *,/),2(38X,3H***,11X), /54X,  &
-     25HI(q) - principal inertias, /2(38X,3H***,11X), /38X,1H*,  &
-     1P,d17.9,36X,1H*, /38X,1H*,1P,d34.9,19X,1H*, /38X,1H*,1P,  &
-     d51.9,3H  *, /2(38X,3H***,11X), /44X,  &
-     44HQ - transformation matrix - i(q) = qt*i(s)*q, /2(38X,  &
-     3H***,11X),/3(38X,1H*,1P,3D17.9,3H  *,/),2(38X,3H***,11X))
+ 370 FORMAT (/49X,'I(S) - INERTIAS RELATIVE TO C.G. ', /2(38X,'***',   &
+            11X), /3(38X,'*',1P,3D17.9,'  *',/),2(38X,'***',11X), /54X, &
+            'I(Q) - PRINCIPAL INERTIAS', /2(38X,'***',11X), /38X,'*',  &
+            1P,D17.9,36X,'*', /38X,'*',1P,D34.9,19X,'*', /38X,'*',1P,   &
+            D51.9,'  *', /2(38X,'***',11X), /44X, &
+            'Q - TRANSFORMATION MATRIX - I(Q) = QT*I(S)*Q', /2(38X, &
+            '***',11X),/3(38X,'*',1P,3D17.9,'  *',/),2(38X,'***',11X))
  60  RETURN
  
  2020 RETURN 1

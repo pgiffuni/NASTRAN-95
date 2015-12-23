@@ -1,6 +1,6 @@
 SUBROUTINE hdplot (gplst,nmax,maxsf,iopcor,ib)
      
- 
+ IMPLICIT INTEGER (a-z) 
  INTEGER, INTENT(IN OUT)                  :: gplst(1)
  INTEGER, INTENT(IN)                      :: nmax
  INTEGER, INTENT(IN OUT)                  :: maxsf

@@ -2,7 +2,7 @@ SUBROUTINE extern (nex,ngrav,gvect,ilist,pg,n1,iharm)
      
 !     GENERATES EXTERNAL LOADS
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: nex
  INTEGER, INTENT(OUT)                     :: ngrav
  REAL, INTENT(IN OUT)                     :: gvect(1)

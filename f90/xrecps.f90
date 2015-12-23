@@ -7,7 +7,7 @@ SUBROUTINE xrecps (inew,iold)
 !     * STMTS FOR EACH SUB                                             *
 !     ******************************************************************
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: inew
  INTEGER, INTENT(OUT)                     :: iold
  INTEGER :: kbmsk1(8),sft(4),nrecps(2),con(38),mk(4),c10c(7),extab(37),&

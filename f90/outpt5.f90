@@ -211,11 +211,11 @@ SUBROUTINE outpt5
  COMMON /unpakx/  ityp,ii,jj,incr
  EQUIVALENCE      (rz(1),dz(1),iz(1))
  DATA    binary,           formtd,         subnam             /  &
-     'BINARY  ',        'FORMATTD',     4HOUTP, 2HT5       /
+        'BINARY  ',        'FORMATTD',     4HOUTP, 2HT5       /
  DATA    zero,    dzero,   izero,  one,    mone,   fn         /  &
-     0.0,     0.0D0,   0,      1,      -1,     30*4H      /
+         0.0,     0.0D0,   0,      1,      -1,     30*4H      /
  DATA    mtrx,    tble,    BLANK / 4HMTRX, 4HTBLE, 4H         /
- DATA    NONE  /  4H (no,  4HNE) /
+ DATA    NONE  /  4H (NO,  4HNE) /
  
 !     IF MACHINE IS CDC OR UNIVAC, CALL CDCOPN OR UNVOPN TO OPEN OUTPUT
 !     FILE, A FORMATTED SEQUENTIAL TAPE.  NO CONTROL WORDS ARE TO BE

@@ -42,7 +42,7 @@ SUBROUTINE mred1b (mode)
 !              INDSIL - ABSOLUTE INDEX INTO SIL DATA
 !              NSILUS - ABSOLUTE INDEX INTO USET ARRAY
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: mode
  EXTERNAL        rshift,andf,orf,complf
  LOGICAL :: bounds,ponly

@@ -63,11 +63,12 @@ SUBROUTINE gpfdr
      101   ,   102,103, 104,  105,106,   107,  108,109       /
  DATA     onrgy1,   ogpf1,scrt1,scrt2,scrt3,scrt4  ,lama          /  &
      201   ,   202,  301,  302,  303,  304,    108           /
- DATA     meths /   10/, oload/4HAPP-,4HLOAD/, ospcf/4HF-of,4H-spc/
- DATA     scale /   5, 0/, isum  / 0,0,4H*tot,4HALS*,0,0,0,0,0,0  /
+ DATA     meths /   10/, oload/4HAPP-,4HLOAD/, ospcf/4HF-OF,4H-SPC/
+ DATA     scale /   5, 0/, isum  / 0,0,4H*TOT,4HALS*,0,0,0,0,0,0  /
  DATA     method/   4HSTAT,4HICS , 4HREIG,4HEN  , 4HDS0 ,4H       ,  &
-     4HDS1 ,4H    , 4HFREQ,4H    , 4HTRAN,4HSNT    ,  &
-     4HBKL0,4H    , 4HBKL1,4H    , 4HCEIG,4HEN     , 4HPLA ,4H    /
+                    4HDS1 ,4H    , 4HFREQ,4H    , 4HTRAN,4HSNT    ,  &
+                    4HBKL0,4H    , 4HBKL1,4H    , 4HCEIG,4HEN     , &
+                    4HPLA ,4H    /
  
 !     CASE CONTROL POINTERS
  

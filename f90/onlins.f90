@@ -3,7 +3,7 @@ SUBROUTINE onlins (*,lx)
 !     ON-LINE SCAN ROUTINE, CALLED ONLY BY SCAN
  
 !     WRITTEN FEBY G.CHAN/SPERRY,  FEB. 1986
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: lx
  EXTERNAL        lshift,   rshift,   andf,     orf,      complf
  LOGICAL :: debug

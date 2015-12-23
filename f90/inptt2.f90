@@ -100,10 +100,10 @@ SUBROUTINE inptt2
      (blk(12)  ,bcol  ), (dcore(1),core(1))
 !WKBI
  DATA    ifirst / 0 /
- DATA    subnam/  4HINPT, 4HT2  /  ,   NONE / 4H (no,4HNE)       /
+ DATA    subnam/  4HINPT, 4HT2  /  ,   NONE / 4H (NO,4HNE)       /
  DATA    zero  ,  mone,mtwo,mtre,mfor /0,-1,-2,-3,-4  /, i3 / 3  /  &
-     mfiv  ,  msix,mete /-5,-6,-8 /,    ipt2,ipt4 / 1H2, 1H4 /
- DATA    idhdr /  4HNAST,4HRAN ,4HFORT,4H tap,4HE id,4H cod,3HE -/
+         mfiv  ,  msix,mete /-5,-6,-8 /,    ipt2,ipt4 / 1H2, 1H4 /
+ DATA    idhdr /  4HNAST,4HRAN ,4HFORT,4H TAP,4HE ID,4H COD,3HE -/
  DATA    bcdbin/  4HBCD ,4H    ,4HBINA,4HRY    /, msc / 4HMSC    /
  
  

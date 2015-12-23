@@ -6,7 +6,7 @@ SUBROUTINE retblk (ibl)
 !     SUPERBLOCK, THEY ARE RETURNED TO THE FREE LIST OF THEIR OWN
 !     RESPECTIVE SUPERBLOCKS.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: ibl
  EXTERNAL        lshift,rshift,andf,orf
  LOGICAL :: ditup,nxtup,repeat

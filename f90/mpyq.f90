@@ -32,7 +32,7 @@ SUBROUTINE mpyq (z      )
 !     (2) TO IMPROVE MPYAD INNER LOOP LOGIC FOR THE COMMON CASES
  
  
- 
+ IMPLICIT INTEGER (a-z)
  REAL, INTENT(IN OUT)                     :: z(1)
  REAL :: a(4)    ,b(4)    ,d(4)    , aa(4) ,aaa  ,  &
      bsr     ,aas(1)  ,dds(1)  ,bbb     ,bsi   ,bbs

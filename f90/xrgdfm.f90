@@ -160,9 +160,13 @@ SUBROUTINE xrgdfm (newsol,oldsol,iapp,iufile,iopen,isize,iscr,  &
             optape, card, FILE, rfmt, coment, subset, dolafl, dolacr, idate(3),  &
             filtyp(4),  solnum(20), numsol(50),oldnum,  phase(3), oldind
  INTEGER :: altfil
+
  DIMENSION       ioutbf(200)
+
  COMMON /altrxx/ altfil, newalt
+
  CHARACTER (LEN=23) :: ufm
+
  COMMON /xmssg / ufm
  COMMON /xrgdxx/ irestr, nsubst, iphase, icol   , NUMBER, itype  ,  &
                  istate, ierror, num(2), ind    , nument         ,  &
@@ -176,16 +180,19 @@ SUBROUTINE xrgdfm (newsol,oldsol,iapp,iufile,iopen,isize,iscr,  &
  COMMON /phas28/ ipas28(14)
  COMMON /phas31/ ipas31(2)
  COMMON /phas37/ ipas37(6)
+
  EQUIVALENCE     (ksystm( 2), optape), (ksystm(56), ithrml) ,  &
      (ksystm(42), idate(1)), (ksystm(69), isubal), (ksystm( 9), nlpp  )
+
  DATA    filtyp/ 4HDMAP, 4HDISP, 4HHEAT, 4HAERO    /
  DATA    solnum/ 1H1 ,1H2 ,1H3 ,1H4 ,1H5 ,1H6 ,1H7 ,  &
-     1H8 ,1H9 ,2H10,2H11,2H12,2H13,2H14, 2H15,2H16,2H17,2H18,2H19,2H20     /
+                 1H8 ,1H9 ,2H10,2H11,2H12,2H13,2H14,  &
+                 2H15,2H16,2H17,2H18,2H19,2H20     /
  DATA    card  / 4HCARD /, FILE   / 4HFILE /
  DATA    rfmt  / 4HRFMT /, BLANK  / 4H     /
  DATA    asters/ 4H**** /, coment / 4H$$$$ /
- DATA    subset/ 4HSBST /, dolacr / 4H$*ca /
- DATA    dolafl/ 4H$*fi /
+ DATA    subset/ 4HSBST /, dolacr / 4H$*CA /
+ DATA    dolafl/ 4H$*FI /
  DATA    phase / 4HPHS1,   4HPHS2, 4HPHS3  /
  DATA    sub   / 4HXRGD,   4HFM            /
  DATA    nas   / 4HNAS  /, maxsol / 19     /
@@ -195,10 +202,11 @@ SUBROUTINE xrgdfm (newsol,oldsol,iapp,iufile,iopen,isize,iscr,  &
 !     THIS PROVIDES FOR 31 DIFFERENT VALUES IN TOTAL (1 WORD)
  
  DATA    numsol/ 187, 188, 189, 190, 191, 192, 193, 194,  &
-     195, 196, 197, 198, 199, 200, 201, 202,  &
-     203, 204, 205,  -1,  -1,  -1,  -1, 210,  &
-     -1, 211,  -1,  -1,  -1,  -1,  -1, 212,  &
-     -1,  -1,  -1,  -1,  -1,  -1, 216, 214, 215, 9*-1 /
+                 195, 196, 197, 198, 199, 200, 201, 202,  &
+                 203, 204, 205,  -1,  -1,  -1,  -1, 210,  &
+                  -1, 211,  -1,  -1,  -1,  -1,  -1, 212,  &
+                  -1,  -1,  -1,  -1,  -1,  -1, 216, 214,  &
+                  215, 9*-1 /
 ! WAS:
 !     DATA    NUMSOL/
 !    1                187, 188, 189, 190, 191, 192, 193, 194,
@@ -300,7 +308,7 @@ SUBROUTINE xrgdfm (newsol,oldsol,iapp,iufile,iopen,isize,iscr,  &
 !     FILE - 7/90)
  
  IF (record(3) == asters) GO TO 310
- IF (                           record(2) /= idate(3)) GO TO 770
+ IF (record(2) /= idate(3)) GO TO 770
  310  READ (lu,305,ERR=720,END=730) record
  
 !     BLANK OUT THE 19TH AND 20TH WORDS AS THEY
@@ -412,5 +420,6 @@ SUBROUTINE xrgdfm (newsol,oldsol,iapp,iufile,iopen,isize,iscr,  &
      ' BUT THE RIGID FORMAT DATA BASE IS LEVEL ',2A4)
  790  nogo = 3
  800  CALL rfclse (lu)
+ 
  RETURN
 END SUBROUTINE xrgdfm

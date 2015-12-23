@@ -48,8 +48,8 @@ SUBROUTINE optpr1
  EQUIVALENCE     (x(1),core(1)), (x(7),y(1))
 !     DATA    DEBUG / .FALSE. /
  DATA    poph  , plmh / 404,4, 304,3 /,  NAME / 4H opt,3HPR1 /,  &
-     hpop  / 4H   p,4HOPT  /      ,  NONE / 4H (no,4HNE) /,  &
-     ltype / 90 /  ,numtyp / 20  /
+         hpop  / 4H   p,4HOPT  /      ,  NONE / 4H (NO,4HNE) /,  &
+         ltype / 90 /  ,numtyp / 20  /
  
 !     NELTYP      = NO. ELEMENT TYPES THAT MAY BE OPTIMIZED
 !     LTYPE       = DIMENSION OF DATDTY AND DTYP

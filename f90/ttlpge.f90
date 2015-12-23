@@ -150,10 +150,10 @@ SUBROUTINE ttlpge (topt)
  WRITE  (nout,170) mchttl
  WRITE  (nout,180) vn,idate(2),idate(3)
  WRITE  (nout,190)
- 170  FORMAT (//////34X,4H****, /32X,1H*,6X,1H*, /31X,1H*,8X,1H*,  &
-     /31X,16H*  n a s t r a n, /31X,1H*,8X,1H*, /32X,1H*,6X,1H*, /34X,4H****,  &
+ 170  FORMAT (//////34X,'****', /32X,'*',6X,'*', /31X,'*',8X,'*',  &
+     /31X,'*  N A S T R A N', /31X,'*',8X,'*', /32X,'*',6X,'*', /34X,'****',  &
      ///25X,a28)
- 180  FORMAT(27X,a20,//26X,17HSYSTEM release - ,a3,a2, 4H ed.)
+ 180  FORMAT(27X,a20,//26X,'SYSTEM RELEASE - ',a3,a2, ' ED.')
  190  FORMAT (/32X,'DISTRIBUTED BY', //9X,'COMPUTER SOFTWARE MANAGE',  &
      'MENT AND INFORMATION CENTER (COSMIC)', /17X,'UNIVERSITY ',  &
      'OF GEORGIA, ATHENS, GEORGIA 30602', /17X,  &
