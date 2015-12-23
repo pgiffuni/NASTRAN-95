@@ -8,7 +8,7 @@ SUBROUTINE xfadj1 (bf,shift,sd)
 !     SD   = 0 SINGLE (2 FIELDS), 1 DOUBLE (4 FIELDS)
 !     RIGHT SHIFTING CAUSES INSERTION OF LEADING ZEROS
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: bf(1)
  INTEGER, INTENT(IN OUT)                  :: sd
  EXTERNAL        lshift,rshift,andf,orf,shift

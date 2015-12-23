@@ -10,7 +10,7 @@ SUBROUTINE seteq (name1,name2,prefx,dry2,itest,imore,lim)
 !            DOES NOT EXIST
 !         1  OTHERWISE
  
- 
+ IMPLICIT INTEGER (a-z) 
  INTEGER, INTENT(IN)                      :: name1(2)
  INTEGER, INTENT(IN)                      :: name2(2)
  INTEGER, INTENT(IN OUT)                  :: prefx

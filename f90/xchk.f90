@@ -80,8 +80,8 @@ SUBROUTINE xchk
  DATA    noscar/ 4HXOSC/
  DATA    nxchk / 4HXCHK,4H    /
  DATA    nvps  / 4HXVPS,4H    /
- DATA    nxptdc/ 4HXPTD,4HIC  /, dcparm/4H(non,4HE)  /
- DATA    hdg   / 4H    ,4HADDI,4HTION,4HS TO,4H che,4HCKPO,4HINT ,  &
+ DATA    nxptdc/ 4HXPTD,4HIC  /, dcparm/4H(NON,4HE)  /
+ DATA    hdg   / 4H    ,4HADDI,4HTION,4HS TO,4H CHE,4HCKPO,4HINT ,  &
      4HDICT,4HIONA,4HRY  ,22*4H    /
  DATA    blkcnt/ 90*0  /,      limit /90       /
  DATA    lpurge/ 100   /
@@ -595,33 +595,30 @@ SUBROUTINE xchk
 !      OPEN (UNIT=4, FILE=DIC, STATUS='UNKNOWN')
 !      IROPEN = 1
    815 WRITE  (irdict,820) seqno,ptdic(j1),ptdic(j1+1),nflags,nreel,nfile
-   820 FORMAT (i10,4H,   ,2A4,12H,   flags = ,i1,11H,   reel = ,i2,  &
-       11H,   FILE = ,i6)
+   820 FORMAT (I10,',   ',2A4,',   FLAGS = ',I1,',   REEL = ',I2, &
+        ',   FILE = ',I6)
    IF (diag09 == 1) CYCLE
    nlines = nlines + 1
    IF (mach < 5 .AND. nfile /= 0 .AND. ptdic(j1) /= nvps(1))  &
        nlines = nlines + 1
    IF (nlines >= nlpp) CALL page
    WRITE  (otpe,821) seqno,ptdic(j1),ptdic(j1+1),nflags,nreel,nfile
-   821 FORMAT (1H ,i9 ,4H,   ,2A4,12H,   flags = ,i1,11H,   reel = ,i2,  &
-       11H,   FILE = ,i6)
+   821 FORMAT (' ',I9 ,',   ',2A4,',   FLAGS = ',I1,',   REEL = ',I2, &
+       ',   FILE = ',I6)
    IF (mach < 5 .AND. nfile /= 0 .AND. ptdic(j1) /= nvps(1))  &
        WRITE (otpe,822) ptdic(j1),ptdic(j1+1),blkcnt(i-i1),blksiz
-   822 FORMAT (13X,6H FILE ,2A4, 9H contains, i10,  &
-       28H blocks, each BLOCK contains,i5,7H words.)
+   822 FORMAT (13X,' FILE ',2A4, ' CONTAINS', I10, &
+       ' BLOCKS, EACH BLOCK CONTAINS',I5,' WORDS.')
    CYCLE
+
    805 CONTINUE
-!      IF (IROPEN .EQ. 1) GO TO 8055
-!      OPEN (UNIT=4, FILE=DIC, STATUS='UNKNOWN')
-!      IROPEN = 1
-!8055  CONTINUE
    WRITE  (irdict,806) seqno,nreel
-   806 FORMAT (i10,36H,   reenter at dmap sequence NUMBER ,i5)
+   806 FORMAT (I10,',   REENTER AT DMAP SEQUENCE NUMBER ',I5)
    IF (diag09 == 1) CYCLE
    nlines = nlines + 2
    IF (nlines >= nlpp) CALL page
    WRITE  (otpe,807) seqno,nreel
-   807 FORMAT (1H ,/1H ,i9,36H,   reenter at dmap sequence NUMBER ,i5)
+   807 FORMAT (' ',/' ',I9,',   REENTER AT DMAP SEQUENCE NUMBER ',I5)
  END DO
  
 !     WRITE PTDIC ONTO XPTD
@@ -644,7 +641,7 @@ SUBROUTINE xchk
  ASSIGN 901 TO RETURN
  GO TO 980
  901 WRITE  (otpe,902) fdict(i),fdict(i+1)
- 902 FORMAT (4X,26HCOULD NOT OPEN FILE NAMED ,2A4)
+ 902 FORMAT (4X,'COULD NOT OPEN FILE NAMED ',2A4)
  GO TO 995
  
  905 n = 1102
@@ -657,34 +654,34 @@ SUBROUTINE xchk
  ASSIGN 911 TO RETURN
  GO TO 985
  911 WRITE  (otpe,912)
- 912 FORMAT (4X,43HUNABLE TO POSITION DATA pool tape correctly )
+ 912 FORMAT (4X,'UNABLE TO POSITION DATA POOL TAPE CORRECTLY')
  GO TO 995
  
  920 n = 1104
  ASSIGN 921 TO RETURN
  GO TO 985
  921 WRITE  (otpe,922)
- 922 FORMAT (4X,24HFDICT table is incorrect )
+ 922 FORMAT (4X,'FDICT TABLE IS INCORRECT')
  GO TO 995
  
  930 n = 1105
  ASSIGN 931 TO RETURN
  GO TO 980
  931 WRITE  (otpe,932) fdict(i),fdict(i+1),head(1),head(2)
- 932 FORMAT (4X,29HCANNOT find DATA BLOCK NAMED ,2A4,17H header record = ,2A4)
+ 932 FORMAT (4X,'CANNOT FIND DATA BLOCK NAMED ',2A4,' HEADER RECORD = ',2A4)
  GO TO 995
  
  940 n = 1106
  ASSIGN 941 TO RETURN
  GO TO 985
  941 WRITE  (otpe,942)
- 942 FORMAT (4X,32HCHECKPOINT dictionary overflowed)
+ 942 FORMAT (4X,'CHECKPOINT DICTIONARY OVERFLOWED')
  GO TO 995
  
  960 n = 1108
  ASSIGN 961 TO RETURN
  GO TO 985
- 962 FORMAT (4X,22HPURGE table overflowed)
+ 962 FORMAT (4X,'PURGE TABLE OVERFLOWED')
  961 WRITE  (otpe,962)
  GO TO 995
  

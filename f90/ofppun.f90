@@ -149,7 +149,7 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  ic1 = idd
  290 CONTINUE
  WRITE  (lpch,300) idtemp,ic1,buf(3),icard
- 300 FORMAT (8HTEMP*    ,i16,i16,1P,e16.6,16X,i8)
+ 300 FORMAT ('TEMP*   ' ,i16,i16,1P,e16.6,16X,i8)
  GO TO 1710
  
  400 FORMAT (i10,62X,i8)
@@ -164,10 +164,10 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  510 FORMAT (i10,8X,i10,8X,2A4,28X,i8)
  520 FORMAT (i10,7X,a1,3(1P,e18.6),i8)
  530 FORMAT (1P,e16.6,1X,a1,3(1P,e18.6),i8)
- 590 FORMAT (6H-cont-,12X,3(1P,e18.6),i8)
- 600 FORMAT (6H-cont-,12X,2(1P,e18.6),18X,i8)
- 610 FORMAT (6H-cont-,12X,1P,e18.6,36X,i8)
- 620 FORMAT (6H-cont-,12X,1P,e18.6,18X,1P,e18.6,i8)
+ 590 FORMAT ('-CONT-',12X,3(1P,e18.6),i8)
+ 600 FORMAT ('-CONT-',12X,2(1P,e18.6),18X,i8)
+ 610 FORMAT ('-CONT-',12X,1P,e18.6,36X,i8)
+ 620 FORMAT ('-CONT-',12X,1P,e18.6,18X,1P,e18.6,i8)
  
  
 !     PUNCH HEADING CARDS
@@ -192,9 +192,9 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
    730 WRITE (lpch,770) (hd(j),j=65,79),icard
  END DO
  
- 750 FORMAT (10H$title   =,15A4,2X,i8)
- 760 FORMAT (10H$subtitle=,15A4,2X,i8)
- 770 FORMAT (10H$label   =,15A4,2X,i8)
+ 750 FORMAT ('$TITLE   =',15A4,2X,i8)
+ 760 FORMAT ('$SUBTITLE=',15A4,2X,i8)
+ 770 FORMAT ('$LABEL   =',15A4,2X,i8)
  
  ktype = id(2)/1000
  m = id(2) - (ktype)*1000
@@ -275,22 +275,22 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  1000 WRITE (lpch,1160) icard
  GO TO 1200
  
- 1010 FORMAT (14H$displacements,58X,i8)
- 1020 FORMAT (7H$oloads,65X,i8)
- 1030 FORMAT (5H$spcf,67X,i8)
- 1040 FORMAT (15H$element forces,57X,i8)
- 1050 FORMAT (17H$element stresses,55X,i8)
- 1060 FORMAT (24H$stresses at grid points,48X,i8)
- 1070 FORMAT (12H$eigenvector,60X,i8)
- 1080 FORMAT (9H$velocity,63X,i8)
- 1090 FORMAT (13H$acceleration,59X,i8)
- 1100 FORMAT (18H$non-linear-forces,54X,i8)
- 1110 FORMAT (27H$eigenvector (solution set),45X,i8)
- 1120 FORMAT (29H$displacements (solution set),43X,i8)
- 1130 FORMAT (24H$velocity (solution set),48X,i8)
- 1140 FORMAT (28H$acceleration (solution set),43X,i8)
- 1150 FORMAT (23HELEMENT strain energies ,49X,i8)
- 1160 FORMAT (24HGRID point force balance ,48X,i8)
+ 1010 FORMAT ('$DISPLACEMENTS',58X,I8)
+ 1020 FORMAT ('$OLOADS',65X,I8)
+ 1030 FORMAT ('$SPCF',67X,I8)
+ 1040 FORMAT ('$ELEMENT FORCES',57X,I8)
+ 1050 FORMAT ('$ELEMENT STRESSES',55X,I8)
+ 1060 FORMAT ('$STRESSES AT GRID POINTS',48X,I8)
+ 1070 FORMAT ('$EIGENVECTOR',60X,I8)
+ 1080 FORMAT ('$VELOCITY',63X,I8)
+ 1090 FORMAT ('$ACCELERATION',59X,I8)
+ 1100 FORMAT ('$NON-LINEAR-FORCES',54X,I8)
+ 1110 FORMAT ('$EIGENVECTOR (SOLUTION SET)',45X,I8)
+ 1120 FORMAT ('$DISPLACEMENTS (SOLUTION SET)',43X,I8)
+ 1130 FORMAT ('$VELOCITY (SOLUTION SET)',48X,I8)
+ 1140 FORMAT ('$ACCELERATION (SOLUTION SET)',43X,I8)
+ 1150 FORMAT ('ELEMENT STRAIN ENERGIES' ,49X,I8)
+ 1160 FORMAT ('GRID POINT FORCE BALANCE' ,48X,I8)
  1170 icard = icard - 1
  
 !     REAL, REAL/IMAGINARY, MAGNITUDE/PHASE
@@ -305,9 +305,9 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  GO TO 1300
  
  1230 WRITE  (lpch,1260) icard
- 1240 FORMAT (12H$REAL output,60X,i8)
- 1250 FORMAT (22H$REAL-imaginary output, 50X,i8)
- 1260 FORMAT (23H$magnitude-phase output,49X,i8)
+ 1240 FORMAT ('$REAL OUTPUT',60X,I8)
+ 1250 FORMAT ('$REAL-IMAGINARY OUTPUT', 50X,I8)
+ 1260 FORMAT ('$MAGNITUDE-PHASE OUTPUT',49X,I8)
  
 !     SUBCASE NUMBER FOR SORT1 OUTPUT, OR
 !     SUBCASE NUMBER FOR SORT2, FREQUENCY AND TRANSIENT RESPONSE ONLY
@@ -317,7 +317,7 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  IF (iapp /= 5 .AND. iapp /= 6) GO TO 1400
  1310 icard = icard + 1
  WRITE  (lpch,1320) id(4),icard
- 1320 FORMAT (13H$subcase id =,i12,47X,i8)
+ 1320 FORMAT ('$SUBCASE ID =',i12,47X,i8)
  
 !     IF ELEMENT STRESS OR FORCE PUNCH ELEMENT TYPE NUMBER
  
@@ -326,8 +326,8 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  id3   = id(3)
  IF (l2 /= 378) WRITE (lpch,1410) id3,ie(1,id3),ie(2,id3),icard
  IF (l2 == 378) WRITE (lpch,1420) icard
- 1410 FORMAT (15H$element TYPE =,i12,3X,1H(,2A4,1H),32X,i8)
- 1420 FORMAT (38H$punched in material coordinate system,34X,i8)
+ 1410 FORMAT ('$ELEMENT TYPE =',I12,3X,'(',2A4,')',32X,I8)
+ 1420 FORMAT ('$PUNCHED IN MATERIAL COORDINATE SYSTEM',34X,I8)
  
 !     PUNCH EIGENVALUE, FREQUENCY, POINT OR ELEMENT ID, OR TIME
  
@@ -361,10 +361,10 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  1510 icard = icard + 1
  IF (ktype == 1) GO TO 1530
  WRITE  (lpch,1520,ERR=1700) rid(6),id(5),icard
- 1520 FORMAT (13H$eigenvalue =,e15.7,2X,6HMODE =,i6,30X,i8)
+ 1520 FORMAT ('$EIGENVALUE =',e15.7,2X,'MODE =',i6,30X,i8)
  GO TO 1700
  1530 WRITE  (lpch,1540,ERR=1700) rid(6),rid(7),id(5),icard
- 1540 FORMAT (15H$eigenvalue = (,e15.7,1H,,e15.7,8H) mode =,i6,12X,i8)
+ 1540 FORMAT ('$EIGENVALUE = (',e15.7,',',e15.7,') MODE =',i6,12X,i8)
  GO TO 1700
  
 !     FREQUENCY OR TIME, POINT OR ELEMENT ID
@@ -372,21 +372,21 @@ SUBROUTINE ofppun (ibuf,buf,nwds,iopt,idd,pnched)
  1550 IF (ktype > 1) GO TO 1590
  icard = icard + 1
  WRITE  (lpch,1560,ERR=1700) rid(5),icard
- 1560 FORMAT (12H$frequency =,e16.7,44X,i8)
+ 1560 FORMAT ('$FREQUENCY =',e16.7,44X,i8)
  GO TO 1700
  1570 IF (ktype > 1) GO TO 1590
  icard = icard + 1
  WRITE  (lpch,1580,ERR=1700) rid(5),icard
- 1580 FORMAT (7H$time =,e16.7,49X,i8)
+ 1580 FORMAT ('$TIME =',e16.7,49X,i8)
  GO TO 1700
  1590 IF (ktype <= 1) GO TO 1700
  icard = icard + 1
  IF (m == 4 .OR. m == 5) GO TO 1610
  WRITE  (lpch,1600) id(5),icard
- 1600 FORMAT (11H$point id =,i12,49X,i8)
+ 1600 FORMAT ('$POINT ID =',i12,49X,i8)
  GO TO 1700
  1610 WRITE  (lpch,1620) id(5),icard
- 1620 FORMAT (13H$element id =,i10,49X,i8)
+ 1620 FORMAT ('$ELEMENT ID =',i10,49X,i8)
  
 !     CARD HEADING COMPLETE
  

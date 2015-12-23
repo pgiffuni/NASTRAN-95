@@ -19,10 +19,10 @@ SUBROUTINE xgpimw (msgno,i,j,a)
  COMMON /system/ zsys(90),lpch,ldict
  COMMON /output/ pghdg(1)
  COMMON /xgpic / icold,islsh,iequl,nblank,nxequi,  &
-     ndiag,nsol,ndmap,nestm1,nestm2,nexit,  &
-     nbegin,nend,njump,ncond,nrept,ntime,nsave,noutpt,  &
-     nchkpt,npurge,nequiv,ncpw,nbpc,nwpc,  &
-     maskhi,masklo,isgnon,nosgn,iallon,masks(1)
+                 ndiag,nsol,ndmap,nestm1,nestm2,nexit,  &
+                 nbegin,nend,njump,ncond,nrept,ntime,nsave,noutpt,  &
+                 nchkpt,npurge,nequiv,ncpw,nbpc,nwpc,  &
+                 maskhi,masklo,isgnon,nosgn,iallon,masks(1)
  COMMON /xgpi6 / medtp,fnmtp,cnmtp,medpnt,lmed,iplus,diag14,diag17
  COMMON /xgpid / icst,iunst,imst,ihapp,idsapp,idmapp,  &
      isave,itpflg,iapnd,idum(5),ieqflg
@@ -33,16 +33,16 @@ SUBROUTINE xgpimw (msgno,i,j,a)
  EQUIVALENCE     (zsys( 2),op    ), (zsys( 3),nogo  ),  &
      (zsys( 9),nlpp  ), (zsys(12),nlines),  &
      (zsys(77),bkdata), (zsys(26),cppgct), (zsys(19),iecho ), (zsys(24),icfiat)
- DATA    hdg1  / 17, 4H    ,4H COS,4HMIC ,4H/ na,4HSTRA,4HN dm,  &
-     4HAP c,4HOMPI,4HLER ,4H- so,4HURCE,4H lis, 4HTING,4*4H     /
+ DATA    hdg1  / 17, 4H    ,4H COS,4HMIC ,4H/ NA,4HSTRA,4HN DM,  &
+             4HAP C,4HOMPI,4HLER ,4H- SO,4HURCE,4H LIS, 4HTING,4*4H     /
  DATA    hdg2  / 6, 6*4H         /
  DATA    hdg3  / 1, 4H           /
- DATA    hdg4  / 21, 4HINTE,4HRPRE,4HTED ,4HFROM,4H the,4H osc,4HAR. ,  &
-     4HNEGA,4HTIVE,4H dma,4HP in,4HDICA,4HTES ,4HA no,  &
-     4HN ex,4HECUT,4HABLE,4H ins,4HTRUC,4HTION,4H    /
- DATA    hdg5  / 25, 4H* * ,4H*  d,4H m a,4H p  ,4H c r,4H o s,4H s -,  &
-     4H r e,4H f e,4H r e,4H n c,4H e  ,4H * *,4H *  ,  &
-     7*4H    ,4HMODU,4HLE  ,4H  na,4HMES  /
+ DATA    hdg4  / 21, 4HINTE,4HRPRE,4HTED ,4HFROM,4H THE,4H OSC,4HAR. ,  &
+                     4HNEGA,4HTIVE,4H DMA,4HP IN,4HDICA,4HTES ,4HA NO,  &
+                     4HN EX,4HECUT,4HABLE,4H INS,4HTRUC,4HTION,4H    /
+ DATA    hdg5  / 25, 4H* * ,4H*  D,4H M A,4H P  ,4H C R,4H O S,4H S -,  &
+                 4H R E,4H F E,4H R E,4H N C,4H E  ,4H * *,4H *  ,  &
+                 7*4H    ,4HMODU,4HLE  ,4H  NA,4HMES  /
  DATA    kdlh   / 0     /
  DATA    istar  / 1H*   /
  DATA    ipage  / 0     /

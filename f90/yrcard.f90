@@ -6,7 +6,7 @@ SUBROUTINE yrcard (out,nflag,in)
 !     THIS ROUTINE CAN BE DELETED IF THE NEW XRCARD ROUTINE PASSES
 !     ALL RELIABILITY TESTS                 G.CHAN/UNISYS,  2/1988
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(OUT)                     :: out(1)
  INTEGER, INTENT(IN OUT)                  :: nflag
  INTEGER, INTENT(IN)                      :: in(18)

@@ -6,7 +6,7 @@ SUBROUTINE optp1a (elt,elop,ele,dtyp)
  REAL, INTENT(OUT)                        :: ele(1)
  INTEGER, INTENT(IN)                      :: dtyp(1)
  INTEGER :: iwd(28),count,est,sysbuf,outtap,  &
-     ycor,ecor,b1p1,ie(1),ipt(21),imat(1),NAME(2) 
+     ycor,ecor,b1p1,ie(1),ipt(21),imat(1),name(2) 
  CHARACTER (LEN=23) :: ufm
  COMMON /xmssg / ufm
  COMMON /BLANK / skp1(2),count,skp2(2),ycor,b1p1,npow,  &
@@ -18,7 +18,7 @@ SUBROUTINE optp1a (elt,elop,ele,dtyp)
  COMMON /matout/ omat(20)
  COMMON /names / nrd,noeor,nwrt,nweor
  EQUIVALENCE     (e(1),ie(1)), (omat(1),imat(1)), (k1,c1)
- DATA    NAME  / 4H opt,4HP1A  /
+ DATA    name  / 4H OPT,4HP1A  /
  
 !     POINTER TO IPT ARRAY - ZERO MEANS ELEMENT NOT USED.
 !     UPDATE IPT DIMENSIONS AS NEW ELEMENTS ARE ADDED

@@ -23,9 +23,9 @@ SUBROUTINE comect (ele,MAX)
  DATA    pcomp / 5502,25,2, 5602,14,2, 5702,13,2, 5802,17,17 /
 !                     PCOMP      PCOMP1     PCOMP2     PSHELL
  DATA    nm1   / 18    /,  &
-     m1    / 4H(33X, 4H,2A4, 4H,18H, 4HIGNO, 4HRING, 4H ele,  &
-     4HMENT, 4H (2A, 4H4,32, 4HH) w, 4HITH , 4HMORE,  &
-     4H tha, 4HN 32, 4H con, 4HNECT, 4HIONS, 4H.)  /, ilxx  / 2HXX /
+     m1    / 4H(33X, 4H,2A4, 4H,18H, 4HIGNO, 4HRING, 4H ELE,  &
+     4HMENT, 4H (2A, 4H4,32, 4HH) W, 4HITH , 4HMORE,  &
+     4H THA, 4HN 32, 4H CON, 4HNECT, 4HIONS, 4H.)  /, ilxx  / 2HXX /
  DATA    ihx2  / 1,1,3,3,5,5,7,7,1,3,5,7,13,13,15,15,17,17,19,19/
  DATA    ihx3  / 1,1,4,4,4,7,7,7,10,10,10,1,1,4,7,10,21,24,27,30,  &
      21,21,24,24,24,27,27,27,30,30,30,21            /

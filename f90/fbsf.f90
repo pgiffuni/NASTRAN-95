@@ -24,7 +24,7 @@ SUBROUTINE fbsf (zs,zd)
 !                         AND FOR SOLUTION VECTORS
 !     ZS( BUF2        ) - BUFFER FOR FILE WITH TRIANGULAR MATRIX
  
- 
+ IMPLICIT INTEGER (a-z)
  REAL, INTENT(OUT)                        :: zs(1)
  DOUBLE  PRECISION, INTENT(OUT)           :: zd(1)
  LOGICAL :: ident

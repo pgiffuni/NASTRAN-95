@@ -9,7 +9,7 @@ SUBROUTINE fname (FILE,NAME)
  COMMON /xfist / fist(2)
  COMMON /xfiat / fiat(1)
  DATA    nblank/ 4H    /
- DATA    non1  , non2  / 4H (no,4HNE) /
+ DATA    non1  , non2  / 4H (NO,4HNE) /
 !*******
 !     SEARCH THE FIST FOR THE FILE
 !*******
@@ -38,5 +38,6 @@ SUBROUTINE fname (FILE,NAME)
  30 ix = fist(j+1) + 2
  NAME(1) = fiat(ix  )
  NAME(2) = fiat(ix+1)
+ 
  RETURN
 END SUBROUTINE fname

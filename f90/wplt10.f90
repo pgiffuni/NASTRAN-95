@@ -41,7 +41,7 @@ SUBROUTINE wplt10 (a,opt)
 !              PER WORD ON THE COMPUTER ON WHICH THE PLOT TAPE IS
 !              BEING READ)
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: a(6)
  INTEGER, INTENT(IN OUT)                  :: opt
  INTEGER :: c(30),ten(5),zero(30)

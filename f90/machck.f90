@@ -11,7 +11,7 @@ SUBROUTINE machck (*)
  
 !  $MIXED_FORMATS
  
- 
+ IMPLICIT INTEGER (a-z)
  EXTERNAL        lshift,rshift
  INTEGER :: ar(5)
  REAL :: xx

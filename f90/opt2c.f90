@@ -32,7 +32,7 @@ SUBROUTINE opt2c (pt,iel,ipr,pr,rr)
 !     (EPT ONLY) ENTRIES BEYOND 100 WORDS.
  
  DATA   NAME   / 4H opt, 4H2C   /
- DATA   nmes   , yes,plus,blk   /  0, 4HYES , 4H+aaa, 4H    /
+ DATA   nmes   , yes,plus,blk   /  0, 4HYES , 4H+AAA, 4H    /
  DATA   tube   , quad4,trim6,tria3  / 3, 64 , 73, 83        /
  DATA   pcd    /  &
      4HPBAR,4H    , 4HPELB,4HOW  , 4HPIS2,4HD8  , 4HPQDM,4HEM  ,  &

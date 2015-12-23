@@ -21,7 +21,7 @@ SUBROUTINE mpydri (a,da,b,db,c,dc)
 !     LAST MODIFIED FOR SPECIAL CASES THAT INVOLVE B MATRIX IS ALSO
 !     A DIAGONAL MATRIX OR A ROW-VECOTR,  2/93                 ----
  
- 
+ IMPLICIT INTEGER (a-z)
  REAL, INTENT(IN OUT)                     :: a(1)
  DOUBLE PRECISION, INTENT(IN OUT)         :: da(1)
  REAL, INTENT(IN OUT)                     :: b(1)

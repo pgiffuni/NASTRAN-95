@@ -9,21 +9,32 @@ SUBROUTINE adr
     !     DYNAMICS
     !     ADR  UHVT1,CASECC,QKHL,TOL1,SPLINE,SILA,USETA/PKF/V,N,BOV/C,Y,
     !          MACH=0.0/C,N,APP $
- 
-    INTEGER :: sysbuf,out,casecc,disp,qkhl,load,spline,sila,  &
-        useta,iz(1),pkf,app,flut,freq,scr1,scr2,scr3,scr4, mcb(7)
-    REAL :: mach
+
+    IMPLICIT NONE
+    INTEGER :: sysbuf,out   ,casecc,disp  ,qkhl  ,load  ,spline,sila  ,  &
+               useta ,iz(1) ,pkf   ,app   ,flut  ,freq  ,scr1  ,scr2  ,  &
+               scr3  ,scr4  ,mcb(7),i     ,iaero ,ibuf1 ,ibuf2 ,ibuf3 ,  &
+               ii    ,incr  ,incr1 ,inn   ,iout  ,ipa   ,ipd   ,ipq   ,  &
+               iti   ,ito   ,j     ,k     ,l     ,m     ,nam   ,ncol  ,  &
+               ncore ,next  ,nfreq ,nload ,nn    ,nnn   ,nns1  ,nogo  ,  &
+               nrow  ,nterma,ntermd,nterms,nw
+
+    REAL    :: mach  ,bov   ,pi    ,twopi ,z
+
     CHARACTER (LEN=29) :: uim
     CHARACTER (LEN=25) :: uwm
     CHARACTER (LEN=23) :: ufm
-    COMMON /xmssg / ufm,uwm,uim
-    COMMON /BLANK / bov,mach,app
+
+    COMMON /xmssg / ufm   ,uwm   ,uim
+    COMMON /blank / bov   ,mach  ,app
     COMMON /system/ sysbuf,out
-    COMMON /condas/ pi,twopi
-    COMMON /unpakx/ iout,inn,nnn,incr1
-    COMMON /packx / iti,ito,ii,nn,incr
+    COMMON /condas/ pi    ,twopi
+    COMMON /unpakx/ iout  ,inn   ,nnn   ,incr1
+    COMMON /packx / iti   ,ito   ,ii    ,nn    ,incr
     COMMON /zzzzzz/ z(1)
+
     EQUIVALENCE     (z(1),iz(1))
+
     DATA    iaero / 176/
     DATA    flut  / 4HFLUT/, freq /4HFREQ/
     DATA    disp  / 101/ , casecc /102/ , qkhl /103/ , load /104/

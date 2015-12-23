@@ -35,7 +35,7 @@ SUBROUTINE totape (caller,z)
 !         2 FOR OUTPUT PRINT ONLY
 !      OR 3 FOR BOTH
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: caller
  INTEGER, INTENT(OUT)                     :: z(3)
  LOGICAL :: disc,     tapbit

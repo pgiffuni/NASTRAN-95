@@ -47,9 +47,9 @@ SUBROUTINE gp3c
      5,      7,       13,     17,       21,     27,  &
      6,      8,       15,     19,       24,     30/
  
- DATA   n3304,n3305,pl3err/4H3304, 4H3305, 4H0***, 4H use, 4HR fa,  &
-     4HTAL , 4HMESS, 4HAGE , 4H330*, 4H, pl,  &
-     4HOAD3, 4H car, 4HD fr, 4HOM l, 4HOAD , 4HSET /
+ DATA   n3304,n3305,pl3err/4H3304, 4H3305, 4H0***, 4H USE, 4HR FA,  &
+     4HTAL , 4HMESS, 4HAGE , 4H330*, 4H, PL,  &
+     4HOAD3, 4H CAR, 4HD FR, 4HOM l, 4HOAD , 4HSET /
  DATA   nam  /    4HGP3C,4H      /
  
 !     CHECK TRAILER BITS FOR PRESENCE OF PLOAD2 AND PLOAD3 CARDS.

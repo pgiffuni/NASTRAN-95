@@ -200,10 +200,11 @@ SUBROUTINE gibstk (ndstk,iold,renum,ndeg,lvl,lvls1,lvls2,ccstor,  &
  ibw2 = maxb
  ipf2 = sumwb
  IF (nlpp > 50) WRITE (nout,100) maxb,sumwb,maxwb,averwb, rmsb,brmsb
- 100 FORMAT (/31X,66HAFTER resequencing by gibbs-poole-stockmeyer (gps) &
-     &algorithm - - -, /40X,13HBANDWIDTH    ,i9,  /40X,13HPROFILE      ,i9,  &
-     /40X,13HMAX wavefront,i9,  /40X,13HAVG wavefront,f9.3,  &
-     /40X,13HRMS wavefront,f9.3,/40X,13HRMS bandwidth,f9.3)
+ 100 FORMAT (/31X,'AFTER RESEQUENCING BY GIBBS-POOLE-STOCKMEYER (GPS)' &
+     ' ALGORITHM - - -', &
+              /40X,'BANDWIDTH    ',I9,  /40X,'PROFILE      ',I9,   &
+              /40X,'MAX WAVEFRONT',I9,  /40X,'AVG WAVEFRONT',F9.3, &
+              /40X,'RMS WAVEFRONT',F9.3,/40X,'RMS BANDWIDTH',F9.3)
  
 !     CHECK NEW NUMBERING AGAINST OLD NUMBERING.
  

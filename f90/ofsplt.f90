@@ -60,7 +60,7 @@ SUBROUTINE ofsplt (*,esym,elid,g,offset,x,deform,gplst)
 !     GIRD POINT XYZ COORDINATES AT HAND IN GLOBAL ALREADY?
 !     THE OFFSET PLOT IS QUESTIONABLE.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: esym
  INTEGER, INTENT(IN OUT)                  :: elid
  INTEGER, INTENT(IN)                      :: g(3)

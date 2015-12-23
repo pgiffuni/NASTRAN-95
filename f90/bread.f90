@@ -9,7 +9,7 @@ SUBROUTINE bread (ig,inv,ii3,norig,kg)
 !      CRBE1, CREB2, CRBE3 AND CRSPLINE
 !      03/92, TO INCLUDE DUMMY ELEMENTS, CDUM1,...,CDUM9
  
- 
+ IMPLICIT INTEGER (a-z) 
  INTEGER, INTENT(IN OUT)                  :: ig(1)
  INTEGER, INTENT(OUT)                     :: inv(ii3,1)
  INTEGER, INTENT(IN OUT)                  :: ii3

@@ -5,7 +5,7 @@ SUBROUTINE optp1c (elt,elop,pr)
  INTEGER, INTENT(IN)                      :: elop(2,2)
  INTEGER, INTENT(IN OUT)                  :: pr(1)
  INTEGER :: count, ept, sysbuf,outtap,  &
-     ycor,prcor,prc,NAME(2),card(2),dtyp(21),b1p1,ENTRY
+     ycor,prcor,prc,name(2),card(2),dtyp(21),b1p1,ENTRY
  CHARACTER (LEN=25) :: sfm
  CHARACTER (LEN=29) :: uim
  CHARACTER (LEN=25) :: uwm
@@ -19,7 +19,7 @@ SUBROUTINE optp1c (elt,elop,pr)
  COMMON /system/ sysbuf,outtap
  COMMON /names / nrd,noeor,nwrt,nweor
  EQUIVALENCE     (m1,rm1)
- DATA    NAME  / 4H opt,4HP1C  /,  rm1 / -1.0 /
+ DATA    name  / 4H OPT,4HP1C  /,  rm1 / -1.0 /
  
 !      PROPERTY CORRELATOR TO EST DESIGN VARIABLE (100*EST LOCATION).
 !      THIS VALUE ADDS/SUBTRACTS FROM EST ENTRY TO GET EPT LOCATION.

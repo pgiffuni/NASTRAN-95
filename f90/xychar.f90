@@ -1,6 +1,6 @@
 SUBROUTINE xychar (row,col,CHAR)
      
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: row
  INTEGER, INTENT(IN)                      :: col
  INTEGER, INTENT(IN)                      :: CHAR

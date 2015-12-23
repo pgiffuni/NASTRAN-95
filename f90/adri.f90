@@ -2,27 +2,25 @@ SUBROUTINE adri (fl,nfreq,ncore,qhhl,scr2,scr1,scr3,scr4,nrow,  &
     ncol,nogo)
      
  
-    REAL, INTENT(OUT)                        :: fl(1)
-    INTEGER, INTENT(IN)                      :: nfreq
-    INTEGER, INTENT(IN)                      :: ncore
-    INTEGER, INTENT(IN)                      :: qhhl
-    INTEGER, INTENT(IN OUT)                  :: scr2
-    INTEGER, INTENT(IN OUT)                  :: scr1
-    INTEGER, INTENT(IN OUT)                  :: scr3
-    INTEGER, INTENT(IN OUT)                  :: scr4
-    INTEGER, INTENT(OUT)                     :: nrow
-    INTEGER, INTENT(IN)                      :: ncol
-    INTEGER, INTENT(OUT)                     :: nogo
-    INTEGER :: trl(7),out
-    DIMENSION  mcb(7),NAME(2)
+
+    REAL, INTENT(OUT)           :: fl(1)
+    INTEGER, INTENT(IN)         :: nfreq ,ncore ,qhhl  ,ncol
+    INTEGER, INTENT(IN OUT)     :: scr1  ,scr2  ,scr3  ,scr4
+    INTEGER, INTENT(OUT)        :: nrow  ,nogo
+    INTEGER                     :: trl(7),out
+
+    DIMENSION  mcb(7),name(2)
+
     CHARACTER (LEN=23) :: ufm
+
     COMMON /xmssg / ufm
-    COMMON /BLANK / bov,rm
-    COMMON /condas/ pi,twopi
-    COMMON /system/ isys,out,dum(52),iprec
-    COMMON /unpakx/ iout,inn,nnn,incr1
-    COMMON /packx / iti,ito,ii,nn,incr
-    COMMON /TYPE  / p(2),iwc(4)
+    COMMON /blank / bov   ,rm
+    COMMON /condas/ pi    ,twopi
+    COMMON /system/ isys  ,out   ,dum(52),iprec
+    COMMON /unpakx/ iout  ,inn   ,nnn   ,incr1
+    COMMON /packx / iti   ,ito   ,ii    ,nn    ,incr
+    COMMON /type  / p(2)  ,iwc(4)
+
     DATA    nhfrdi, NAME /4HFRDI,4HADRI,4H    /
  
     ibuf1 = ncore - isys

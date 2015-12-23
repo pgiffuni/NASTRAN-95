@@ -34,11 +34,11 @@ SUBROUTINE outmsc (*,*)
  COMMON /zzzzzz/  z(1)
  EQUIVALENCE      (xns(1),z(1))
  EQUIVALENCE      (xns(1),dxns(1))
- DATA    hdr   /  4HNAST,4HRAN ,4HFORT,4H tap,4HE id,4H cod,4HE - /
+ DATA    hdr   /  4HNAST,4HRAN ,4HFORT,4H TAP,4HE ID,4H COD,4HE - /
  DATA    inp   /  4HUT1 ,4HUT2 ,4HUT3 ,4HINPT,4HINP1,4HINP2,4HINP3,  &
-     4HINP4,4HINP5,4HINP6,4HINP7,4HINP8,4HINP9       /
+                  4HINP4,4HINP5,4HINP6,4HINP7,4HINP8,4HINP9       /
  DATA    mo2   /  '. MODULE OUTPUT2 - '      /
- DATA    NONE  ,  sub   /4H (no,4HNE) ,4HOUTP,4HUT2*              /
+ DATA    NONE  ,  sub   /4H (NO,4HNE) ,4HOUTP,4HUT2*              /
  
  WRITE  (nout,10) uim
  10 FORMAT (a29,'. USER REQUESTED RECORDS IN MSC/OUTPUT2 COMPATIBLE',  &

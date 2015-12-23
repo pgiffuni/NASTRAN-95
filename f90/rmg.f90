@@ -58,7 +58,7 @@ SUBROUTINE rmg
 !     MYRADM  = 2  IMPLIES UNSYMMETRIC SCRIPT-AF INPUT
  
  DATA     subr  / 4HRMG ,4H     /
- DATA     radtyp/ 4H    ,4H  un /
+ DATA     radtyp/ 4H    ,4H  UN /
  DATA     radlst/ 2014,  20     /
  DATA     radmtx/ 3014,  30     /
  DATA     hbdytp/ 52            /

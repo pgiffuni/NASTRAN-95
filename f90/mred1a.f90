@@ -30,7 +30,7 @@ SUBROUTINE mred1a (mode)
 !                       .EQ. -1, NO FIXED POINTS DEFINED
 !              DRY    - MODULE OPERATION FLAG
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: mode
  EXTERNAL        rshift,andf
  LOGICAL :: ponly

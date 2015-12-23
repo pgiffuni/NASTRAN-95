@@ -6,7 +6,7 @@ SUBROUTINE optp1b (elt,elop,ele,pr)
  INTEGER, INTENT(IN OUT)                  :: ele(1)
  INTEGER, INTENT(OUT)                     :: pr(1)
  INTEGER :: count,ect,sysbuf,  &
-     outtap,ycor,prcor,prc,NAME(2),card(2),elcr,elpt, pid,prpt,prpt1,b1p1
+     outtap,ycor,prcor,prc,name(2),card(2),elcr,elpt, pid,prpt,prpt1,b1p1
  COMMON /BLANK / skp1(2),count,skp2(2),ycor,b1p1,npow,  &
      nelw,nwdse,nprw,nwdsp,skp3, skp4(2),ect,skp5(4),numelm,itype(21)
  CHARACTER (LEN=25) :: sfm
@@ -19,7 +19,7 @@ SUBROUTINE optp1b (elt,elop,ele,pr)
  COMMON /gpta1 / ntypes,last,incr,NE(1)
  COMMON /system/ sysbuf,outtap
  COMMON /names / nrd,noeor,nwrt,nweor
- DATA    NAME  / 4H opt,4HP1B  /
+ DATA    name  / 4H OPT,4HP1B  /
  
  
  ieop  = 1

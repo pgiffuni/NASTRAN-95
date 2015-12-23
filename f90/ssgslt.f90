@@ -7,7 +7,7 @@ SUBROUTINE ssgslt (slt,newslt,est)
 !     MISC. CONSTANTS.  THE EXTERNAL LOADS WILL BE PREPARED AS USUAL FOR
 !     THESE AND OTHER LOAD CARD TYPES VIA SUBROUTINE EXTERN.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: slt
  INTEGER, INTENT(IN)                      :: newslt
  INTEGER, INTENT(IN)                      :: est

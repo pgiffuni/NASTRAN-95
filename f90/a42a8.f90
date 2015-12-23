@@ -1,23 +1,22 @@
 SUBROUTINE a42a8 (a,b,c)
-     
+
     !     MERGES TWO A4 BCD WORDS (A AND B) TO ONE A8 BCD WORD (C)
- 
- 
-    REAL, INTENT(IN OUT)                     :: a
-    REAL, INTENT(IN OUT)                     :: b
-    REAL, INTENT(IN OUT)                     :: c(2)
-    CHARACTER (LEN=4) :: ka,    kb
-    CHARACTER (LEN=8) :: kc,    d
- 
- 
+
+    IMPLICIT NONE
+    REAL, INTENT(IN OUT)     :: a,    b,    c(2)
+    REAL                     :: dummy
+    INTEGER                  :: ncpw
+    CHARACTER (LEN=4)        :: ka,    kb
+    CHARACTER (LEN=8)        :: kc,    d
+
     COMMON /system/ dummy(40), ncpw
  
     WRITE (d,10) a,b
- 
     IF (ncpw < 8) READ (d,10) c(1),c(2)
     IF (ncpw >= 8) READ (d,20) c(1)
 10  FORMAT (2A4)
 20  FORMAT ( a8)
+
     RETURN
  
  

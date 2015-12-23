@@ -76,12 +76,12 @@ SUBROUTINE outpt4
  EQUIVALENCE      (x(1),xns(1))
  EQUIVALENCE      (x(1),ix(1),dx(1)),(xns(1),dxns(1)),(nm1,NAME(1))
  DATA    inp   /  4HUT1 ,4HUT2 ,4HUT3 ,4HINPT,4HINP1,4HINP2,4HINP3,  &
-     4HINP4,4HINP5,4HINP6,4HINP7,4HINP8,4HINP9/
+                  4HINP4,4HINP5,4HINP6,4HINP7,4HINP8,4HINP9/
  DATA    tab1  /  4HKELM,4HMELM,4HBELM,4HKDIC,4HMDIC,4HBDIC/,  &
-     tab2  /  4HHKEL,4HHMEL,4HHBEL,4HHKDI,4HHMDI,4HHBDI/
+         tab2  /  4HHKEL,4HHMEL,4HHBEL,4HHKDI,4HHMDI,4HHBDI/
  DATA    dns   ,  spa  / 'DENSE ', 'SPARSE' /  rzero,zero  / 0.,0 /
  DATA    fmd   ,  unf  / 'FORMATTED  ','UNFORMATTED' /
- DATA    NONE  ,  sub  / 4H (no,4HNE) ,4HOUTP,4HT4   /
+ DATA    NONE  ,  sub  / 4H (NO,4HNE) ,4HOUTP,4HT4   /
 !WKBI
  DATA    ifirst / 0 /
  

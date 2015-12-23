@@ -29,19 +29,19 @@ SUBROUTINE ofp
  COMMON /zzzzzz/  core(20000)
  COMMON /ofp1id/  idm(2)
  COMMON /output/  head(96)
- EQUIVALENCE      (ksystm( 1),sysbuf), (ksystm( 2),l     ),  &
-     (ksystm( 9),maxlns), (ksystm(12),line  ),  &
-     (ksystm(38),axif  ), (ksystm(56),itherm),  &
-     (freal (1),REAL(1)), (fimag (1),imag(1)),  &
-     (id    (3),ieltyp ), (iout(1),out(1),dout(1)),  &
-     (l1, of(1),core(1)), (l2,of(2)), (l3,of(3)),  &
-     (l4, of(4)), (l5,of(5)), (id(1),of(6)), (buff(1),of(56))
+ EQUIVALENCE  (ksystm( 1),sysbuf), (ksystm( 2),l     ),  &
+              (ksystm( 9),maxlns), (ksystm(12),line  ),  &
+              (ksystm(38),axif  ), (ksystm(56),itherm),  &
+              (freal (1),REAL(1)), (fimag (1),imag(1)),  &
+              (id    (3),ieltyp ), (iout(1),out(1),dout(1)),  &
+              (l1, of(1),core(1)), (l2,of(2)), (l3,of(3)),  &
+      (l4, of(4)), (l5,of(5)), (id(1),of(6)), (buff(1),of(56))
 !WKBI
  EQUIVALENCE      ( cfmt, FMT )
- DATA    pe    /  4H1P,e /,   pf   / 4H0P,f /
+ DATA    pe    /  4H1P,E /,   pf   / 4H0P,F /
  DATA    e236  /  4H23.6 /,   f236 / 4H14.1 /
  DATA    e156  /  4H15.6 /,   f156 / 4H6.1  /
- DATA    i8    /  4H,i8, /,   i12  / 4H,i11 /
+ DATA    i8    /  4H,I8, /,   i12  / 4H,I11 /
  DATA    i2x   /  4H2X   /,   i2xx / 4H,2X  /
  DATA    i1x   /  4H(1X  /,   i1xx / 4H,1X  /
  DATA    istar /  4H,1H* /,   i15x / 4H/14X /
@@ -49,11 +49,11 @@ SUBROUTINE ofp
  DATA    i9x   /  4H,9X  /,   i6x  / 4H,6X  /
  DATA    f174  /  4H17.4 /
  DATA    static,  reigen  ,   freq ,  trans  , bk1  , ceigen  /  &
-     1     ,  2       ,   5    ,  6      , 8    , 9       /
+         1     ,  2       ,   5    ,  6      , 8    , 9       /
  DATA    a4    ,  comma   ,   cparen, oparen  /  &
-     4HA4  ,  4H,     ,   4H)   , 4H(     /
+         4HA4  ,  4H,     ,   4H)   , 4H(     /
  DATA    eend  /  195    /,   i15blk/ 4HA4,  , 4H11X /,  &
-     gse   /  4HG     ,   4HS   , 4HE    , 4HM   /
+         gse   /  4HG     ,   4HS   , 4HE    , 4HM   /
  DATA    filex /  101, 102,  103,104, 105    , 106   /
  DATA    iblank,  e9pt1  /    4H    , 195    /
  DATA    iheat /  4HHEAT /,   center/ 4HTER  /

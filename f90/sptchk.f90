@@ -85,8 +85,9 @@ SUBROUTINE sptchk
  RETURN
  
  160  WRITE (nout,170) maxgrd
- 170  FORMAT (120H1*** user fatal error 2007,  this structure model uses &
-     &more grid points than the total no. of grid cards in bulk DATA (= ,i6,1H),/)
+ 170  FORMAT('1*** USER FATAL ERROR 2007,  THIS STRUCTURE MODEL USES' &
+      ' MORE GRID POINTS THAN THE TOTAL NO. OF GRID CARDS IN BULK DATA (=' &
+      '2',I6,')',/)
  ngrid=0
  GO TO 190
  

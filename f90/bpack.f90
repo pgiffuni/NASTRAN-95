@@ -1,6 +1,6 @@
 SUBROUTINE bpack (ig,i,j,l)
      
- 
+ IMPLICIT INTEGER (a-z) 
  INTEGER*2, INTENT(OUT)                   :: ig(1)
  INTEGER, INTENT(IN)                      :: i
  INTEGER, INTENT(IN)                      :: j

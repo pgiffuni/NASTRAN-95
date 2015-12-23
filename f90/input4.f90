@@ -110,7 +110,7 @@ SUBROUTINE input4 (nmat,unitx,tape,bcdopt)
 !     PROTION THRU SYMMETRY.
  
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: nmat
  INTEGER, INTENT(IN OUT)                  :: unitx
  INTEGER, INTENT(IN OUT)                  :: tape

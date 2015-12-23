@@ -16,7 +16,7 @@ SUBROUTINE page2 (lines)
  
 !     SIMPLIFIED BY G.CHAN/UNISYS, AND PAGE3 ADDED  12/92
  
- 
+ IMPLICIT INTEGER (a-z) 
  INTEGER, INTENT(IN OUT)                  :: lines
  INTEGER :: titlex(18),NAME(2),fchar,date,page
  CHARACTER (LEN=7) ::  machos
@@ -31,7 +31,7 @@ SUBROUTINE page2 (lines)
  EQUIVALENCE     (titlex(1),title(1))
  DATA    month /'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',  &
                 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'/
- DATA    NAME  / 4H pag, 4HE2  /
+ DATA    NAME  / 4H PAG, 4HE2  /
  
  flag  = 2
  

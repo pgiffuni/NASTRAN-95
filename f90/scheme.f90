@@ -139,12 +139,12 @@ SUBROUTINE scheme (ig,inv,ii3,INT,icc,ild,norig,ip,un,z)
  90   CALL mesage (k,scr1,sub)
  
  100  WRITE  (nout,110) kdim
- 110  FORMAT (28H0*** bandit SCRATCH array of,i5,20H words is too small.  &
-     ,/5X,57HUSER could use one of the following options AND resubmit ,  &
-     27HJOB. (users manual p.2.1-1), /5X,  &
-     53HINCREASE SCRATCH array by nastran bandtdim option, OR, /5X,  &
-     53HSWITCH TO cuthill-mckee method only by  bandtmth=1 OR, /5X,  &
-     57HSKIP bandit computation by setting nastran card bandit=-1,//)
+ 110  FORMAT ('0*** BANDIT SCRATCH ARRAY OF,I5,20H WORDS IS TOO SMALL.' &
+      ,/5X,'USER COULD USE ONE OF THE FOLLOWING OPTIONS AND RESUBMIT ', &
+      'JOB. (USERS MANUAL P.2.1-1)', /5X, &
+      'INCREASE SCRATCH ARRAY BY NASTRAN BANDTDIM OPTION, OR',/5X, &
+      'SWITCH TO CUTHILL-MCKEE METHOD ONLY BY  BANDTMTH=1 OR',/5X, &
+      'SKIP BANDIT COMPUTATION BY SETTING NASTRAN CARD BANDIT=-1',//)
  GO TO 140
  
  120  WRITE  (nout,130) k,nn,ii3,kmod,maxgrd,maxdeg

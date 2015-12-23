@@ -6,7 +6,7 @@ SUBROUTINE xflszd (FILE,iblock,filnam)
 !     IF FILE GT 0 IT IS THE INDEX OF THE FILE ON THE DATA POOL FILE
 !     IF FILE = 0 THE NUMBER OF WORDS PER BLOCK IS RETURNED IN IBLOCK
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN)                      :: FILE
  INTEGER, INTENT(OUT)                     :: iblock
  INTEGER, INTENT(IN OUT)                  :: filnam

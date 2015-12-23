@@ -20,7 +20,7 @@ SUBROUTINE setlvl (newnm,numb,oldnms,itest,ibit)
 !     APPROPRIATE TYPE OF SUBSTRUCTURE. IF IBIT IS ZERO NO CHANGE IS
 !     MADE TO THE MDI
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: newnm(2)
  INTEGER, INTENT(IN OUT)                  :: numb
  INTEGER, INTENT(OUT)                     :: oldnms(14)

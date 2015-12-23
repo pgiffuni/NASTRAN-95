@@ -71,7 +71,7 @@ SUBROUTINE em1d (eltype,istart,itype,ncount,ido,iwords,nbdys,  &
      (ksystm(1 ),sysbuf), (ksystm(2),outpt ),  &
      (ksystm(56),ithrml), (ecpt(1),necpt(1)),  &
      (z(1)      ,iz(1) ), (nsil(1),necpt(2))
- DATA     nam  / 4H  em,4H1D  /
+ DATA     nam  / 4H  EM,4H1D  /
  DATA     scr6 / 306          /
  
 !     FROM EST GET ALL NECESSARY ELEMENT INFO

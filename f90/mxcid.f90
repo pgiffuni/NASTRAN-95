@@ -11,6 +11,7 @@ SUBROUTINE mxcid (*,z,mset,msze,nwds,uset,gpl,sil,buf1)
 !     IF THIS IS A SUBSTRUCTURING PROBLEM, MXCIDS SHOULD BE CALLED
 !     INSTEAD
  
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: z(1)
  INTEGER, INTENT(IN OUT)                  :: mset
  INTEGER, INTENT(IN)                      :: msze

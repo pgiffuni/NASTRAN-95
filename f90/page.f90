@@ -7,11 +7,13 @@ SUBROUTINE page
  CHARACTER (LEN=11) :: mchnam
  CHARACTER (LEN=30) :: ahead
  CHARACTER (LEN=3)  :: month(12)
+ 
  COMMON /chmach/ mchnam, machos
  COMMON /machin/ mach(4)
  COMMON /system/ sysbuf,otpe,mpcn(3),spcn,method,loadn,sym,st,  &
      ipage,line,itline,maxlin,date(3),dum15(15),iofp, x(8),crdate(3)
  COMMON /output/ title(32),subtit(32),label(32),head1(32), head2(32),head3(32)
+ 
  EQUIVALENCE     (titlex(1),title(1))
  DATA    month /'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',  &
                 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'/

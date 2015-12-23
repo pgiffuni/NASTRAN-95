@@ -76,11 +76,11 @@ SUBROUTINE dbase
  DATA    eqexin,  bgpdt, geom2,  cstm,  scr1,  sub              /  &
      101,     102,   103,    104,   301,   4HDBAS,4HE       /
  DATA    end1,    end2,  end3,   FMT                            /  &
-     4H -en,  2HD-,  2H--,   4H, un,4HFORM,4HATTE,1HD       /
+     4H -EN,  2HD-,  2H--,   4H, UN,4HFORM,4HATTE,1HD       /
  DATA    fmt1,    mone,  BLANK,  bzero, izero,        debug     /  &
      1H,,     -1,    4H    , 4H 0.0,4H-0  ,       .false.   /
  DATA    ls,      inpx,                 limaf,        limrx     /  &
-     1HS,     4H inp,4HINPT, 4H  ut,    78,       200       /
+     1HS,     4H INP,4HINPT, 4H  UT,    78,       200       /
  DATA    gpt,            elm,           dis,          dash      /  &
      'GRID PTS',     'ELEMENTS',    'DISPLCNT',  '--------' /
  DATA    lod,            forc,          velo,         blk8      /  &

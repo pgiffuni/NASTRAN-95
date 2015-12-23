@@ -69,7 +69,7 @@ SUBROUTINE unpscr (in,out,z,buf1,buf2,maxz,tysign,flag)
 !     TERMS IN STRING FORMS SIMILAR TO OUTPUT4 MODULE. THIS IMPROVEMENT
 !     WILL BE LEFT FOR NEXT PROJECT.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: in(7)
  INTEGER, INTENT(IN)                      :: out
  INTEGER, INTENT(OUT)                     :: z(3)

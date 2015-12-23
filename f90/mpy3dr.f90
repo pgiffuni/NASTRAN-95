@@ -5,7 +5,7 @@ SUBROUTINE mpy3dr (z)
  
 !     SETS UP OPEN CORE AND DETERMINES SOLUTION METHOD.
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER, INTENT(IN OUT)                  :: z(1)
  EXTERNAL         andf,orf,complf,lshift
  LOGICAL :: e

@@ -8,7 +8,7 @@ SUBROUTINE bunpak (ig,i,nj,jg)
 !     THIS ROUTINE GREATLY INCREASES BANDIT INTERNAL EFFICIENCY
 !     WRITTEN BY G.CHAN/UNISYS,    MAY 1988
  
- 
+ IMPLICIT INTEGER (a-z)
  INTEGER*2, INTENT(IN)                    :: ig(1)
  INTEGER, INTENT(IN)                      :: i
  INTEGER, INTENT(IN)                      :: nj

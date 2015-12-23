@@ -127,13 +127,13 @@ SUBROUTINE strscn (s_or_f)
  IF (.NOT.debug) GO TO 40
  WRITE (nout,30) iopen,jopen,ielt,iel,iset,icomp,icompx,lcse1,  &
      lcse2,isort,subc,itrl3,lbeg,lend,nscan
- 30   FORMAT (//2X,12HDEBUG/strscn,/,2(2X,l1),2X,2A4,13I8)
+ 30  FORMAT (//2X,'DEBUG/STRSCN',/,2(2X,L1),2X,2A4,13I8)
  IF (iopt == 2) WRITE (nout,33) ntop,(iscan(j),j=1,nscan)
  IF (iopt == 1) WRITE (nout,35) amax,amin,(iscan(j),j=1,nscan)
  33   FORMAT (5X,i9,31I3)
  35   FORMAT (5X,2E10.3,31I3)
  IF (lend > lbeg) WRITE (nout,38) iset,(iz(j),j=lbeg,lend)
- 38   FORMAT (/5X,3HSET,i8, (/5X,15I7))
+ 38   FORMAT (/5X,'SET',i8, (/5X,15I7))
  IF (nscan > 10) GO TO 590
  IF (nscan ==  0) GO TO 670
  
@@ -212,7 +212,7 @@ SUBROUTINE strscn (s_or_f)
  
  i=140
  IF (debug) WRITE (nout,145) i,iset,isort,icase,lcse1,lcse2,subc
- 145  FORMAT (/9X,12HDEBUG/strscn,i4,1H-,/2X,i9,11I7,3X,l1)
+ 145  FORMAT (/9X,'DEBUG/STRSCN',I4,1H-,/2X,I9,11I7,3X,L1)        
  nwds =id(10)
  layerd = .false.
 
@@ -493,7 +493,7 @@ SUBROUTINE strscn (s_or_f)
  
  j =j+2
  IF (debug) WRITE (nout,450) j,kk,(z(il2+i),iz(il2+i+1),i=1,k,2)
- 450  FORMAT (/9X,17HDEBUG/strscn 450-,2I7,(/15X,e11.3,i5))
+ 450  FORMAT (/9X,'DEBUG/STRSCN 450-',2I7,(/15X,E11.3,I5))        
  460  DO  k=1,kk
    i =ih1+(iz(j)-1)*nwds1
    CALL WRITE (oufile,iz(i+1),nwds,noeor)
@@ -617,19 +617,19 @@ SUBROUTINE strscn (s_or_f)
  CALL mesage (30,220,ielt)
  GO TO 480
  
- 700  FORMAT (//5X,52HSYSTEM error/strscn.  INPUT OR output FILE NOT rea&
-              &dy, 2(2X,l1))
- 710  FORMAT (//5X, 8HELEMENT ,2A4,32H, OR subcase, NOT in DATA BLOCK ,  &
-              2A4,i7,8H rewinds)
- 720  FORMAT (//5X,34HTOO many components specified for ,2A4)
- 730  FORMAT (//5X,40HINSUFFICIENT core TO process output scan,  &
-               /5X,56HSMALL values of amax-amin require large core requirement)
- 740  FORMAT (//5X,23HSYSTEM error/strscn 740,7X,6I7, /,(5X,12I10))
- 750  FORMAT (/,i9,37H words written TO output FILE, record,i5,9X,2I5)
- 760  FORMAT (//5X,45HINSUFFICIENT core TO process output scan for ,2A4,  &
-               /5X,89HLARGE topn value requires excessive core requirement.  top&
-               &n is automatically reduced from,i5,3H TO,i5)
- 770  FORMAT (//5X,40HFIELD component error, case abort/strscn,5X,2I9, 1X,2A4)
- 780  FORMAT (//5X,37HNO applicable elemt OR subcase/strscn,3X,2A4,i8)
+ 700  FORMAT (//5X,'SYSTEM ERROR/STRSCN.  INPUT OR OUTPUT FILE NOT READY', 2(2X,L1))        
+ 710  FORMAT (//5X,'ELEMENT ',2A4,', OR SUBCASE, NOT IN DATA BLOCK ', &
+                2A4,I7,' REWINDS')        
+ 720  FORMAT (//5X,'TOO MANY COMPONENTS SPECIFIED FOR ',2A4)        
+ 730  FORMAT (//5X,'INSUFFICIENT CORE TO PROCESS OUTPUT SCAN', &
+               /5X,'SMALL VALUES OF AMAX-AMIN REQUIRE LARGE CORE REQUIREMENT') 
+ 740  FORMAT (//5X,'SYSTEM ERROR/STRSCN 740',7X,6I7, /,(5X,12I10))     
+ 750  FORMAT (/,I9,' WORDS WRITTEN TO OUTPUT FILE, RECORD',I5,9X,2I5)  
+ 760  FORMAT (//5X,'INSUFFICIENT CORE TO PROCESS OUTPUT SCAN FOR ',2A4, &
+               /5X,'LARGE TOPN VALUE REQUIRES EXCESSIVE CORE REQUIREMENT.', &
+                   'TOP2N IS AUTOMATICALLY REDUCED FROM',I5,' TO',I5)        
+ 770  FORMAT (//5X,'FIELD COMPONENT ERROR, CASE ABORT/STRSCN',5X,2I9,  &
+                1X,2A4)        
+ 780  FORMAT (//5X,'NO APPLICABLE ELEMT OR SUBCASE/STRSCN',3X,2A4,I8)  
  
 END SUBROUTINE strscn
