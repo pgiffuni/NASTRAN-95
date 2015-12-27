@@ -456,6 +456,7 @@ SUBROUTINE ffread (*,card)
     GO TO 60
   
 470 WRITE  (nout,475) inflag,(a(i),i=1,j)
+<<<<<<< HEAD
 475 FORMAT (//,' *** CAN NOT OPEN FILE (UNIT=',i3,4H) - ,94A1)
     GO TO 500
 480 j = j - 1
@@ -466,6 +467,18 @@ SUBROUTINE ffread (*,card)
 500 nogo = 1
     IF (mach == 3 .OR. mach >= 5) WRITE (nout,505)
 505 FORMAT (5X,'SUGGESTION- CHECK USER ID OR QUALIFIER')
+=======
+475 FORMAT (//,29H *** can NOT OPEN FILE (UNIT=,i3,4H) - ,94A1)
+    GO TO 500
+480 j = j - 1
+    WRITE  (nout,485) (a(i),i=1,j)
+485 FORMAT (//,23H *** FILE NAME error - ,48A1)
+    IF (j >= 48) WRITE (nout,490)
+490 FORMAT (5X,31HFILE NAME exceeds 48 characters)
+500 nogo = 1
+    IF (mach == 3 .OR. mach >= 5) WRITE (nout,505)
+505 FORMAT (5X,38HSUGGESTION- check user id OR qualifier)
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
     inflag = inflag - 1
     IF (inflag <= iwo) inflag = 0
     card(1) = BLANK
@@ -549,7 +562,11 @@ SUBROUTINE ffread (*,card)
 660 IF (lash == 0 .AND. kk == 0) GO TO 680
     j = kk + 1
     WRITE  (nout,670) j
+<<<<<<< HEAD
 670 FORMAT (' *** ILLEGAL USE OF SLASH IN FIELD',i3)
+=======
+670 FORMAT (34H *** illegal use of slash in field,i3)
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
     GO TO 540
   
     !     A DELETE CARD (/) READ
@@ -816,11 +833,19 @@ SUBROUTINE ffread (*,card)
     ierr = ierr + 1
     IF (ierr < 30) GO TO 170
 3070 WRITE  (screen,3080)
+<<<<<<< HEAD
 3080 FORMAT ('0*** JOB TERMINATED DUE TO TOO MANY INPUT ERRORS')
     STOP
 3100 je = ii - 1
     WRITE  (screen,3150) kk,card(kk),(a(j),j=jj,je)
 3150 FORMAT (5X,'FIELD',i3,' (',a8,') OF PREVIOUS CARD SHOULD NOT BE ',  &
+=======
+3080 FORMAT (48H0*** job terminated due TO too many INPUT errors)
+    STOP
+3100 je = ii - 1
+    WRITE  (screen,3150) kk,card(kk),(a(j),j=jj,je)
+3150 FORMAT (5X,5HFIELD,i3,2H (,a8,') OF PREVIOUS CARD SHOULD NOT BE ',  &
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
         'USED FOR', /5X,'INCREMENTATION (BY ',8A1, ').  ZERO IS ASSUMED')
     IF (INT > 0) jc(kk) = 0
     IF (INT < 0) rc(kk) = 0.0
@@ -830,6 +855,7 @@ SUBROUTINE ffread (*,card)
 3250 FORMAT (5X,'FIELD',i3,' IS TOO LONG. ONLY 8 DIGITS ALLOWED - ', 16A1)
     GO TO  3000
 3300 WRITE  (screen,3350)
+<<<<<<< HEAD
 3350 FORMAT (5X,'PREVIOUS CARD WAS NOT SET UP FOR DUPLICATION')
     GO TO  3000
 3400 WRITE  (screen,3450) a8
@@ -840,6 +866,18 @@ SUBROUTINE ffread (*,card)
     GO TO  3050
 3600 WRITE  (screen,3650)
 3650 FORMAT (' *** INPUT ERROR AFTER EQUAL SIGN (=)')
+=======
+3350 FORMAT (5X,44HPREVIOUS card was NOT set up for duplication)
+    GO TO  3000
+3400 WRITE  (screen,3450) a8
+3450 FORMAT (35H *** INDEX error.  no value after ))
+    GO TO  3050
+3500 WRITE  (screen,3550)
+3550 FORMAT (49H *** INPUT error - too many fields.  repeat INPUT)
+    GO TO  3050
+3600 WRITE  (screen,3650)
+3650 FORMAT (37H *** INPUT error after equal SIGN (=))
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
     IF (iechos == -2) GO TO 60
     WRITE  (screen,3060) a8
     nogo = 1
@@ -849,6 +887,7 @@ SUBROUTINE ffread (*,card)
     GO TO  3050
 3800 je = ii - 1
     WRITE  (screen,3850) (a(j),j=jj,je)
+<<<<<<< HEAD
 3850 FORMAT (5X,'INVALID INTEGER - ',16A1)
     GO TO  3000
 3900 je = ii - 1
@@ -864,12 +903,30 @@ SUBROUTINE ffread (*,card)
 4200 WRITE  (screen,4250) kk,l(kk),jc(kk),loop
 4250 FORMAT (5X,'FIELD',i3,' (',i8,'-',i8,') IS NOT DIVIDABLE BY',i4,  &
         /5X,'RESUME INPUT',/)
+=======
+3850 FORMAT (5X,18HINVALID INTEGER - ,16A1)
+    GO TO  3000
+3900 je = ii - 1
+    WRITE  (screen,3950) (a(j),j=jj,je)
+3950 FORMAT (5X,22HINVALID f.p. NUMBER - ,16A1)
+    GO TO  3000
+4000 WRITE  (screen,4050)
+4050 FORMAT (47H *** INPUT error after star (*), OR percent (%))
+    GO TO  3050
+4100 WRITE  (screen,4150)
+4150 FORMAT (41H *** zero loop count.  no cards generated)
+    GO TO  3050
+4200 WRITE  (screen,4250) kk,l(kk),jc(kk),loop
+4250 FORMAT (5X,5HFIELD,i3,2H (,i8,1H-,i8,21H) is NOT dividable by,i4,  &
+        /5X,12HRESUME INPUT,/)
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
 4300 IF (iechos /= -2) nogo = 1
     DO  j = 1,10
         card(j) = SAVE(j)
     END DO
     GO TO  60
 4400 WRITE  (screen,4450) (a(j),j=jj,je)
+<<<<<<< HEAD
 4450 FORMAT (5X,'MORE THAN ONE DEC. PT.,  - ',16A1)
     GO TO  3000
 4500 WRITE  (screen,4550)
@@ -907,6 +964,45 @@ SUBROUTINE ffread (*,card)
 5400 WRITE  (nout,5450)
 5450 FORMAT (/,' *** LEFT BRACKET ENCOUNTERED WITHOUT FIRST PRECEEDED BY ', &
                "'=', '*', OR '%'")
+=======
+4450 FORMAT (5X,27HMORE than one dec. pt.,  - ,16A1)
+    GO TO  3000
+4500 WRITE  (screen,4550)
+4550 FORMAT (39H *** warning- nested readfile operation)
+    GO TO  350
+4600 WRITE  (screen,4650)
+4650 FORMAT (45H *** so be it.  TO run nastran link1 only ***,/)
+    GO TO  60
+4700 WRITE  (screen,4750)
+4750 FORMAT (23H *** BLANK line ignored)
+    GO TO  60
+4800 WRITE  (screen,4850) temp
+4850 FORMAT (40H *** INTEGER error in continuation id - ,a8)
+    IF (iechos /= -2) WRITE (screen,3060) a8
+    GO TO  4300
+4900 WRITE  (screen,4950) (tmp(j),j=1,9)
+4950 FORMAT (35H *** continuation field too long - ,9A1, /5X,  &
+        25HLAST generated card was -,/)
+    WRITE  (screen,2450) SAVE
+    GO TO  4300
+5000 WRITE  (screen,5050)
+5050 FORMAT (27H *** too many left brackets)
+    GO TO  3050
+5100 WRITE  (nout,5150)
+5150 FORMAT (/,20H *** eof encountered )
+    IF (mach == 4 .AND. inflag == 5) REWIND inflag
+    GO TO  60
+5200 WRITE  (nout,5250)
+5250 FORMAT (/,48H *** skipfile ignored.  FILE has NOT been OPENED)
+    GO TO  60
+5300 WRITE  (nout,5350)
+5350 FORMAT (/,26H *** feature NOT available)
+    IF (iechos /= -2) WRITE (screen,3060) a8
+    GO TO  60
+5400 WRITE  (nout,5450)
+5450 FORMAT (/,73H *** left bracket encountered without first preceeded &
+        &by '=', '*', OR '%')
+>>>>>>> d6697cb3550dda9a69b01e86a7002d41d2d4f575
     GO TO  3000
   
 END SUBROUTINE ffread
